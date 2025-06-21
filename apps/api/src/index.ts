@@ -1,35 +1,28 @@
 import express, {Request, Response} from 'express'
 import { createServer } from 'http';
-import { WebSocketServer } from 'ws';
+import { Server } from 'socket.io'
 
 const app = express();
-const server =  createServer();
+const httpServer = createServer(app);
 
-const wss = new WebSocketServer({ server });
+const io = new Server(httpServer, {
+    cors: { origin : '*'},
+})
 
-wss.on('connection', (ws) => {
-    console.log("Web socket connection established");
+io.on('connection', (socket) => {
+    console.log("User Connected: ", socket.id);
     
-    ws.on('message', (message) => {
-        console.log("Received: ", message.toString());
-        wss.clients.forEach(client => {
-            if (client.readyState === ws.OPEN) {
-                 client.send(`Echo: ${message}`);                
-            }
-        });
-    });
+    socket.on('message', (msg) => {
+        io.emit('message', msg);
+    })
 
-    ws.on('close', () => {
-        console.log("Websocket connection closed");
+    socket.on('disconnect', () => {
+        console.log('User Disconnected:', socket.id);        
     })
 })
 
-app.get('/', (_, res) => {
-    res.send('Express + Websocket !')
-});
-
 const PORT = 5000;
-server.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+httpServer.listen(PORT, () => {
+    console.log(`API Server running on http://localhost:${PORT}`);
 });
 
