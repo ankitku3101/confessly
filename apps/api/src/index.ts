@@ -9,16 +9,35 @@ const io = new Server(httpServer, {
     cors: { origin : '*'},
 })
 
+const users = new Map();
+
 io.on('connection', (socket) => {
-    console.log("User Connected: ", socket.id);
-    
+
+    socket.on('user_joined', (username) => {
+        users.set(socket.id, username)
+        io.emit('system_message', {
+            text: `${username} joined the chat`,
+            username,
+            timestamp: new Date().toISOString(),
+            isSystem: true,
+        })
+    })
+
     socket.on('message', (msg) => {
         io.emit('message', msg);
     })
 
     socket.on('disconnect', () => {
-        console.log('User Disconnected:', socket.id);        
-    })
+    const username = users.get(socket.id);
+        if (username) {
+        io.emit('system_message', {
+            text: `${username} left the chat`,
+            username,
+            timestamp: new Date().toISOString(),
+            isSystem: true,
+        });
+        users.delete(socket.id);
+        }    })
 })
 
 const PORT = 5000;

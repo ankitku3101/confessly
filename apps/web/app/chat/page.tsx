@@ -4,12 +4,17 @@ import React, { useState, useRef, useEffect } from "react";
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Avatar } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from "@/components/ui/separator";
 import { io, Socket } from "socket.io-client"
 
-type Message = { user: string; text: string };
+type Message = {
+  user?: string;
+  text: string;
+  timestamp?: string;
+  isSystem?: boolean;
+};
 
 export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -26,6 +31,7 @@ export default function Chat() {
 
     socket.current.on("connect", () => {
       console.log("Connected to WebSocket server");
+      socket.current?.emit('user_joined', username); 
     });
 
     socket.current.on("disconnect", () => {
@@ -33,6 +39,10 @@ export default function Chat() {
     });
 
     socket.current.on('message', (msg: Message) => {
+      setMessages(prev => [...prev, msg]);
+    });
+
+    socket.current.on('system_message', (msg: Message) => {
       setMessages(prev => [...prev, msg]);
     });
 
@@ -50,10 +60,17 @@ export default function Chat() {
   const sendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim() && socket.current) {
-      const msg = { user: username, text: input };
+      const msg: Message = { user: username, text: input };
       socket.current.emit("message", msg);
+      // setMessages(prev => [...prev, msg]);
       setInput("");
     }
+  };
+
+  const formatTime = (timestamp?: string) => {
+    if (!timestamp) return "";
+    const date = new Date(timestamp);
+    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")}`;
   };
 
   return (
@@ -79,15 +96,46 @@ export default function Chat() {
         <>
           <ScrollArea className="h-80 p-4 flex-1">
             <div ref={scrollRef}>
-              {messages.map((msg, idx) => (
-                <div key={idx} className="flex items-start mb-2">
-                  <Avatar className="mr-2" />
-                  <div>
-                    <div className="font-semibold">{msg.user}</div>
-                    <div>{msg.text}</div>
+              {messages.map((msg, idx) =>
+                msg.isSystem ? (
+                  <div key={idx} className="text-center text-muted-foreground text-xs my-2">
+                    {msg.text}
+                    {msg.timestamp && (
+                      <span className="ml-2 text-[10px]">{formatTime(msg.timestamp)}</span>
+                    )}
                   </div>
-                </div>
-              ))}
+                ) : (
+                  <div
+                    key={idx}
+                    className={`flex mb-2 ${msg.user === username ? 'justify-end' : 'justify-start'}`}
+                  >
+                    {msg.user !== username && (
+                      <Avatar className="mr-2">
+                        <AvatarFallback>{msg.user?.[0]?.toUpperCase()}</AvatarFallback>
+                      </Avatar>
+                    )}
+
+                    <div
+                      className={`max-w-[70%] rounded-lg px-3 py-2 ${
+                        msg.user === username
+                          ? 'bg-blue-500 text-white ml-auto'
+                          : 'bg-gray-200 text-black'
+                      }`}
+                    >
+                      {msg.user !== username && (
+                        <div className="text-sm font-semibold">{msg.user}</div>
+                      )}
+                      <div className="text-sm">{msg.text}</div>
+                    </div>
+
+                    {msg.user === username && (
+                      <Avatar className="ml-2">
+                        <AvatarFallback>{msg.user?.[0]?.toUpperCase()}</AvatarFallback>
+                      </Avatar>
+                    )}
+                  </div>
+                )
+              )}
             </div>
           </ScrollArea>
           <Separator />
