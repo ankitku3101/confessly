@@ -27,6 +27,13 @@ io.on('connection', (socket) => {
         io.emit('message', msg);
     })
 
+    socket.on('typing', () => {
+        const username = users.get(socket.id);
+        if (username) {
+        socket.broadcast.emit("user_typing", username);
+        }
+    });
+
     socket.on('disconnect', () => {
     const username = users.get(socket.id);
         if (username) {

@@ -19,6 +19,8 @@ type Message = {
 export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
+  const [typing, setTyping] = useState(false);
+  const [userTyping, setUserTyping] = useState<string | null>(null);
   const [username, setUsername] = useState("");
   const [hasJoined, setHasJoined] = useState(false); 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -36,6 +38,13 @@ export default function Chat() {
 
     socket.current.on("disconnect", () => {
       console.log("Disconnected from WebSocket server");
+    });
+
+    socket.current.on("user_typing", (typingUser) => {
+      if (typingUser !== username) {
+        setUserTyping(typingUser);
+        setTimeout(() => setUserTyping(null), 2500);
+      }
     });
 
     socket.current.on('message', (msg: Message) => {
@@ -62,7 +71,6 @@ export default function Chat() {
     if (input.trim() && socket.current) {
       const msg: Message = { user: username, text: input };
       socket.current.emit("message", msg);
-      // setMessages(prev => [...prev, msg]);
       setInput("");
     }
   };
@@ -138,11 +146,19 @@ export default function Chat() {
               )}
             </div>
           </ScrollArea>
+          {userTyping && (
+            <div className="text-sm text-muted-foreground px-4 py-2 text-center">
+              {userTyping} is typing...
+            </div>
+          )}
           <Separator />
           <form onSubmit={sendMessage} className="flex p-2">
             <Input
               value={input}
-              onChange={e => setInput(e.target.value)}
+              onChange={e => {
+                setInput(e.target.value);
+                socket.current?.emit("typing", { message: e.target.value, username });
+              }}
               placeholder="Type your message…"
               className="flex-1 mr-2"
             />
