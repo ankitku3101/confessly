@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from "@/components/ui/separator";
 import { io, Socket } from "socket.io-client"
+import { Metadata } from "next";
 
 type Message = {
   user?: string;
@@ -24,6 +25,10 @@ export default function Chat() {
   const [hasJoined, setHasJoined] = useState(false); 
   const scrollRef = useRef<HTMLDivElement>(null);
   const socket = useRef<Socket | null>(null);
+
+  // useEffect(() => {
+  //   document.title = "Real-time Chat | WebSockets Playground";
+  // }, []);
 
   useEffect(() => {
     if (!hasJoined) return;
