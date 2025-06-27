@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
+
 export default function Chat() {
   const [username, setUsername] = useState("");
   const [hasJoined, setHasJoined] = useState(false);
@@ -41,5 +42,5 @@ export default function Chat() {
     return <RoomSelector setRoom={setRoom} />;
   }
 
-  return <ChatRoom username={username} room={room} />;
+  return <ChatRoom username={username} room={room} setRoom={setRoom}/>;
 }

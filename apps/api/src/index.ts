@@ -1,54 +1,80 @@
-import express, {Request, Response} from 'express'
+import express from 'express';
 import { createServer } from 'http';
-import { Server } from 'socket.io'
+import { Server } from 'socket.io';
 
 const app = express();
 const httpServer = createServer(app);
-
 const io = new Server(httpServer, {
-    cors: { origin : '*'},
-})
+  cors: { origin: '*' },
+});
 
-const users = new Map();
+const rooms = new Map<string, Set<string>>();
 
 io.on('connection', (socket) => {
+  let joinedRoom: string | null = null;
+  let username: string | null = null;
 
-    socket.on('user_joined', (username) => {
-        users.set(socket.id, username)
-        io.emit('system_message', {
-            text: `${username} joined the chat`,
-            username,
-            timestamp: new Date().toISOString(),
-            isSystem: true,
-        })
-    })
+  socket.emit('active_rooms', Array.from(rooms.keys()));
 
-    socket.on('message', (msg) => {
-        io.emit('message', msg);
-    })
+  socket.on('join_room', (data: { username: string; room: string }) => {
+    username = data.username;
+    joinedRoom = data.room;
 
-    socket.on('typing', () => {
-        const username = users.get(socket.id);
-        if (username) {
-        socket.broadcast.emit("user_typing", username);
-        }
+    socket.join(joinedRoom);
+
+    if (!rooms.has(joinedRoom)) {
+      rooms.set(joinedRoom, new Set());
+    }
+    rooms.get(joinedRoom)!.add(socket.id);
+
+    io.to(joinedRoom).emit('system_message', {
+      text: `${username} joined the room`,
+      timestamp: new Date().toISOString(),
+      isSystem: true,
     });
 
-    socket.on('disconnect', () => {
-    const username = users.get(socket.id);
-        if (username) {
-        io.emit('system_message', {
-            text: `${username} left the chat`,
-            username,
-            timestamp: new Date().toISOString(),
-            isSystem: true,
-        });
-        users.delete(socket.id);
-        }    })
-})
+    emitActiveRooms();
+  });
+
+  socket.on('message', (msg: { user: string; text: string; room: string }) => {
+    if (msg.room) {
+      io.to(msg.room).emit('message', {
+        ...msg,
+        timestamp: new Date().toISOString(),
+      });
+    }
+  });
+
+  socket.on('typing', ({ username, room }: { username: string; room: string }) => {
+    socket.to(room).emit('user_typing', username);
+  });
+
+  socket.on('disconnect', () => {
+    if (joinedRoom !== null && rooms.has(joinedRoom)) {
+      const userSet = rooms.get(joinedRoom)!;
+      userSet.delete(socket.id);
+
+      if (userSet.size === 0) {
+        rooms.delete(joinedRoom);
+      }
+
+      io.to(joinedRoom).emit('system_message', {
+        text: `${username} left the room`,
+        timestamp: new Date().toISOString(),
+        isSystem: true,
+      });
+
+      emitActiveRooms();
+    }
+  });
+
+  function emitActiveRooms() {
+    const activeRoomList = Array.from(rooms.keys());
+    io.emit('active_rooms', activeRoomList);
+  }
+});
 
 const PORT = 5000;
 httpServer.listen(PORT, () => {
-    console.log(`API Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
-

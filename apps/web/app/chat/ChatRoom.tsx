@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
 import React, { useState, useRef, useEffect } from "react";
-import { Card } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from "@/components/ui/separator";
-import { io, Socket } from "socket.io-client"
+import { io, Socket } from "socket.io-client";
 
 type Message = {
   user?: string;
@@ -17,64 +17,94 @@ type Message = {
   isSystem?: boolean;
 };
 
-export default function ChatRoom({ username, room } : {username: any, room: any}) {
+interface Props {
+  username: string;
+  room: string;
+  setRoom: React.Dispatch<React.SetStateAction<string>>;
+}
+
+let socket: Socket | null = null;
+
+export default function ChatRoom({ username, room, setRoom }: Props) {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const [userTyping, setUserTyping] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const socket = useRef<Socket | null>(null);
 
   useEffect(() => {
-    socket.current = io("http://localhost:5000");
+    if (!socket) {
+      socket = io("http://localhost:5000");
+    }
 
-    socket.current.on("connect", () => {
-      socket.current?.emit('join_room', { username, room });
+    socket.emit('join_room', { username, room });
+
+    socket.on('message', (msg: Message) => {
+      setMessages(prev => [...prev, msg]);
     });
 
-    socket.current.on("user_typing", (typingUser) => {
+    socket.on('system_message', (msg: Message) => {
+      setMessages(prev => [...prev, msg]);
+    });
+
+    socket.on("user_typing", (typingUser) => {
       if (typingUser !== username) {
         setUserTyping(typingUser);
-        setTimeout(() => setUserTyping(null), 2500);
+        setTimeout(() => setUserTyping(null), 2000);
       }
     });
 
-    socket.current.on('message', (msg: Message) => {
-      setMessages(prev => [...prev, msg]);
-    });
-
-    socket.current.on('system_message', (msg: Message) => {
-      setMessages(prev => [...prev, msg]);
-    });
-
     return () => {
-      socket.current?.disconnect();
+      socket?.disconnect();
+      socket = null;
     };
   }, [room, username]);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages]);
 
   const sendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    if (input.trim() && socket.current) {
-      const msg: Message = { user: username, text: input, room };
-      socket.current.emit("message", msg);
-      setInput("");
+    if (input.trim()) {
+      const msg: Message = {
+        user: username,
+        text: input.trim(),
+        room,
+      };
+      socket?.emit("message", msg);
+      setInput('');
     }
   };
 
+  const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const text = e.target.value;
+    setInput(text);
+    socket?.emit("typing", { username, room });
+  };
+
   const formatTime = (timestamp?: string) => {
-    if (!timestamp) return "";
+    if (!timestamp) return '';
     const date = new Date(timestamp);
-    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")}`;
+    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black">
-      <Card className="w-full max-w-md mx-auto mt-10 flex flex-col"> 
+    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white">
+      <Card className="w-full max-w-md mx-auto mt-10 flex flex-col">
+        <div className="p-4 border-b border-muted-foreground flex justify-between items-center text-sm font-semibold">
+          <div>Username: {username}</div>
+          <div>Room: {room}</div>
+          <Button
+            variant="destructive"
+            onClick={() => {
+              socket?.disconnect();
+              setRoom(""); 
+            }}
+          >
+            Leave Room
+          </Button>
+        </div>
+
         <ScrollArea className="h-80 p-4 flex-1">
           <div ref={scrollRef}>
             {messages.map((msg, idx) =>
@@ -119,21 +149,21 @@ export default function ChatRoom({ username, room } : {username: any, room: any}
             )}
           </div>
         </ScrollArea>
+
         {userTyping && (
           <div className="text-sm text-muted-foreground px-4 py-2 text-center">
             {userTyping} is typing...
           </div>
         )}
+
         <Separator />
-        <form onSubmit={sendMessage} className="flex p-2">
+
+        <form onSubmit={sendMessage} className="flex p-2 gap-2">
           <Input
             value={input}
-            onChange={e => {
-              setInput(e.target.value);
-              socket.current?.emit("typing", { message: e.target.value, username, room });
-            }}
+            onChange={handleTyping}
             placeholder="Type your message…"
-            className="flex-1 mr-2"
+            className="flex-1"
           />
           <Button type="submit">Send</Button>
         </form>
