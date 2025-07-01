@@ -1,6 +1,7 @@
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import { facetimeHandler } from './facetimeHandler';
 
 const app = express();
 const httpServer = createServer(app);
@@ -13,6 +14,8 @@ const rooms = new Map<string, Set<string>>();
 io.on('connection', (socket) => {
   let joinedRoom: string | null = null;
   let username: string | null = null;
+
+  facetimeHandler(io, socket);
 
   socket.emit('active_rooms', Array.from(rooms.keys()));
 
