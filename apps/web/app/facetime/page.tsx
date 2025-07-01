@@ -12,7 +12,7 @@ export default function FacetimePage() {
     const socketRef = useRef<Socket | null>(null)
 
     useEffect(() => {
-        socketRef.current = io("http://localhost:5000/facetime")
+        socketRef.current = io("http://localhost:5000")
         
         socketRef.current.on("partner_found", (id: string) => {
             console.log("Partner Found: ", id);
@@ -74,7 +74,9 @@ export default function FacetimePage() {
                 Stop Camera
             </Button>
 
-            <Button onClick={findPartner}>Find Match</Button>
+            <Button onClick={findPartner}>
+                Find Match
+            </Button>
 
             <p className="text-sm mt-2">
                 {partnerId ? `Matched with: ${partnerId}` : "Not matched yet."}
