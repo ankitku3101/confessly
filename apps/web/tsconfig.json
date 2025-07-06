@@ -10,6 +10,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,

@@ -15,7 +15,7 @@ export default function RoomSelector({ setRoom }: Props) {
   const [rooms, setRooms] = useState<string[]>([]);
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
+    const socket = io('http://192.168.40.146:5000');
 
     socket.on('active_rooms', (roomList: string[]) => {
       setRooms(roomList);
