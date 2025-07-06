@@ -33,7 +33,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
 
   useEffect(() => {
     if (!socket) {
-      socket = io("http://localhost:5000");
+      socket = io(process.env.NEXT_PUBLIC_API_URL);
     }
 
     socket.emit('join_room', { username, room });

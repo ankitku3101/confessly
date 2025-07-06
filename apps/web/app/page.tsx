@@ -10,6 +10,8 @@ export default function Home() {
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <Image
             alt="background"
+            width={1920}
+            height={1080}
             src={"https://deifkwefumgah.cloudfront.net/shadcnblocks/block/patterns/square-alt-grid.svg"}
             className="[mask-image:radial-gradient(75%_75%_at_center,black,transparent)] opacity-50 w-full h-full object-cover"
         />

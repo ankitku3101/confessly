@@ -12,7 +12,7 @@ export default function FacetimePage() {
     const socketRef = useRef<Socket | null>(null)
 
     useEffect(() => {
-        socketRef.current = io("http://localhost:5000")
+        socketRef.current = io(process.env.NEXT_PUBLIC_API_URL)
         
         socketRef.current.on("partner_found", (id: string) => {
             console.log("Partner Found: ", id);
