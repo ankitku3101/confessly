@@ -15,8 +15,6 @@ io.on('connection', (socket) => {
   let joinedRoom: string | null = null;
   let username: string | null = null;
 
-  facetimeHandler(io, socket);
-
   socket.emit('active_rooms', Array.from(rooms.keys()));
 
   socket.on('join_room', (data: { username: string; room: string }) => {
