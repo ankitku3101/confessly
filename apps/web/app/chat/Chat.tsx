@@ -16,20 +16,20 @@ export default function Chat() {
   if (!hasJoined) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black">
-        <Card className="w-full max-w-md mx-auto mt-10 flex flex-col">
+        <Card className="w-full max-w-md mx-auto mt-10 flex flex-col bg-[#0a0a0a] border border-[#454545]">
           <form 
             onSubmit={e => {
               e.preventDefault();
               if (username.trim()) setHasJoined(true);
             }}
-            className="w-full p-4 flex flex-col items-center"
+            className="w-full px-4 py-2 flex flex-col items-center"
           >
-            <label className="mb-2 font-semibold">Enter your username:</label>
+            <label className="mb-2 font-semibold text-white">Enter your username</label>
             <Input 
               value={username}
               onChange={e => setUsername(e.target.value)}
               placeholder="Username"
-              className="mb-2"
+              className="mb-4 text-white border border-[#454545]"
             />
             <Button type="submit">Join Chat</Button>
           </form>

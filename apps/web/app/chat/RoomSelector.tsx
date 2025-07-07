@@ -15,7 +15,7 @@ export default function RoomSelector({ setRoom }: Props) {
   const [rooms, setRooms] = useState<string[]>([]);
 
   useEffect(() => {
-    const socket = io('http://192.168.40.146:5000');
+    const socket = io(process.env.NEXT_PUBLIC_API_URL);
 
     socket.on('active_rooms', (roomList: string[]) => {
       setRooms(roomList);
@@ -40,14 +40,14 @@ export default function RoomSelector({ setRoom }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white">
-      <Card className="w-full max-w-md mx-auto mt-10 flex flex-col p-4 space-y-2">
+      <Card className="w-full max-w-md mx-auto mt-10 flex flex-col p-4 space-y-2 bg-[#0a0a0a] border border-[#454545]">
         <form onSubmit={handleJoinRoom} className="flex flex-col w-full space-y-2">
-          <label className="font-semibold">Enter a Room ID</label>
+          <label className="font-semibold text-white">Enter a Room ID</label>
           <Input
             value={roomInput}
             onChange={(e) => setRoomInput(e.target.value)}
             placeholder="6-digit Room ID"
-            className="text-black"
+            className="text-white border border-[#454545]"
           />
           <Button type="submit" className="w-full">
             Join Room
