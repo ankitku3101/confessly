@@ -60,7 +60,7 @@ export default function RoomSelector({ setRoom }: Props) {
 
         {rooms.length > 0 && (
           <div className="mt-6">
-            <h2 className="text-lg font-bold mb-2">Active Rooms:</h2>
+            <h2 className="text-lg font-bold mb-2 text-white">Active Rooms:</h2>
             <ul className="space-y-2">
               {rooms.map((room) => (
                 <li key={room} className="flex justify-between items-center px-4 py-2 rounded-xl bg-gray-200/50">
