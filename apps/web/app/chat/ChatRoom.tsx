@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { io, Socket } from 'socket.io-client';
+import { Feeling } from '@/components/BlobGradient';
 
 type Message = {
   user?: string;
@@ -14,21 +15,24 @@ type Message = {
   timestamp?: string;
   room?: string;
   isSystem?: boolean;
+  feeling?: Feeling; 
 };
 
 interface Props {
   username: string;
   room: string;
   setRoom: React.Dispatch<React.SetStateAction<string>>;
+  feeling: Feeling; // 
 }
 
 let socket: Socket | null = null;
 
-export default function ChatRoom({ username, room, setRoom }: Props) {
+export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [userTyping, setUserTyping] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  
 
   useEffect(() => {
     if (!socket) {
@@ -72,11 +76,14 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
         user: username,
         text: input.trim(),
         room,
+        feeling,
+        timestamp: new Date().toISOString(),
       };
       socket?.emit('message', msg);
       setInput('');
     }
   };
+
 
   const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
