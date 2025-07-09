@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { io } from 'socket.io-client';
+import { StarsBackground } from '@/components/ui/stars-background';
 
 interface Props {
   setRoom: React.Dispatch<React.SetStateAction<string>>;
@@ -39,7 +40,7 @@ export default function RoomSelector({ setRoom }: Props) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white">
+    <div className="min-h-screen flex flex-col items-center justify-center text-white ">
       <Card className="w-full max-w-md mx-auto mt-10 flex flex-col p-4 space-y-2 bg-[#0a0a0a] border border-[#454545]">
         <form onSubmit={handleJoinRoom} className="flex flex-col w-full space-y-2">
           <label className="font-semibold text-white">Enter a Room ID</label>

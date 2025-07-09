@@ -6,7 +6,7 @@ import ChatRoom from "./ChatRoom";
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-
+import { StarsBackground } from "@/components/ui/stars-background";
 
 export default function Chat() {
   const [username, setUsername] = useState("");
@@ -15,8 +15,8 @@ export default function Chat() {
 
   if (!hasJoined) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-black">
-        <Card className="w-full max-w-md mx-auto mt-10 flex flex-col bg-[#0a0a0a] border border-[#454545]">
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <Card className="w-full max-w-md mx-auto mt-10 flex flex-col bg-[#0a0a0a] border border-[#454545] z-1">
           <form 
             onSubmit={e => {
               e.preventDefault();

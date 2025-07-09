@@ -86,7 +86,7 @@ export const TextRevealCard = ({
         }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
         className={cn(
-          'absolute inset-0 z-20 text-center bg-gradient-to-b from-white via-white/80 to-white/60 bg-clip-text text-transparent pointer-events-none',
+          'absolute inset-0 z-20 text-center bg-gradient-to-b from-white via-white/80 to-white/60 bg-clip-text text-transparent pointer-events-nonec',
           textClassName
         )}
       >

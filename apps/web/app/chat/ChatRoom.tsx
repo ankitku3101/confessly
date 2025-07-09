@@ -91,7 +91,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
   };
 
   return (
-    <div className="h-screen w-full flex items-center justify-center bg-[#000000] text-white overflow-hidden">
+    <div className="h-screen w-full flex items-center justify-center text-white overflow-hidden">
       <Card className="h-full md:h-4/5 w-full md:max-w-5xl flex flex-col bg-[#0a0a0a] text-white md:rounded-xl md:shadow-[0_0_25px_2px_rgba(69,69,69,0.5)]">
 
         {/* Header */}
