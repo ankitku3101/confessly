@@ -13,9 +13,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WebSockets Playground",
+  title: "Confessly",
   description: "Developed by Ankit Kumar",
 };
+
 
 export default function RootLayout({
   children,
