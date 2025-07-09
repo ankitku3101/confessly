@@ -11,6 +11,14 @@ import {
 import { StarsBackground } from '@/components/ui/stars-background';
 import { ShootingStars } from '@/components/ui/shooting-stars';
 import Link from 'next/link';
+import { TextRevealCard } from '@/components/ui/text-reveal-card';
+
+// Rotating taglines
+const TAGLINES = [
+  'say it, forget it',
+  'share without shame',
+  'anonymity meets honesty',
+];
 
 const COLORS_TOP = ['#13FFAA', '#1E67C6', '#CE84CF', '#DD335C'];
 
@@ -29,6 +37,10 @@ export default function Hero() {
   const backgroundImage = useMotionTemplate`radial-gradient(110% 145% at 50% 0%, #000000 44%, ${color})`;
   const border = useMotionTemplate`1px solid ${color}`;
   const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
+
+  // Pick a random tagline on each render
+  const randomTagline =
+    TAGLINES[Math.floor(Math.random() * TAGLINES.length)];
 
   return (
     <motion.section
@@ -54,14 +66,10 @@ export default function Hero() {
           confessly
         </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7, duration: 0.8 }}
-          className="mt-4 italic text-white/60 text-base sm:text-lg text-center tracking-wide"
-        >
-          "where secrets spark conversations"
-        </motion.p>
+        <TextRevealCard
+          text="where secrets spark conversations"
+          textClassName="mt-4 italic text-white/60 text-base sm:text-lg text-center tracking-wide"
+        />
 
         <Link href={'/chat'}>
           <motion.button
