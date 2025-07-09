@@ -38,7 +38,6 @@ export default function Hero() {
   const border = useMotionTemplate`1px solid ${color}`;
   const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
 
-  // Pick a random tagline on each render
   const randomTagline =
     TAGLINES[Math.floor(Math.random() * TAGLINES.length)];
 
@@ -66,10 +65,16 @@ export default function Hero() {
           confessly
         </motion.h1>
 
-        <TextRevealCard
-          text="where secrets spark conversations"
-          textClassName="mt-4 italic text-white/60 text-base sm:text-lg text-center tracking-wide"
-        />
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.9 }}
+        >
+          <TextRevealCard
+            text="where secrets spark conversations"
+            textClassName="mt-4 italic text-white/60 text-base sm:text-lg text-center tracking-wide"
+          />
+        </motion.span>
 
         <Link href={'/chat'}>
           <motion.button

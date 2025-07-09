@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export const MagicCursor = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -11,13 +13,21 @@ export const MagicCursor = () => {
   const springY = useSpring(mouseY, { stiffness: 1000, damping: 100 });
 
   useEffect(() => {
-    const move = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener('mousemove', move);
-    return () => window.removeEventListener('mousemove', move);
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    setIsMobile(isTouchDevice);
+
+    if (!isTouchDevice) {
+      const move = (e: MouseEvent) => {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+      };
+
+      window.addEventListener('mousemove', move);
+      return () => window.removeEventListener('mousemove', move);
+    }
   }, [mouseX, mouseY]);
+
+  if (isMobile) return null; 
 
   return (
     <>
@@ -60,7 +70,7 @@ const TrailParticles = ({ x, y }: { x: any; y: any }) => {
       });
 
       setTimeout(() => dot.remove(), 600);
-    }, 10); 
+    }, 10);
     return () => clearInterval(interval);
   }, [x, y]);
 
