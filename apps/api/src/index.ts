@@ -10,24 +10,25 @@ const io = new Server(httpServer, {
 
 const rooms = new Map<string, Set<string>>();
 
+const users = new Map<string, { username: string; room: string; feeling?: number }>();
+
 io.on('connection', (socket) => {
-  let joinedRoom: string | null = null;
-  let username: string | null = null;
+  console.log('User connected:', socket.id);
 
   socket.emit('active_rooms', Array.from(rooms.keys()));
 
-  socket.on('join_room', (data: { username: string; room: string }) => {
-    username = data.username;
-    joinedRoom = data.room;
+  socket.on('join_room', (data: { username: string; room: string; feeling?: number }) => {
+    const { username, room, feeling } = data;
 
-    socket.join(joinedRoom);
+    socket.join(room);
+    users.set(socket.id, { username, room, feeling });
 
-    if (!rooms.has(joinedRoom)) {
-      rooms.set(joinedRoom, new Set());
+    if (!rooms.has(room)) {
+      rooms.set(room, new Set());
     }
-    rooms.get(joinedRoom)!.add(socket.id);
+    rooms.get(room)!.add(socket.id);
 
-    io.to(joinedRoom).emit('system_message', {
+    io.to(room).emit('system_message', {
       text: `${username} joined the room`,
       timestamp: new Date().toISOString(),
       isSystem: true,
@@ -36,13 +37,9 @@ io.on('connection', (socket) => {
     emitActiveRooms();
   });
 
-  socket.on('message', (msg: { user: string; text: string; room: string }) => {
-    if (msg.room) {
-      io.to(msg.room).emit('message', {
-        ...msg,
-        timestamp: new Date().toISOString(),
-      });
-    }
+  socket.on('message', (msg: { user: string; text: string; room: string; feeling?: number }) => {
+    const timestamp = new Date().toISOString();
+    io.to(msg.room).emit('message', { ...msg, timestamp });
   });
 
   socket.on('typing', ({ username, room }: { username: string; room: string }) => {
@@ -50,22 +47,27 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    if (joinedRoom !== null && rooms.has(joinedRoom)) {
-      const userSet = rooms.get(joinedRoom)!;
-      userSet.delete(socket.id);
+    const user = users.get(socket.id);
+    if (!user) return;
 
-      if (userSet.size === 0) {
-        rooms.delete(joinedRoom);
+    const { username, room } = user;
+    users.delete(socket.id);
+
+    const roomSet = rooms.get(room);
+    if (roomSet) {
+      roomSet.delete(socket.id);
+      if (roomSet.size === 0) {
+        rooms.delete(room);
       }
-
-      io.to(joinedRoom).emit('system_message', {
-        text: `${username} left the room`,
-        timestamp: new Date().toISOString(),
-        isSystem: true,
-      });
-
-      emitActiveRooms();
     }
+
+    io.to(room).emit('system_message', {
+      text: `${username} left the room`,
+      timestamp: new Date().toISOString(),
+      isSystem: true,
+    });
+
+    emitActiveRooms();
   });
 
   function emitActiveRooms() {
