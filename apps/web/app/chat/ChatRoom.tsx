@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Separator } from '@/components/ui/separator';
+import { Image, SendHorizontal, Smile, Sticker } from 'lucide-react'
 import { io, Socket } from 'socket.io-client';
 import { Feeling } from '@/components/BlobGradient';
 
@@ -195,14 +195,40 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
           </div>
 
           {/* Input Row */}
-          <div className="flex gap-2 items-center">
-            <Input
-              value={input}
-              onChange={handleTyping}
-              placeholder="Type your message…"
-              className="flex-1 bg-[#0a0a0a] border border-[#454545] text-white placeholder:text-[#BBBBBB]"
-            />
-            <Button type="submit">Send</Button>
+          <div className="flex items-center gap-2">
+            <div className="flex flex-1 items-center px-4 py-2 rounded-md border border-[#454545] bg-[#0a0a0a] text-white focus-within:ring-1 ring-[#BBBBBB]">
+              {/* Input */}
+              <input
+                type="text"
+                value={input}
+                onChange={handleTyping}
+                placeholder="Type your message…"
+                className="flex-1 bg-transparent border-none focus:outline-none text-sm placeholder:text-[#BBBBBB] p-1"
+              />
+              
+              {/* Emoji Icon */}
+              <button type="button" className="mx-[5px] text-[#BBBBBB] hover:text-white">
+                <Smile className="w-5 h-5" />
+              </button>
+
+              {/* GIF Icon */}
+              <button type="button" className="mx-[5px] text-[#BBBBBB] hover:text-white">
+                <Image className="w-5 h-5" />
+              </button>
+
+              {/* Sticker Icon */}
+              <button type="button" className="mx-[5px] text-[#BBBBBB] hover:text-white">
+                <Sticker className="w-5 h-5" />
+              </button>
+
+              {/* Send Icon */}
+              <button
+                type="submit"
+                className="ml-2 text-[#BBBBBB] hover:text-white"
+              >
+                <SendHorizontal className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </form>
 
