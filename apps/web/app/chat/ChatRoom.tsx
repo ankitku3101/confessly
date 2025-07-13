@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Image, SendHorizontal, Smile, Sticker } from 'lucide-react'
@@ -97,7 +96,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
 
   return (
     <div className="h-screen w-full flex items-center justify-center text-white overflow-hidden">
-      <Card className="h-full md:h-4/5 w-full md:max-w-5xl flex flex-col bg-[#0a0a0a] text-white md:rounded-xl md:shadow-[0_0_25px_2px_rgba(69,69,69,0.5)]">
+      <Card className="h-full md:h-4/5 w-full md:max-w-5xl gap-0 py-1 flex flex-col bg-[#0a0a0a] text-white md:rounded-xl md:shadow-[0_0_25px_2px_rgba(69,69,69,0.5)] border border-[#454545]">
 
         {/* Header */}
         <div className="p-4 border-b border-[#454545] flex justify-between items-center text-sm font-semibold shrink-0">
@@ -187,16 +186,17 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
         {/* Input and Typing Indicators */}
         <form
           onSubmit={sendMessage}
-          className="flex flex-col gap-4 p-4 border-t border-[#454545]"
+          className="flex flex-col gap-2 p-5"
         >
           {/* Typing Indicator */}
-          <div className="h-5 text-[#BBBBBB] text-sm text-center transition-opacity duration-200 ease-in-out">
+          <div className="h-5 text-[#BBBBBB] text-sm text-left transition-opacity duration-200 ease-in-out">
             {userTyping ? `${userTyping} is typing...` : ''}
           </div>
 
           {/* Input Row */}
           <div className="flex items-center gap-2">
             <div className="flex flex-1 items-center px-4 py-2 rounded-md border border-[#454545] bg-[#0a0a0a] text-white focus-within:ring-1 ring-[#BBBBBB]">
+              
               {/* Input */}
               <input
                 type="text"
