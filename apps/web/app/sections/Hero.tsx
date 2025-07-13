@@ -76,7 +76,7 @@ export default function Hero() {
           />
         </motion.span>
 
-        <Link href={'/chat'}>
+        <Link href={'/chat'} className='cursor-none'>
           <motion.button
             style={{ border, boxShadow }}
             initial={{ opacity: 0 }}
@@ -84,7 +84,7 @@ export default function Hero() {
             transition={{ delay: 0.9, duration: 0.5 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.985 }}
-            className="group mt-8 relative flex w-fit items-center gap-2 rounded-full bg-[#1f1f1f]/60 px-6 py-3 text-white transition-colors hover:bg-[#1f1f1f]/80 cursor-pointer"
+            className="group mt-8 relative flex w-fit items-center gap-2 rounded-full bg-[#1f1f1f]/60 px-6 py-3 text-white transition-colors hover:bg-[#1f1f1f]/80 cursor-none"
           >
             Enter Anonymously
             <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />

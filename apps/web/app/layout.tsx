@@ -34,7 +34,7 @@ export default function RootLayout({
       >
         <StarsBackground className="absolute inset-0 -z-10 pointer-events-none" />
         <ShootingStars className="absolute inset-0 -z-10 pointer-events-none" />
-        <MagicCursor />
+        {/* <MagicCursor /> */}
         {children}
         <Analytics />
       </body>

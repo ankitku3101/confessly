@@ -31,6 +31,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   const [input, setInput] = useState('');
   const [userTyping, setUserTyping] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!socket) {
@@ -67,6 +68,21 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
     });
   }, [messages]);
 
+  // Mobile keyboard handling
+  useEffect(() => {
+    const handleResize = () => {
+      if (inputRef.current && document.activeElement === inputRef.current) {
+        // Small delay to ensure viewport has updated
+        setTimeout(() => {
+          inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const sendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim()) {
@@ -95,26 +111,41 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   };
 
   return (
-    <div className="h-screen w-full flex items-center justify-center text-white overflow-hidden">
-      <Card className="h-full md:h-4/5 w-full md:max-w-5xl gap-0 py-1 flex flex-col bg-[#0a0a0a] text-white md:rounded-xl md:shadow-[0_0_25px_2px_rgba(69,69,69,0.5)] border border-[#454545]">
+    <div className="min-h-screen w-screen flex items-center justify-center">
+      <Card className="w-full h-screen
+  border-0 rounded-none shadow-none
+  lg:h-[85vh] lg:max-w-5xl lg:rounded-xl lg:shadow-[0_0_25px_2px_rgba(69,69,69,0.5)] lg:border lg:border-[#454545] lg:mx-auto
+  bg-[#0a0a0a] text-white flex flex-col
+  transition-all">
 
         {/* Header */}
-        <div className="p-4 border-b border-[#454545] flex justify-between items-center text-sm font-semibold shrink-0">
-          <div>Username: {username}</div>
-          <div>Room: {room}</div>
+        <div className="p-3 lg:p-4 border-b border-[#454545] flex justify-between items-center text-sm font-semibold shrink-0">
+          <div className="truncate text-xs sm:text-sm">Username: {username}</div>
+          <div className="truncate mx-2 text-xs sm:text-sm">Room: {room}</div>
           <Button
             variant="destructive"
+            size="sm"
             onClick={() => {
               socket?.disconnect();
               setRoom('');
             }}
+            className="shrink-0 text-xs sm:text-sm px-2 sm:px-3"
           >
-            Leave Room
+            Leave
           </Button>
         </div>
 
-        {/* Message list area */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-2" ref={scrollRef}>
+        {/* Message list area - Key changes here */}
+        <div 
+          className="flex-1 overflow-y-auto p-2 sm:p-3 lg:p-4 space-y-2 overscroll-contain" 
+          ref={scrollRef}
+          style={{ 
+            // Ensure messages area takes remaining space
+            minHeight: 0,
+            // Prevent overscroll bounce on iOS
+            WebkitOverflowScrolling: 'touch'
+          }}
+        >
           {messages.map((msg, idx) =>
             msg.isSystem ? (
               <div key={idx} className="text-center text-[#BBBBBB] text-xs my-4">
@@ -130,7 +161,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
               >
                 {/* RECEIVER's avatar */}
                 {msg.user !== username && (
-                  <Avatar className="mr-2 text-black">
+                  <Avatar className="mr-2 text-black shrink-0">
                     <AvatarFallback>{msg.user?.[0]?.toUpperCase()}</AvatarFallback>
                   </Avatar>
                 )}
@@ -140,7 +171,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                   <>
                     <div className="flex items-start">
                       {msg.feeling !== undefined && (
-                        <Avatar className="mx-1">
+                        <Avatar className="mx-1 shrink-0">
                           <AvatarFallback className="bg-transparent">
                             <span className="text-[22px]">
                               {msg.feeling === Feeling.Sad ? '🥺' :
@@ -150,23 +181,23 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                           </AvatarFallback>
                         </Avatar>
                       )}
-                      <div className="max-w-md rounded-lg px-3 py-2 bg-blue-700 text-white ml-1">
-                        <div className="text-sm text-white">{msg.text}</div>
+                      <div className="max-w-[75%] sm:max-w-[70%] lg:max-w-md rounded-lg px-2 sm:px-3 py-2 bg-blue-700 text-white ml-1">
+                        <div className="text-xs sm:text-sm text-white break-words">{msg.text}</div>
                       </div>
                     </div>
-                    <Avatar className="ml-2 text-black">
+                    <Avatar className="ml-2 text-black shrink-0">
                       <AvatarFallback>{msg.user?.[0]?.toUpperCase()}</AvatarFallback>
                     </Avatar>
                   </>
                 ) : (
                   <>
                     {/* RECEIVER's msg and emoji block */}
-                    <div className="max-w-md rounded-lg px-3 py-2 bg-[#454545] text-white">
-                      <div className="text-sm font-semibold text-white">{msg.user}</div>
-                      <div className="text-sm text-white">{msg.text}</div>
+                    <div className="max-w-[75%] sm:max-w-[70%] md:max-w-md rounded-lg px-2 sm:px-3 py-2 bg-[#454545] text-white">
+                      <div className="text-xs sm:text-sm font-semibold text-white truncate">{msg.user}</div>
+                      <div className="text-xs sm:text-sm text-white break-words">{msg.text}</div>
                     </div>
                     {msg.feeling !== undefined && (
-                      <Avatar className="mx-1">
+                      <Avatar className="mx-1 shrink-0">
                         <AvatarFallback className="bg-transparent">
                           <span className="text-[22px]">
                             {msg.feeling === Feeling.Sad ? '🥺' :
@@ -183,54 +214,76 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
           )}
         </div>
 
-        {/* Input and Typing Indicators */}
-        <form
-          onSubmit={sendMessage}
-          className="flex flex-col gap-2 p-5"
-        >
-          {/* Typing Indicator */}
-          <div className="h-5 text-[#BBBBBB] text-sm text-left transition-opacity duration-200 ease-in-out">
-            {userTyping ? `${userTyping} is typing...` : ''}
-          </div>
-
-          {/* Input Row */}
-          <div className="flex items-center gap-2">
-            <div className="flex flex-1 items-center px-4 py-2 rounded-md border border-[#454545] bg-[#0a0a0a] text-white focus-within:ring-1 ring-[#BBBBBB]">
-              
-              {/* Input */}
-              <input
-                type="text"
-                value={input}
-                onChange={handleTyping}
-                placeholder="Type your message…"
-                className="flex-1 bg-transparent border-none focus:outline-none text-sm placeholder:text-[#BBBBBB] p-1"
-              />
-              
-              {/* Emoji Icon */}
-              <button type="button" className="mx-[5px] text-[#BBBBBB] hover:text-white">
-                <Smile className="w-5 h-5" />
-              </button>
-
-              {/* GIF Icon */}
-              <button type="button" className="mx-[5px] text-[#BBBBBB] hover:text-white">
-                <Image className="w-5 h-5" />
-              </button>
-
-              {/* Sticker Icon */}
-              <button type="button" className="mx-[5px] text-[#BBBBBB] hover:text-white">
-                <Sticker className="w-5 h-5" />
-              </button>
-
-              {/* Send Icon */}
-              <button
-                type="submit"
-                className="ml-2 text-[#BBBBBB] hover:text-white"
-              >
-                <SendHorizontal className="w-5 h-5" />
-              </button>
+        {/* Input and Typing Indicators - Key changes here */}
+        <div className="shrink-0 border-t border-[#454545] lg:border-t-0">
+          <form
+            onSubmit={sendMessage}
+            className="flex flex-col gap-1 sm:gap-2 p-2 sm:p-3 lg:p-5"
+          >
+            {/* Typing Indicator */}
+            <div className="h-3 sm:h-4 lg:h-5 text-[#BBBBBB] text-xs sm:text-sm text-left transition-opacity duration-200 ease-in-out">
+              {userTyping ? `${userTyping} is typing...` : ''}
             </div>
-          </div>
-        </form>
+
+            {/* Input Row */}
+            <div className="flex items-center gap-1 sm:gap-2">
+              <div className="flex flex-1 items-center px-2 sm:px-3 lg:px-4 py-2 rounded-md border border-[#454545] bg-[#0a0a0a] text-white focus-within:ring-1 ring-[#BBBBBB]">
+                
+                {/* Input */}
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={handleTyping}
+                  placeholder="Type your message…"
+                  className="flex-1 bg-transparent border-none focus:outline-none text-sm sm:text-base placeholder:text-[#BBBBBB] p-1 min-w-0"
+                  style={{
+                    // Prevent zoom on iOS
+                    fontSize: '16px',
+                  }}
+                />
+                
+                {/* Mobile-optimized icon buttons */}
+                <div className="flex items-center gap-0.5 sm:gap-1 md:gap-2 shrink-0">
+                  {/* Emoji Icon */}
+                  <button 
+                    type="button" 
+                    className="p-1 text-[#BBBBBB] hover:text-white touch-manipulation"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <Smile className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </button>
+
+                  {/* GIF Icon - Hidden on very small screens */}
+                  <button 
+                    type="button" 
+                    className="p-1 text-[#BBBBBB] hover:text-white touch-manipulation hidden sm:block"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <Image className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </button>
+
+                  {/* Sticker Icon - Hidden on very small screens */}
+                  <button 
+                    type="button" 
+                    className="p-1 text-[#BBBBBB] hover:text-white touch-manipulation hidden sm:block"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <Sticker className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </button>
+
+                  {/* Send Icon */}
+                  <button
+                    type="submit"
+                    className="p-1 text-[#BBBBBB] hover:text-white touch-manipulation"
+                  >
+                    <SendHorizontal className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
 
       </Card>
     </div>

@@ -13,21 +13,29 @@ export const MagicCursor = () => {
   const springY = useSpring(mouseY, { stiffness: 1000, damping: 100 });
 
   useEffect(() => {
-    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
-    setIsMobile(isTouchDevice);
+  const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+  setIsMobile(isTouchDevice);
 
-    if (!isTouchDevice) {
-      const move = (e: MouseEvent) => {
-        mouseX.set(e.clientX);
-        mouseY.set(e.clientY);
-      };
+  if (!isTouchDevice) {
+    const hero = document.querySelector('.hero') as HTMLElement | null;
 
-      window.addEventListener('mousemove', move);
-      return () => window.removeEventListener('mousemove', move);
-    }
-  }, [mouseX, mouseY]);
+    if (!hero) return;
 
-  if (isMobile) return null; 
+    const move = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+
+    hero.addEventListener('mousemove', move as EventListener);
+
+    return () => {
+      hero.removeEventListener('mousemove', move as EventListener);
+    };
+  }
+}, [mouseX, mouseY]);
+
+
+  if (isMobile) return null;
 
   return (
     <>
@@ -40,7 +48,7 @@ export const MagicCursor = () => {
           translateX: springX,
           translateY: springY,
         }}
-        className="pointer-events-none fixed z-[9999] top-0 left-0 w-[80px] h-auto -translate-x-[50%] -translate-y-[30%]"
+        className="pointer-events-none fixed z-[9999] top-0 left-0 w-[80px] h-auto -translate-x-[50%] -translate-y-[20%]"
       />
     </>
   );
@@ -71,6 +79,7 @@ const TrailParticles = ({ x, y }: { x: any; y: any }) => {
 
       setTimeout(() => dot.remove(), 600);
     }, 10);
+
     return () => clearInterval(interval);
   }, [x, y]);
 
