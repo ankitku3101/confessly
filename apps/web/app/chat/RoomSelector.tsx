@@ -5,15 +5,34 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { io } from 'socket.io-client';
-import { StarsBackground } from '@/components/ui/stars-background';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface Props {
   setRoom: React.Dispatch<React.SetStateAction<string>>;
 }
 
+const RoomSchema = z.object({
+  roomId: z
+    .string()
+    .refine((val) => /^\d{6}$/.test(val), {
+      message: 'Room ID must be a 6-digit number',
+    }),
+});
+
+type RoomSchemaType = z.infer<typeof RoomSchema>;
+
 export default function RoomSelector({ setRoom }: Props) {
-  const [roomInput, setRoomInput] = useState('');
   const [rooms, setRooms] = useState<string[]>([]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RoomSchemaType>({
+    resolver: zodResolver(RoomSchema),
+  });
 
   useEffect(() => {
     const socket = io(process.env.NEXT_PUBLIC_API_URL);
@@ -27,11 +46,8 @@ export default function RoomSelector({ setRoom }: Props) {
     };
   }, []);
 
-  const handleJoinRoom = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (roomInput.trim()) {
-      setRoom(roomInput.trim());
-    }
+  const onSubmit = (data: RoomSchemaType) => {
+    setRoom(data.roomId);
   };
 
   const handleCreateRoom = () => {
@@ -40,16 +56,18 @@ export default function RoomSelector({ setRoom }: Props) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-white ">
+    <div className="min-h-screen flex flex-col items-center justify-center text-white">
       <Card className="w-full max-w-md mx-auto mt-10 flex flex-col p-4 space-y-2 bg-[#0a0a0a] border border-[#454545]">
-        <form onSubmit={handleJoinRoom} className="flex flex-col w-full space-y-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full space-y-2">
           <label className="font-semibold text-white">Enter a Room ID</label>
           <Input
-            value={roomInput}
-            onChange={(e) => setRoomInput(e.target.value)}
+            {...register('roomId')}
             placeholder="6-digit Room ID"
             className="text-white border border-[#454545]"
           />
+          {errors.roomId && (
+            <p className="text-red-500 text-sm mt-1">{errors.roomId.message}</p>
+          )}
           <Button type="submit" className="w-full">
             Join Room
           </Button>
