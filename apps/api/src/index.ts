@@ -5,7 +5,11 @@ import { Server } from 'socket.io';
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
-  cors: { origin: '*' },
+  cors: { 
+    origin: ['https://confessly-web.vercel.app'] ,
+    methods: ['GET', 'POST'],
+    credentials: true,
+  }
 });
 
 const rooms = new Map<string, Set<string>>();
