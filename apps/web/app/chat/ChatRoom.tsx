@@ -4,7 +4,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Image, SendHorizontal, Smile, Sticker } from 'lucide-react'
+import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Image, SendHorizontal, Smile, Sticker, LogOut, Users, Settings, SmilePlusIcon, CircleUserRound, House, Home } from 'lucide-react'
 import { io, Socket } from 'socket.io-client';
 import { Feeling } from '@/components/BlobGradient';
 
@@ -111,38 +112,105 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   };
 
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center">
-      <Card className="w-full h-screen
-  border-0 rounded-none shadow-none
-  lg:h-[85vh] lg:max-w-5xl lg:rounded-xl lg:shadow-[0_0_25px_2px_rgba(69,69,69,0.5)] lg:border lg:border-[#454545] lg:mx-auto
-  bg-[#0a0a0a] text-white flex flex-col
-  transition-all">
+    <div className="w-screen min-h-screen flex items-center justify-center">
+      <Card className="w-full py-2
+        flex flex-col
+        bg-[#0a0a0a] text-white
+        overflow-hidden
+        rounded-none
+        h-[100dvh]             
+        lg:h-[85vh]            
+        lg:max-w-5xl
+        lg:rounded-xl
+        lg:shadow-[0_0_25px_2px_rgba(69,69,69,0.5)]
+        border
+        border-[#454545]"
+      >
 
         {/* Header */}
-        <div className="p-3 lg:p-4 border-b border-[#454545] flex justify-between items-center text-sm font-semibold shrink-0">
-          <div className="truncate text-xs sm:text-sm">Username: {username}</div>
-          <div className="truncate mx-2 text-xs sm:text-sm">Room: {room}</div>
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={() => {
-              socket?.disconnect();
-              setRoom('');
-            }}
-            className="shrink-0 text-xs sm:text-sm px-2 sm:px-3"
-          >
-            Leave
-          </Button>
+        <div className="p-2 lg:p-3 border-b border-[#454545] grid grid-cols-3 items-center text-sm font-semibold shrink-0 w-full text-[#BBBBBB] bg-[#0a0a0a]">
+          
+          {/* Left: Username & Room ID */}
+          <div className="flex items-center gap-4 truncate text-xs sm:text-sm">
+            <div className="flex items-center gap-1 min-w-0">
+              <CircleUserRound className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+              <span className="truncate">{username}</span>
+            </div>
+            <div className="flex items-center gap-1 min-w-0">
+              <Home className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+              <span className="truncate">{room}</span>
+            </div>
+          </div>
+
+          {/* Center: Room Name */}
+          <div className="text-center text-base sm:text-lg md:text-2xl text-white truncate">
+            TalkRooms
+          </div>
+
+          {/* Right: Icons */}
+          <div className="flex items-center gap-3 justify-end text-[#BBBBBB]">
+            {/* All icons as before */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="hover:text-white cursor-pointer">
+                  <SmilePlusIcon className="w-5 h-5" />
+                </button>
+              </DialogTrigger>
+              <DialogContent className="bg-[#0f0f0f] border border-[#333] text-[#CCCCCC]">
+                <DialogHeader>
+                  <DialogTitle className="text-white">Set Status</DialogTitle>
+                </DialogHeader>
+                <div className="text-sm mt-2">(Status modal)</div>
+              </DialogContent>
+            </Dialog>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="hover:text-white cursor-pointer">
+                  <Users className="w-5 h-5" />
+                </button>
+              </DialogTrigger>
+              <DialogContent className="bg-[#0f0f0f] border border-[#333] text-[#CCCCCC]">
+                <DialogHeader>
+                  <DialogTitle className="text-white">Online Users</DialogTitle>
+                </DialogHeader>
+                <div className="text-sm mt-2">(List of online users)</div>
+              </DialogContent>
+            </Dialog>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="hover:text-white cursor-pointer">
+                  <Settings className="w-5 h-5" />
+                </button>
+              </DialogTrigger>
+              <DialogContent className="bg-[#0f0f0f] border border-[#333] text-[#CCCCCC]">
+                <DialogHeader>
+                  <DialogTitle className="text-white">Room Settings</DialogTitle>
+                </DialogHeader>
+                <div className="text-sm mt-2">(Room settings)</div>
+              </DialogContent>
+            </Dialog>
+
+            <button
+              onClick={() => {
+                socket?.disconnect();
+                setRoom('');
+              }}
+              className="text-red-500 hover:text-white cursor-pointer"
+              title="Leave Room"
+            >
+              <LogOut className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        {/* Message list area - Key changes here */}
+        {/* Message list area*/}
         <div 
           className="flex-1 overflow-y-auto p-2 sm:p-3 lg:p-4 space-y-2 overscroll-contain" 
           ref={scrollRef}
           style={{ 
-            // Ensure messages area takes remaining space
             minHeight: 0,
-            // Prevent overscroll bounce on iOS
             WebkitOverflowScrolling: 'touch'
           }}
         >
@@ -214,7 +282,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
           )}
         </div>
 
-        {/* Input and Typing Indicators - Key changes here */}
+        {/* Input and Typing Indicators */}
         <div className="shrink-0 border-t border-[#454545] lg:border-t-0">
           <form
             onSubmit={sendMessage}
@@ -238,7 +306,6 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                   placeholder="Type your message…"
                   className="flex-1 bg-transparent border-none focus:outline-none text-sm sm:text-base placeholder:text-[#BBBBBB] p-1 min-w-0"
                   style={{
-                    // Prevent zoom on iOS
                     fontSize: '16px',
                   }}
                 />
@@ -254,19 +321,11 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                     <Smile className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
 
-                  {/* GIF Icon - Hidden on very small screens */}
-                  <button 
-                    type="button" 
-                    className="p-1 text-[#BBBBBB] hover:text-white touch-manipulation hidden sm:block"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <Image className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </button>
 
                   {/* Sticker Icon - Hidden on very small screens */}
                   <button 
                     type="button" 
-                    className="p-1 text-[#BBBBBB] hover:text-white touch-manipulation hidden sm:block"
+                    className="p-1 text-[#BBBBBB] hover:text-white touch-manipulation"
                     onClick={(e) => e.preventDefault()}
                   >
                     <Sticker className="w-4 h-4 sm:w-5 sm:h-5" />
