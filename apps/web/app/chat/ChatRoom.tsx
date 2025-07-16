@@ -257,7 +257,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                           {msg.feeling !== undefined && (
                             <Avatar className="mx-1 shrink-0">
                               <AvatarFallback className="bg-transparent">
-                                <span className="text-[16px]">
+                                <span className="text-[22px]">
                                   {msg.feeling === Feeling.Sad
                                     ? '🥺'
                                     : msg.feeling === Feeling.Neutral
