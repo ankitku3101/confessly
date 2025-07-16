@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { LoaderFive } from "@/components/ui/loader";
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Image, SendHorizontal, Smile, Sticker, LogOut, Users, Settings, SmilePlusIcon, CircleUserRound, House, Home } from 'lucide-react'
@@ -33,6 +34,8 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   const [userTyping, setUserTyping] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [hasJoined, setHasJoined] = useState(false);
+
 
   useEffect(() => {
     if (!socket) {
@@ -47,6 +50,10 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
 
     socket.on('system_message', (msg: Message) => {
       setMessages((prev) => [...prev, msg]);
+
+      if (msg.text?.toLowerCase().includes('joined the room')) {
+        setHasJoined(true);
+      }
     });
 
     socket.on('user_typing', (typingUser) => {
@@ -214,71 +221,87 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
             WebkitOverflowScrolling: 'touch'
           }}
         >
-          {messages.map((msg, idx) =>
-            msg.isSystem ? (
-              <div key={idx} className="text-center text-[#BBBBBB] text-xs my-4">
-                {msg.text}
-                {msg.timestamp && (
-                  <span className="ml-2 text-[10px]">{formatTime(msg.timestamp)}</span>
-                )}
-              </div>
-            ) : (
-              <div
-                key={idx}
-                className={`flex items-start ${msg.user === username ? 'justify-end' : 'justify-start'}`}
-              >
-                {/* RECEIVER's avatar */}
-                {msg.user !== username && (
-                  <Avatar className="mr-2 text-black shrink-0">
-                    <AvatarFallback>{msg.user?.[0]?.toUpperCase()}</AvatarFallback>
-                  </Avatar>
-                )}
-
-                {/* SENDER's block with avatar, msg and emoji */}
-                {msg.user === username ? (
-                  <>
-                    <div className="flex items-start">
-                      {msg.feeling !== undefined && (
-                        <Avatar className="mx-1 shrink-0">
-                          <AvatarFallback className="bg-transparent">
-                            <span className="text-[22px]">
-                              {msg.feeling === Feeling.Sad ? '🥺' :
-                              msg.feeling === Feeling.Neutral ? '😐' :
-                              '😄'}
-                            </span>
-                          </AvatarFallback>
-                        </Avatar>
-                      )}
-                      <div className="max-w-[75%] sm:max-w-[70%] lg:max-w-md rounded-lg px-2 sm:px-3 py-2 bg-blue-700 text-white ml-1">
-                        <div className="text-xs sm:text-sm text-white break-words">{msg.text}</div>
-                      </div>
-                    </div>
-                    <Avatar className="ml-2 text-black shrink-0">
-                      <AvatarFallback>{msg.user?.[0]?.toUpperCase()}</AvatarFallback>
-                    </Avatar>
-                  </>
+          {!hasJoined ? (
+            <div className="flex justify-center items-center h-full">
+              <LoaderFive text="Loading chat..." />
+            </div>
+          ) : (
+            <>
+              {messages.map((msg, idx) =>
+                msg.isSystem ? (
+                  <div key={idx} className="text-center text-[#BBBBBB] text-xs my-4">
+                    {msg.text}
+                    {msg.timestamp && (
+                      <span className="ml-2 text-[10px]">{formatTime(msg.timestamp)}</span>
+                    )}
+                  </div>
                 ) : (
-                  <>
-                    {/* RECEIVER's msg and emoji block */}
-                    <div className="max-w-[75%] sm:max-w-[70%] md:max-w-md rounded-lg px-2 sm:px-3 py-2 bg-[#454545] text-white">
-                      <div className="text-xs sm:text-sm font-semibold text-white truncate">{msg.user}</div>
-                      <div className="text-xs sm:text-sm text-white break-words">{msg.text}</div>
-                    </div>
-                    {msg.feeling !== undefined && (
-                      <Avatar className="mx-1 shrink-0">
-                        <AvatarFallback className="bg-transparent">
-                          <span className="text-[22px]">
-                            {msg.feeling === Feeling.Sad ? '🥺' :
-                            msg.feeling === Feeling.Neutral ? '😐' :
-                            '😄'}
-                          </span>
-                        </AvatarFallback>
+                  <div
+                    key={idx}
+                    className={`flex items-start ${
+                      msg.user === username ? 'justify-end' : 'justify-start'
+                    }`}
+                  >
+                    {/* RECEIVER's avatar */}
+                    {msg.user !== username && (
+                      <Avatar className="mr-2 text-black shrink-0">
+                        <AvatarFallback>{msg.user?.[0]?.toUpperCase()}</AvatarFallback>
                       </Avatar>
                     )}
-                  </>
-                )}
-              </div>
-            )
+
+                    {/* SENDER's block with avatar, msg and emoji */}
+                    {msg.user === username ? (
+                      <>
+                        <div className="flex items-start">
+                          {msg.feeling !== undefined && (
+                            <Avatar className="mx-1 shrink-0">
+                              <AvatarFallback className="bg-transparent">
+                                <span className="text-[22px]">
+                                  {msg.feeling === Feeling.Sad
+                                    ? '🥺'
+                                    : msg.feeling === Feeling.Neutral
+                                    ? '😐'
+                                    : '😄'}
+                                </span>
+                              </AvatarFallback>
+                            </Avatar>
+                          )}
+                          <div className="max-w-[75%] sm:max-w-[70%] lg:max-w-md rounded-lg px-2 sm:px-3 py-2 bg-blue-700 text-white ml-1">
+                            <div className="text-xs sm:text-sm text-white break-words">{msg.text}</div>
+                          </div>
+                        </div>
+                        <Avatar className="ml-2 text-black shrink-0">
+                          <AvatarFallback>{msg.user?.[0]?.toUpperCase()}</AvatarFallback>
+                        </Avatar>
+                      </>
+                    ) : (
+                      <>
+                        {/* RECEIVER's msg and emoji block */}
+                        <div className="max-w-[75%] sm:max-w-[70%] md:max-w-md rounded-lg px-2 sm:px-3 py-2 bg-[#454545] text-white">
+                          <div className="text-xs sm:text-sm font-semibold text-white truncate">
+                            {msg.user}
+                          </div>
+                          <div className="text-xs sm:text-sm text-white break-words">{msg.text}</div>
+                        </div>
+                        {msg.feeling !== undefined && (
+                          <Avatar className="mx-1 shrink-0">
+                            <AvatarFallback className="bg-transparent">
+                              <span className="text-[22px]">
+                                {msg.feeling === Feeling.Sad
+                                  ? '🥺'
+                                  : msg.feeling === Feeling.Neutral
+                                  ? '😐'
+                                  : '😄'}
+                              </span>
+                            </AvatarFallback>
+                          </Avatar>
+                        )}
+                      </>
+                    )}
+                  </div>
+                )
+              )}
+            </>
           )}
         </div>
 
