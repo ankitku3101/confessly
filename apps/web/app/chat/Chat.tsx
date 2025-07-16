@@ -17,7 +17,7 @@ export default function Chat() {
 
   if (!hasJoined) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 py-12">
+      <div className="min-h-dvh md:min-h-screen flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-xl">
           <BlobGradient
             feeling={feeling}

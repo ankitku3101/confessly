@@ -112,22 +112,23 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   };
 
   return (
-    <div className="w-screen min-h-screen flex items-center justify-center">
-      <Card className="w-full py-2
-        h-[100dvh]
-        lg:h-[85vh]
+    <div className="min-w-dvw md:w-screen min-h-dvh md:h-screen flex items-center justify-center">
+      <Card className="w-full lg:py-2 py-0
+        min-h-dvh
+        lg:min-h-4/5
         flex flex-col
         bg-[#0a0a0a] text-white
         lg:max-w-5xl
         lg:rounded-xl
         lg:shadow-[0_0_25px_2px_rgba(69,69,69,0.5)]
-        border border-[#454545]
+        border-0
+        md:border md:border-[#454545]
         transition-all
         overflow-hidden"
       >
 
         {/* Header */}
-        <div className="p-2 lg:p-3 border-b border-[#454545] grid grid-cols-3 items-center text-sm font-semibold shrink-0 w-full text-[#BBBBBB] bg-[#0a0a0a]">
+        <div className="p-4 lg:p-3 border-b border-[#454545] grid grid-cols-3 items-center text-sm font-semibold shrink-0 w-full text-[#BBBBBB] bg-[#0a0a0a]">
           
           {/* Left: Username & Room ID */}
           <div className="flex items-center gap-4 truncate text-xs sm:text-sm">
@@ -285,7 +286,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
         <div className="shrink-0 border-t border-[#454545] lg:border-t-0">
           <form
             onSubmit={sendMessage}
-            className="flex flex-col gap-1 sm:gap-2 p-2 sm:p-3 lg:p-5"
+            className="flex flex-col gap-1 sm:gap-2 p-4 sm:p-4 lg:p-5"
           >
             {/* Typing Indicator */}
             <div className="h-3 sm:h-4 lg:h-5 text-[#BBBBBB] text-xs sm:text-sm text-left transition-opacity duration-200 ease-in-out">

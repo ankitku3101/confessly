@@ -56,8 +56,8 @@ export default function RoomSelector({ setRoom }: Props) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-white">
-      <Card className="w-full max-w-md mx-auto mt-10 flex flex-col p-4 space-y-2 bg-[#0a0a0a] border border-[#454545]">
+    <div className="min-h-dvh md:min-h-screen flex flex-col items-center justify-center text-white">
+      <Card className="w-full max-w-sm md:max-w-md mx-auto mt-10 flex flex-col p-4 space-y-2 bg-[#0a0a0a] border border-[#454545]">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full space-y-2">
           <label className="font-semibold text-white">Enter a Room ID</label>
           <Input

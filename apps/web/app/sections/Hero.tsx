@@ -44,7 +44,7 @@ export default function Hero() {
   return (
     <motion.section
       style={{ backgroundImage }}
-      className="relative grid min-h-screen place-content-center overflow-hidden bg-black px-4 py-24 text-gray-200"
+      className="relative grid min-h-dvh md:min-h-screen place-content-center overflow-hidden bg-black px-4 py-24 text-gray-200"
     >
       <div className="relative z-10 flex flex-col items-center">
         <motion.span
