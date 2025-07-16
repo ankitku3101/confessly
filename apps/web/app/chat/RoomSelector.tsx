@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { io } from 'socket.io-client';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -25,6 +26,8 @@ type RoomSchemaType = z.infer<typeof RoomSchema>;
 
 export default function RoomSelector({ setRoom }: Props) {
   const [rooms, setRooms] = useState<string[]>([]);
+  const [showError, setShowError] = useState(false);
+
 
   const {
     register,
@@ -47,7 +50,11 @@ export default function RoomSelector({ setRoom }: Props) {
   }, []);
 
   const onSubmit = (data: RoomSchemaType) => {
-    setRoom(data.roomId);
+    if (rooms.includes(data.roomId)) {
+      setRoom(data.roomId);
+    } else {
+      setShowError(true);
+    }
   };
 
   const handleCreateRoom = () => {
@@ -93,6 +100,19 @@ export default function RoomSelector({ setRoom }: Props) {
           </div>
         )}
       </Card>
+      <Dialog open={showError} onOpenChange={setShowError}>
+        <DialogContent className='bg-black'>
+          <DialogHeader>
+            <DialogTitle className="text-red-500">Room Not Found</DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-gray-300">
+            The room ID you entered doesn't exist. Please check and try again.
+          </p>
+          <Button onClick={() => setShowError(false)} className="mt-4">
+            Close
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
