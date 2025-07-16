@@ -114,6 +114,13 @@
 
 @layer base {
 
+  html,
+  body,
+  #__next {
+    height: 100%;
+    min-height: 100%;
+  }
+
   * {
     scrollbar-width: thin;
     scrollbar-color: #737373 transparent; 

@@ -114,17 +114,16 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   return (
     <div className="w-screen min-h-screen flex items-center justify-center">
       <Card className="w-full py-2
+        h-[100dvh]
+        lg:h-[85vh]
         flex flex-col
         bg-[#0a0a0a] text-white
-        overflow-hidden
-        rounded-none
-        h-[100dvh]             
-        lg:h-[85vh]            
         lg:max-w-5xl
         lg:rounded-xl
         lg:shadow-[0_0_25px_2px_rgba(69,69,69,0.5)]
-        border
-        border-[#454545]"
+        border border-[#454545]
+        transition-all
+        overflow-hidden"
       >
 
         {/* Header */}
