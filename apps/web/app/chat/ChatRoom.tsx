@@ -123,8 +123,10 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
 
   return (
     <div className="min-w-dvw md:w-screen min-h-dvh md:h-screen flex items-center justify-center">
-      <Card className="w-full lg:py-2 py-0
+      <Card className="w-full lg:py-2 py-0 gap-[2px]
         min-h-dvh
+        max-h-dvh
+        lg:max-h-4/5
         lg:min-h-4/5
         flex flex-col
         bg-[#0a0a0a] text-white
@@ -138,28 +140,15 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
       >
 
         {/* Header */}
-        <div className="p-4 lg:p-3 border-b border-[#454545] grid grid-cols-3 items-center text-sm font-semibold shrink-0 w-full text-[#BBBBBB] bg-[#0a0a0a]">
+        <div className="p-4 border-b border-[#454545] flex justify-between text-sm font-semibold shrink-0 w-full text-[#BBBBBB] bg-[#0a0a0a]">
           
-          {/* Left: Username & Room ID */}
-          <div className="flex items-center gap-4 truncate text-xs sm:text-sm">
-            <div className="flex items-center gap-1 min-w-0">
-              <CircleUserRound className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-              <span className="truncate">{username}</span>
-            </div>
-            <div className="flex items-center gap-1 min-w-0">
-              <Home className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-              <span className="truncate">{room}</span>
-            </div>
-          </div>
-
           {/* Center: Room Name */}
           <div className="text-center text-base sm:text-lg md:text-2xl text-white truncate">
             TalkRooms
           </div>
 
           {/* Right: Icons */}
-          <div className="flex items-center gap-3 justify-end text-[#BBBBBB]">
-            {/* All icons as before */}
+          <div className="flex items-center gap-4 justify-end text-[#BBBBBB]">
             <Dialog>
               <DialogTrigger asChild>
                 <button className="hover:text-white cursor-pointer">
@@ -198,7 +187,16 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                 <DialogHeader>
                   <DialogTitle className="text-white">Room Settings</DialogTitle>
                 </DialogHeader>
-                <div className="text-sm mt-2">(Room settings)</div>
+                <div className="flex flex-col gap-4 truncate text-xs sm:text-sm">
+                  <div className="flex items-center gap-1 min-w-0">
+                    <CircleUserRound className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+                    <span className="truncate">Username: {username}</span>
+                  </div>
+                  <div className="flex items-center gap-1 min-w-0">
+                    <Home className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+                    <span className="truncate">Room ID: {room}</span>
+                  </div>
+                </div>
               </DialogContent>
             </Dialog>
 
@@ -217,7 +215,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
 
         {/* Message list area*/}
         <div 
-          className="flex-1 overflow-y-auto p-2 sm:p-3 lg:p-4 space-y-2 overscroll-contain" 
+          className="flex-1 overflow-y-auto p-2 sm:p-3 lg:p-4 space-y-2 overscroll-contain mt-2" 
           ref={scrollRef}
           style={{ 
             minHeight: 0,
@@ -259,7 +257,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                           {msg.feeling !== undefined && (
                             <Avatar className="mx-1 shrink-0">
                               <AvatarFallback className="bg-transparent">
-                                <span className="text-[22px]">
+                                <span className="text-[16px]">
                                   {msg.feeling === Feeling.Sad
                                     ? '🥺'
                                     : msg.feeling === Feeling.Neutral
@@ -301,6 +299,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                         )}
                       </>
                     )}
+                    
                   </div>
                 )
               )}
@@ -308,16 +307,17 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
           )}
         </div>
 
+        {/* Typing Indicator */}
+        <div className="h-8 p-1 mx-4 text-[#BBBBBB] text-xs sm:text-sm text-left transition-opacity duration-200 ease-in-out">
+          {userTyping ? `${userTyping} is typing...` : ''}
+        </div>
+
         {/* Input and Typing Indicators */}
         <div className="shrink-0 border-t border-[#454545] lg:border-t-0">
           <form
             onSubmit={sendMessage}
-            className="flex flex-col gap-1 sm:gap-2 p-4 sm:p-4 lg:p-5"
+            className="flex flex-col gap-1 sm:gap-2 p-4 lg:p-5"
           >
-            {/* Typing Indicator */}
-            <div className="h-3 sm:h-4 lg:h-5 text-[#BBBBBB] text-xs sm:text-sm text-left transition-opacity duration-200 ease-in-out">
-              {userTyping ? `${userTyping} is typing...` : ''}
-            </div>
 
             {/* Input Row */}
             <div className="flex items-center gap-1 sm:gap-2">
