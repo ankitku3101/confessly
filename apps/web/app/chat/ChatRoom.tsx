@@ -7,6 +7,8 @@ import { LoaderFive } from "@/components/ui/loader";
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Image, SendHorizontal, Smile, Sticker, LogOut, Users, Settings, SmilePlusIcon, CircleUserRound, House, Home } from 'lucide-react'
+import { EmojiPicker, EmojiPickerSearch, EmojiPickerContent, EmojiPickerFooter } from "@/components/ui/emoji-picker";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { io, Socket } from 'socket.io-client';
 import { Feeling } from '@/components/BlobGradient';
 
@@ -35,6 +37,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [hasJoined, setHasJoined] = useState(false);
+  const [emojiOpen, setEmojiOpen] = useState(false);
 
 
   useEffect(() => {
@@ -223,7 +226,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
         >
           {!hasJoined ? (
             <div className="flex justify-center items-center h-full">
-              <LoaderFive text="Loading chat..." />
+              <LoaderFive text="Connecting to the server..." />
             </div>
           ) : (
             <>
@@ -336,14 +339,30 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                 {/* Mobile-optimized icon buttons */}
                 <div className="flex items-center gap-0.5 sm:gap-1 md:gap-2 shrink-0">
                   {/* Emoji Icon */}
-                  <button 
-                    type="button" 
-                    className="p-1 text-[#BBBBBB] hover:text-white touch-manipulation"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <Smile className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </button>
-
+                  <Popover open={emojiOpen} onOpenChange={setEmojiOpen}>
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        className="p-1 text-[#BBBBBB] hover:text-white touch-manipulation cursor-pointer"
+                      >
+                        <Smile className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-fit p-0 m-4 md:mr-22">
+                      <EmojiPicker
+                        className="h-[342px]"
+                        onEmojiSelect={({ emoji }) => {
+                          setInput((prev) => prev + emoji);
+                          setEmojiOpen(false);
+                          inputRef?.current?.focus(); 
+                        }}
+                      >
+                        <EmojiPickerSearch />
+                        <EmojiPickerContent/>
+                        <EmojiPickerFooter />
+                      </EmojiPicker>
+                    </PopoverContent>
+                  </Popover>
 
                   {/* Sticker Icon - Hidden on very small screens */}
                   <button 
