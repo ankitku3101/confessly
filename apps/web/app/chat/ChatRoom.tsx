@@ -11,6 +11,7 @@ import { EmojiPicker, EmojiPickerSearch, EmojiPickerContent, EmojiPickerFooter }
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { io, Socket } from 'socket.io-client';
 import { Feeling } from '@/components/BlobGradient';
+import { BorderBeam } from '@/components/magicui/border-beam';
 
 type Message = {
   user?: string;
@@ -136,6 +137,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
         border-0
         md:border md:border-[#454545]
         transition-all
+        relative
         overflow-hidden"
       >
 
@@ -385,7 +387,18 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
             </div>
           </form>
         </div>
-
+        <BorderBeam
+          duration={7}
+          delay={3}
+          size={800}
+          className="from-transparent via-purple-500 to-transparent"
+        />
+        <BorderBeam
+          duration={7}
+          delay={6}
+          size={800}
+          className="from-transparent via-pink-500 to-transparent"
+        />
       </Card>
     </div>
   );
