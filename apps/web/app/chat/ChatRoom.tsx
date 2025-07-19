@@ -13,6 +13,8 @@ import { Feeling } from '@/components/BlobGradient';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import GifPicker from 'gif-picker-react';
 import { AuroraText } from '@/components/magicui/aurora-text';
+import { WordRotate } from '@/components/magicui/word-rotate';
+import { ComicText } from '@/components/magicui/comic-text';
 
 
 type Message = {
@@ -149,8 +151,8 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
         <div className="p-4 border-b border-[#454545] flex justify-between text-sm font-semibold shrink-0 w-full text-[#BBBBBB] bg-[#0a0a0a]">
           
           {/* Center: Room Name */}
-          <div className="text-center text-base sm:text-lg md:text-2xl text-white truncate">
-            Talk<AuroraText speed={1} colors={['#13FFAA', '#1E67C6', '#CE84CF']}>Rooms</AuroraText>
+          <div className="text-center text-base sm:text-lg md:text-2xl">
+            <ComicText>TalkRooms</ComicText>
           </div>
 
           {/* Right: Icons */}
