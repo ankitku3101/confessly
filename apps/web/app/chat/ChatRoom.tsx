@@ -382,16 +382,18 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                   </Popover>
 
                   {/* GIF Icon */}
-                  <Popover open={gifOpen} onOpenChange={setGifOpen}>
-                    <PopoverTrigger asChild>
-                      <button 
-                        type="button" 
+                  <Dialog open={gifOpen} onOpenChange={setGifOpen}>
+                    
+                    <DialogTrigger asChild>
+                      <button
+                        type="button"
                         className="p-1 text-[#BBBBBB] hover:text-teal-400 touch-manipulation cursor-pointer"
                       >
                         <Sticker className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-fit p-0 m-4 md:mr-22 bg-[#0a0a0a] border border-[#454545] rounded-md">
+                    </DialogTrigger>
+                    <DialogContent className="bg-[#0a0a0a] border border-[#454545] rounded-lg w-[90vw] max-w-md">
+                      <DialogTitle>Select a GIF</DialogTitle>
                       <GifPicker
                         tenorApiKey={tenorApiKey as string}
                         onGifClick={(gif) => {
@@ -403,14 +405,12 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                             timestamp: new Date().toISOString(),
                           };
                           socket?.emit('message', gifMsg);
-
                           setGifOpen(false);
                           inputRef?.current?.focus();
                         }}
                       />
-                    </PopoverContent>
-                  </Popover>
-
+                    </DialogContent>
+                  </Dialog>
 
                   {/* Send Icon */}
                   <button
