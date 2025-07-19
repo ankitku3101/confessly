@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { LoaderFive } from "@/components/ui/loader";
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -12,6 +11,9 @@ import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover
 import { io, Socket } from 'socket.io-client';
 import { Feeling } from '@/components/BlobGradient';
 import { BorderBeam } from '@/components/magicui/border-beam';
+import GifPicker from 'gif-picker-react';
+import { AuroraText } from '@/components/magicui/aurora-text';
+
 
 type Message = {
   user?: string;
@@ -39,6 +41,8 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [hasJoined, setHasJoined] = useState(false);
   const [emojiOpen, setEmojiOpen] = useState(false);
+  const [gifOpen, setGifOpen] = useState(false);
+  const tenorApiKey = process.env.NEXT_PUBLIC_TENOR_API_KEY
 
 
   useEffect(() => {
@@ -146,7 +150,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
           
           {/* Center: Room Name */}
           <div className="text-center text-base sm:text-lg md:text-2xl text-white truncate">
-            TalkRooms
+            Talk<AuroraText speed={1} colors={['#13FFAA', '#1E67C6', '#CE84CF']}>Rooms</AuroraText>
           </div>
 
           {/* Right: Icons */}
@@ -269,9 +273,20 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                               </AvatarFallback>
                             </Avatar>
                           )}
-                          <div className="max-w-[75%] sm:max-w-[70%] lg:max-w-md rounded-lg px-2 sm:px-3 py-2 bg-blue-700 text-white ml-1">
-                            <div className="text-xs sm:text-sm text-white break-words">{msg.text}</div>
-                          </div>
+                          {msg.text.match(/\.(gif|webp|png|jpg)$/i) ? (
+                            <img
+                              src={msg.text}
+                              alt="GIF"
+                              className="max-w-[240px] ml-1 rounded-md object-contain"
+                            />
+                          ) : (
+                            <div className="max-w-[75%] sm:max-w-[70%] lg:max-w-md rounded-lg px-2 sm:px-3 py-2 bg-blue-700 text-white ml-1">
+                              <div className="text-xs sm:text-sm text-white break-words">
+                                {msg.text}
+                              </div>
+                            </div>
+                          )}
+
                         </div>
                         <Avatar className="ml-2 text-black shrink-0">
                           <AvatarFallback>{msg.user?.[0]?.toUpperCase()}</AvatarFallback>
@@ -345,7 +360,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                     <PopoverTrigger asChild>
                       <button
                         type="button"
-                        className="p-1 text-[#BBBBBB] hover:text-white touch-manipulation cursor-pointer"
+                        className="p-1 text-[#BBBBBB] hover:text-teal-400 touch-manipulation cursor-pointer"
                       >
                         <Smile className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
@@ -366,19 +381,41 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                     </PopoverContent>
                   </Popover>
 
-                  {/* Sticker Icon - Hidden on very small screens */}
-                  <button 
-                    type="button" 
-                    className="p-1 text-[#BBBBBB] hover:text-white touch-manipulation"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <Sticker className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </button>
+                  {/* GIF Icon */}
+                  <Popover open={gifOpen} onOpenChange={setGifOpen}>
+                    <PopoverTrigger asChild>
+                      <button 
+                        type="button" 
+                        className="p-1 text-[#BBBBBB] hover:text-teal-400 touch-manipulation cursor-pointer"
+                      >
+                        <Sticker className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-fit p-0 m-4 md:mr-22 bg-[#0a0a0a] border border-[#454545] rounded-md">
+                      <GifPicker
+                        tenorApiKey={tenorApiKey as string}
+                        onGifClick={(gif) => {
+                          const gifMsg: Message = {
+                            user: username,
+                            text: gif.url,
+                            room,
+                            feeling,
+                            timestamp: new Date().toISOString(),
+                          };
+                          socket?.emit('message', gifMsg);
+
+                          setGifOpen(false);
+                          inputRef?.current?.focus();
+                        }}
+                      />
+                    </PopoverContent>
+                  </Popover>
+
 
                   {/* Send Icon */}
                   <button
                     type="submit"
-                    className="p-1 text-[#BBBBBB] hover:text-white touch-manipulation"
+                    className="p-1 text-[#BBBBBB] hover:text-blue-400 touch-manipulation cursor-pointer"
                   >
                     <SendHorizontal className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
