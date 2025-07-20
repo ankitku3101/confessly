@@ -394,10 +394,11 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                         <Sticker className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
                     </DialogTrigger>
-                    <DialogContent className="bg-[#0a0a0a] border border-[#454545] rounded-lg w-[90vw] max-w-md">
+                    <DialogContent className="bg-[#0a0a0a] border border-[#454545] rounded-lg max-w-md">
                       <DialogTitle>Select a GIF</DialogTitle>
                       <GifPicker
                         tenorApiKey={tenorApiKey as string}
+                        width={'full'}
                         onGifClick={(gif) => {
                           const gifMsg: Message = {
                             user: username,
