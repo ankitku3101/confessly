@@ -15,6 +15,8 @@ import GifPicker from 'gif-picker-react';
 import { AuroraText } from '@/components/magicui/aurora-text';
 import { WordRotate } from '@/components/magicui/word-rotate';
 import { ComicText } from '@/components/magicui/comic-text';
+import { FeelingLottie } from '@/components/FeelingLottie';
+import { JugglingAvatar } from '@/components/JugglingAvatar';
 
 
 type Message = {
@@ -24,6 +26,12 @@ type Message = {
   room?: string;
   isSystem?: boolean;
   feeling?: Feeling; 
+};
+
+type ActiveUser = {
+  username: string;
+  room: string;
+  feeling?: Feeling;
 };
 
 interface Props {
@@ -43,6 +51,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [hasJoined, setHasJoined] = useState(false);
   const [emojiOpen, setEmojiOpen] = useState(false);
+  const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([]);
   const [gifOpen, setGifOpen] = useState(false);
   const tenorApiKey = process.env.NEXT_PUBLIC_TENOR_API_KEY
 
@@ -72,6 +81,10 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
         setTimeout(() => setUserTyping(null), 2000);
       }
     });
+
+    socket.on('active_users', (userList) => {
+      setActiveUsers(userList)
+    })
 
     return () => {
       socket?.disconnect();
@@ -181,7 +194,17 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                 <DialogHeader>
                   <DialogTitle className="text-white">Online Users</DialogTitle>
                 </DialogHeader>
-                <div className="text-sm mt-2">(List of online users)</div>
+                {activeUsers.length === 0 ? (
+                  <div className="text-sm mt-2 italic text-[#888]">No Users Online</div>
+                ) : (
+                  <ul className='mt-2 space-y-1 text-sm'>
+                    {activeUsers.map((user, index) => (
+                      <li key={index} className="text-[#DDDDDD]">
+                        • {user.username}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </DialogContent>
             </Dialog>
 
@@ -247,78 +270,49 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                 ) : (
                   <div
                     key={idx}
-                    className={`flex items-start ${
+                    className={`flex items-end gap-2 ${
                       msg.user === username ? 'justify-end' : 'justify-start'
                     }`}
                   >
-                    {/* RECEIVER's avatar */}
+                    {/* Receiver's avatar (left side) */}
                     {msg.user !== username && (
-                      <Avatar className="mr-2 text-black shrink-0">
-                        <AvatarFallback>{msg.user?.[0]?.toUpperCase()}</AvatarFallback>
-                      </Avatar>
+                      <JugglingAvatar
+                        feeling={msg.feeling ?? Feeling.Neutral}
+                        username={msg.user as string}
+                      />
                     )}
 
-                    {/* SENDER's block with avatar, msg and emoji */}
-                    {msg.user === username ? (
-                      <>
-                        <div className="flex items-start">
-                          {msg.feeling !== undefined && (
-                            <Avatar className="mx-1 shrink-0">
-                              <AvatarFallback className="bg-transparent">
-                                <span className="text-[22px]">
-                                  {msg.feeling === Feeling.Sad
-                                    ? '🥺'
-                                    : msg.feeling === Feeling.Neutral
-                                    ? '😐'
-                                    : '😄'}
-                                </span>
-                              </AvatarFallback>
-                            </Avatar>
-                          )}
-                          {msg.text.match(/\.(gif|webp|png|jpg)$/i) ? (
-                            <img
-                              src={msg.text}
-                              alt="GIF"
-                              className="max-w-[240px] ml-1 rounded-md object-contain"
-                            />
-                          ) : (
-                            <div className="max-w-[75%] sm:max-w-[70%] lg:max-w-md rounded-lg px-2 sm:px-3 py-2 bg-blue-700 text-white ml-1">
-                              <div className="text-xs sm:text-sm text-white break-words">
-                                {msg.text}
-                              </div>
-                            </div>
-                          )}
+                    {/* Message bubble */}
+                    <div className="flex flex-col items-start max-w-[75%] sm:max-w-[70%] lg:max-w-md space-y-1">
+                      {msg.user !== username && (
+                        <div className="text-xs sm:text-sm font-semibold text-white">
+                          {msg.user}
+                        </div>
+                      )}
+                      {msg.text.match(/\.(gif|webp|png|jpg)$/i) ? (
+                        <img
+                          src={msg.text}
+                          alt="Media"
+                          className="rounded-md object-contain max-w-full"
+                        />
+                      ) : (
+                        <div
+                          className={`rounded-lg px-2 sm:px-3 py-2 break-words text-xs sm:text-sm ${
+                            msg.user === username ? 'bg-blue-700 text-white' : 'bg-[#454545] text-white'
+                          }`}
+                        >
+                          {msg.text}
+                        </div>
+                      )}
+                    </div>
 
-                        </div>
-                        <Avatar className="ml-2 text-black shrink-0">
-                          <AvatarFallback>{msg.user?.[0]?.toUpperCase()}</AvatarFallback>
-                        </Avatar>
-                      </>
-                    ) : (
-                      <>
-                        {/* RECEIVER's msg and emoji block */}
-                        <div className="max-w-[75%] sm:max-w-[70%] md:max-w-md rounded-lg px-2 sm:px-3 py-2 bg-[#454545] text-white">
-                          <div className="text-xs sm:text-sm font-semibold text-white truncate">
-                            {msg.user}
-                          </div>
-                          <div className="text-xs sm:text-sm text-white break-words">{msg.text}</div>
-                        </div>
-                        {msg.feeling !== undefined && (
-                          <Avatar className="mx-1 shrink-0">
-                            <AvatarFallback className="bg-transparent">
-                              <span className="text-[22px]">
-                                {msg.feeling === Feeling.Sad
-                                  ? '🥺'
-                                  : msg.feeling === Feeling.Neutral
-                                  ? '😐'
-                                  : '😄'}
-                              </span>
-                            </AvatarFallback>
-                          </Avatar>
-                        )}
-                      </>
+                    {/* Sender's avatar (right side) */}
+                    {msg.user === username && (
+                      <JugglingAvatar
+                        feeling={msg.feeling ?? Feeling.Neutral}
+                        username={msg.user as string}
+                      />
                     )}
-                    
                   </div>
                 )
               )}

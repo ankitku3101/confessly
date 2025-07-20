@@ -40,6 +40,7 @@ io.on('connection', (socket) => {
     });
 
     emitActiveRooms();
+    emitRoomUsers(room);
   });
 
   socket.on('message', (msg: { user: string; text: string; room: string; feeling?: number }) => {
@@ -73,11 +74,23 @@ io.on('connection', (socket) => {
     });
 
     emitActiveRooms();
+    emitRoomUsers(room);
   });
 
   function emitActiveRooms() {
     const activeRoomList = Array.from(rooms.keys());
     io.emit('active_rooms', activeRoomList);
+  }
+
+  function emitRoomUsers(room: string) {
+    const roomSet = rooms.get(room);
+    if (!roomSet) return;
+
+    const userList = Array.from(roomSet)
+      .map((id) => users.get(id))
+      .filter(Boolean);
+
+    io.to(room).emit('active_users', userList);
   }
 });
 
