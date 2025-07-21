@@ -24,6 +24,7 @@ type Message = {
   room?: string;
   isSystem?: boolean;
   feeling?: Feeling; 
+  replyTo?: Message;
 };
 
 type ActiveUser = {
@@ -51,6 +52,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   const [emojiOpen, setEmojiOpen] = useState(false);
   const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([]);
   const [gifOpen, setGifOpen] = useState(false);
+  const [replyTo, setReplyTo] = useState<null | { user?: string; text: string }>(null);
   const tenorApiKey = process.env.NEXT_PUBLIC_TENOR_API_KEY
   const { clientId, setClientId } = useClientIdStore();
 
@@ -132,11 +134,14 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
         room,
         feeling,
         timestamp: new Date().toISOString(),
+        replyTo: replyTo || undefined,
       };
       socket?.emit('message', msg);
       setInput('');
+      setReplyTo(null);
     }
   };
+
 
   const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
@@ -279,11 +284,12 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                 ) : (
                   <div
                     key={idx}
-                    className={`flex items-end gap-2 ${
+                    className={`group relative flex items-end gap-2 ${
                       msg.user === username ? 'justify-end' : 'justify-start'
                     }`}
+                    onClick={() => setReplyTo(msg)}
                   >
-                    {/* Receiver's avatar (left side) */}
+                    {/* Receiver's avatar */}
                     {msg.user !== username && (
                       <JugglingAvatar
                         feeling={msg.feeling ?? Feeling.Neutral}
@@ -298,6 +304,15 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                           {msg.user}
                         </div>
                       )}
+
+                      {/* Reply context (if any) */}
+                      {msg.replyTo && (
+                        <div className="bg-[#2e2e2e] rounded-md p-2 text-xs text-gray-300 border-l-4 border-blue-500">
+                          <span className="font-semibold">{msg.replyTo.user}</span>: {msg.replyTo.text}
+                        </div>
+                      )}
+
+                      {/* Main text or image */}
                       {msg.text.match(/\.(gif|webp|png|jpg)$/i) ? (
                         <img
                           src={msg.text}
@@ -307,7 +322,9 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                       ) : (
                         <div
                           className={`rounded-lg px-2 sm:px-3 py-2 break-words text-xs sm:text-sm ${
-                            msg.user === username ? 'bg-blue-700 text-white' : 'bg-[#454545] text-white'
+                            msg.user === username
+                              ? 'bg-blue-700 text-white'
+                              : 'bg-[#454545] text-white'
                           }`}
                         >
                           {msg.text}
@@ -315,13 +332,18 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                       )}
                     </div>
 
-                    {/* Sender's avatar (right side) */}
+                    {/* Sender's avatar */}
                     {msg.user === username && (
                       <JugglingAvatar
                         feeling={msg.feeling ?? Feeling.Neutral}
                         username={msg.user as string}
                       />
                     )}
+
+                    {/* Tooltip or hint */}
+                    <div className="absolute bottom-full mb-1 hidden group-hover:block text-[10px] text-gray-400">
+                      Click to reply
+                    </div>
                   </div>
                 )
               )}
@@ -333,6 +355,21 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
         <div className="h-8 p-1 mx-4 text-[#BBBBBB] text-xs sm:text-sm text-left transition-opacity duration-200 ease-in-out">
           {userTyping ? `${userTyping} is typing...` : ''}
         </div>
+
+        {replyTo && (
+          <div className="flex items-center justify-between bg-[#333333] text-white px-4 py-2 rounded-md mb-2">
+            <div className="text-xs">
+              Replying to <span className="font-semibold">{replyTo.user}</span>: {replyTo.text}
+            </div>
+            <button
+              onClick={() => setReplyTo(null)}
+              className="text-red-400 text-xs hover:underline"
+            >
+              Cancel
+            </button>
+          </div>
+        )}
+
 
         {/* Input and Typing Indicators */}
         <div className="shrink-0 border-t border-[#454545] lg:border-t-0">
