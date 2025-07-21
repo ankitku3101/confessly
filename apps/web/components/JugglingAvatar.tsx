@@ -3,22 +3,22 @@ import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Player from 'react-lottie-player';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-
 import happyAnim from '@/public/lotties/happy.json';
 import neutralAnim from '@/public/lotties/neutral.json';
 import sadAnim from '@/public/lotties/sad.json';
+import { Feeling } from '@/lib/chat-store';
 
-type Props = {
+interface Props {
+  feeling: Feeling;
   username: string;
-  feeling: number;
-};
+}
 
 export const JugglingAvatar = ({ username, feeling }: Props) => {
   const [showLottie, setShowLottie] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
   const animationData =
-    feeling === 1 ? sadAnim : feeling === 2 ? neutralAnim : happyAnim;
+    feeling === 'happy' ? sadAnim : feeling === 'neutral' ? neutralAnim : happyAnim;
 
   const handleMouseEnter = () => {
     // Show animation

@@ -6,14 +6,22 @@ import ChatRoom from './ChatRoom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Feeling } from '@/components/BlobGradient';
 import BlobGradient from '@/components/BlobGradient';
+import { useChatStore } from '@/lib/chat-store';
 
 export default function Chat() {
-  const [username, setUsername] = useState('');
-  const [hasJoined, setHasJoined] = useState(false);
-  const [room, setRoom] = useState('');
-  const [feeling, setFeeling] = useState<Feeling>(Feeling.Sad);
+
+const {
+  username,
+  hasJoined,
+  room,
+  feeling,
+  setUsername,
+  setHasJoined,
+  setRoom,
+  setFeeling,
+} = useChatStore();
+
 
   if (!hasJoined) {
     return (

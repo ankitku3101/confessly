@@ -17,10 +17,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { Undo2 } from 'lucide-react';
 import Link from 'next/link';
+import { useChatStore } from '@/lib/chat-store';
 
-interface Props {
-  setRoom: React.Dispatch<React.SetStateAction<string>>;
-}
+type Props = {
+  setRoom: (room: string) => void;
+};
 
 const RoomSchema = z.object({
   roomId: z
@@ -35,6 +36,8 @@ type RoomSchemaType = z.infer<typeof RoomSchema>;
 export default function RoomSelector({ setRoom }: Props) {
   const [rooms, setRooms] = useState<string[]>([]);
   const [showError, setShowError] = useState(false);
+  const reset = useChatStore((state) => state.reset);
+
 
   const {
     register,
@@ -75,12 +78,13 @@ export default function RoomSelector({ setRoom }: Props) {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full space-y-2">
           <div className='flex justify-between'>
             <label className="font-semibold text-white">Enter a Room ID</label>
-            <Link
-              href={'/'} 
-              className="p-1 text-white hover:text-red-400 touch-manipulation cursor-pointer"
+            <Button
+              size="sm"
+              onClick={reset}
+              className="p-1 text-white hover:text-red-400 touch-manipulation cursor-pointer hover:bg-transparent bg-transparent"
             >
               <Undo2 className="w-4 h-4 sm:w-5 sm:h-5 " />
-            </Link>
+            </Button>
           </div>
           <Input
             {...register('roomId')}

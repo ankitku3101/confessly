@@ -1,12 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { Feeling } from '@/lib/chat-store';
 
-export enum Feeling {
-  Sad = 1,
-  Neutral = 2,
-  Happy = 3,
-}
 
 const feelingColorMap = {
   [Feeling.Sad]: ['#ff0d0d', '#fc7a6a', '#faa79d'],
@@ -60,7 +56,7 @@ export default function BlobGradient({
         </h2>
         <input
           className="range w-full"
-          onChange={(ev) => setFeeling(Number(ev.target.value) as Feeling)}
+          onChange={(ev) => setFeeling((ev.target.value) as Feeling)}
           type="range"
           min={1}
           value={feeling}

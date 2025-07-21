@@ -1,21 +1,19 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useClientIdStore } from '@/lib/store';
+import { v4 as uuidv4 } from 'uuid';
 import { Card } from '@/components/ui/card';
 import { LoaderFive } from "@/components/ui/loader";
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Image, SendHorizontal, Smile, Sticker, LogOut, Users, Settings, SmilePlusIcon, CircleUserRound, House, Home } from 'lucide-react'
+import { SendHorizontal, Smile, Sticker, LogOut, Users, Settings, SmilePlusIcon, CircleUserRound, Home } from 'lucide-react'
 import { EmojiPicker, EmojiPickerSearch, EmojiPickerContent, EmojiPickerFooter } from "@/components/ui/emoji-picker";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { io, Socket } from 'socket.io-client';
-import { Feeling } from '@/components/BlobGradient';
+import { Feeling } from '@/lib/chat-store';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import GifPicker from 'gif-picker-react';
-import { AuroraText } from '@/components/magicui/aurora-text';
-import { WordRotate } from '@/components/magicui/word-rotate';
 import { ComicText } from '@/components/magicui/comic-text';
-import { FeelingLottie } from '@/components/FeelingLottie';
 import { JugglingAvatar } from '@/components/JugglingAvatar';
 
 
@@ -37,7 +35,7 @@ type ActiveUser = {
 interface Props {
   username: string;
   room: string;
-  setRoom: React.Dispatch<React.SetStateAction<string>>;
+  setRoom: (room: string) => void;
   feeling: Feeling;
 }
 
@@ -54,11 +52,22 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([]);
   const [gifOpen, setGifOpen] = useState(false);
   const tenorApiKey = process.env.NEXT_PUBLIC_TENOR_API_KEY
+  const { clientId, setClientId } = useClientIdStore();
 
 
   useEffect(() => {
+
+    let id = clientId;
+
+    if (!id) {
+      id = uuidv4();
+      setClientId(id);
+    }
+
     if (!socket) {
-      socket = io(process.env.NEXT_PUBLIC_API_URL);
+      socket = io(process.env.NEXT_PUBLIC_API_URL, {
+        query: {clientId: id},
+      });
     }
 
     socket.emit('join_room', { username, room });
