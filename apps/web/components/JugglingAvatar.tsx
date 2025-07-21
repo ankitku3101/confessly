@@ -24,10 +24,9 @@ export const JugglingAvatar = ({ username, feeling }: Props) => {
     // Show animation
     setShowLottie(true);
 
-    // Clear existing timeout if any
     if (timeoutId) clearTimeout(timeoutId);
 
-    // Hide after 6 seconds
+    // To hide lottie after 6 seconds
     const id = setTimeout(() => {
       setShowLottie(false);
     }, 6000);
@@ -53,14 +52,14 @@ export const JugglingAvatar = ({ username, feeling }: Props) => {
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -20, opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.3 }}
             className="absolute inset-0"
           >
             <Player
               play
               loop
               animationData={animationData}
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '120%', height: '120%' }}
             />
           </motion.div>
         ) : (
@@ -69,7 +68,7 @@ export const JugglingAvatar = ({ username, feeling }: Props) => {
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 20, opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.3 }}
             className="absolute inset-0"
           >
             <Avatar className="w-full h-full">
