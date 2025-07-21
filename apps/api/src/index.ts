@@ -1,6 +1,7 @@
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import { attachClientIdMiddleware } from './middleware';
 
 const app = express();
 const httpServer = createServer(app);
@@ -11,11 +12,10 @@ const io = new Server(httpServer, {
     credentials: true,
   },
 });
-
-
 const rooms = new Map<string, Set<string>>();
-
 const users = new Map<string, { username: string; room: string; feeling?: number }>();
+
+io.use(attachClientIdMiddleware);
 
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
