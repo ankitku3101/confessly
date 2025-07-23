@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Card } from '@/components/ui/card';
 import { LoaderFive } from "@/components/ui/loader";
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { SendHorizontal, Smile, Sticker, LogOut, Users, Settings, SmilePlusIcon, CircleUserRound, Home } from 'lucide-react'
+import { SendHorizontal, Smile, Sticker, LogOut, Users, Settings, SmilePlusIcon, CircleUserRound, Home, Reply } from 'lucide-react'
 import { EmojiPicker, EmojiPickerSearch, EmojiPickerContent, EmojiPickerFooter } from "@/components/ui/emoji-picker";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { io, Socket } from 'socket.io-client';
@@ -142,6 +142,16 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
     }
   };
 
+  const handleReply = (message: Message) => {
+    setReplyTo({
+      user: message.user,
+      text: message.text
+    });
+    // Focus input after setting reply
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
+  };
 
   const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
@@ -288,7 +298,6 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                     className={`group relative flex items-end gap-2 ${
                       msg.user === username ? 'justify-end' : 'justify-start'
                     }`}
-                    onClick={() => setReplyTo(msg)}
                   >
                     {/* Receiver's avatar */}
                     {msg.user !== username && (
@@ -298,8 +307,12 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                       />
                     )}
 
-                    {/* Message bubble */}
-                    <div className="flex flex-col items-start max-w-[75%] sm:max-w-[70%] lg:max-w-md space-y-1">
+                    {/* Message bubble container with reply button */}
+                    <div
+                      className={`relative flex flex-col max-w-[75%] sm:max-w-[70%] lg:max-w-md space-y-1 ${
+                        msg.user === username ? 'items-end' : 'items-start'
+                      }`}
+                    >
                       {msg.user !== username && (
                         <div className="text-xs sm:text-sm font-semibold text-white">
                           {msg.user}
@@ -313,24 +326,43 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                         </div>
                       )}
 
-                      {/* Main text or image */}
-                      {msg.text.match(/\.(gif|webp|png|jpg)$/i) ? (
-                        <img
-                          src={msg.text}
-                          alt="Media"
-                          className="rounded-md object-contain max-w-full"
-                        />
-                      ) : (
-                        <div
-                          className={`rounded-lg px-2 sm:px-3 py-2 break-words text-xs sm:text-sm ${
-                            msg.user === username
-                              ? 'bg-blue-700 text-white'
-                              : 'bg-[#454545] text-white'
-                          }`}
+                      {/* Main message content */}
+                      <div className="relative">
+                        {/* Main text or image */}
+                        {msg.text.match(/\.(gif|webp|png|jpg)$/i) ? (
+                          <img
+                            src={msg.text}
+                            alt="Media"
+                            className="rounded-md object-contain max-w-full"
+                          />
+                        ) : (
+                          <div
+                            className={`rounded-lg px-2 sm:px-3 py-2 break-words text-xs sm:text-sm ${
+                              msg.user === username
+                                ? 'bg-blue-700 text-white'
+                                : 'bg-[#454545] text-white'
+                            }`}
+                          >
+                            {msg.text}
+                          </div>
+                        )}
+
+                        {/* Reply button - only visible on hover */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleReply(msg);
+                          }}
+                          className={`absolute top-2 cursor-pointer ${
+                            msg.user === username ? '-left-8' : '-right-8'
+                          } opacity-0 group-hover:opacity-100 transition-opacity duration-200 
+                          bg-[#2a2a2a] hover:bg-[#3a3a3a] text-[#BBBBBB] hover:text-white 
+                          p-1.5 rounded-full shadow-lg border border-[#454545]`}
+                          title="Reply to this message"
                         >
-                          {msg.text}
-                        </div>
-                      )}
+                          <Reply className="w-3 h-3" />
+                        </button>
+                      </div>
                     </div>
 
                     {/* Sender's avatar */}
@@ -340,11 +372,6 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                         username={msg.user as string}
                       />
                     )}
-
-                    {/* Tooltip or hint */}
-                    <div className="absolute bottom-full mb-1 hidden group-hover:block text-[10px] text-gray-400">
-                      Click to reply
-                    </div>
                   </div>
                 )
               )}
@@ -357,20 +384,26 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
           {userTyping ? `${userTyping} is typing...` : ''}
         </div>
 
+        {/* Reply indicator bar */}
         {replyTo && (
-          <div className="flex items-center justify-between bg-[#333333] text-white px-4 py-2 rounded-md mb-2">
-            <div className="text-xs">
-              Replying to <span className="font-semibold">{replyTo.user}</span>: {replyTo.text}
+          <div className="flex items-center justify-between bg-[#333333] text-white px-4 py-2 rounded-md mx-4 mb-2">
+            <div className="flex items-center gap-2 text-xs">
+              <Reply className="w-3 h-3 text-blue-400" />
+              <span>
+                Replying to <span className="font-semibold text-blue-400">{replyTo.user}</span>: 
+                <span className="ml-1 text-gray-300">
+                  {replyTo.text.length > 50 ? `${replyTo.text.substring(0, 50)}...` : replyTo.text}
+                </span>
+              </span>
             </div>
             <button
               onClick={() => setReplyTo(null)}
-              className="text-red-400 text-xs hover:underline"
+              className="text-red-400 text-xs hover:text-red-300 ml-2"
             >
-              Cancel
+              ✕
             </button>
           </div>
         )}
-
 
         {/* Input and Typing Indicators */}
         <div className="shrink-0 border-t border-[#454545] lg:border-t-0">
