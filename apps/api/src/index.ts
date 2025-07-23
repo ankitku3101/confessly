@@ -18,7 +18,6 @@ const users = new Map<string, { username: string; room: string; feeling?: number
 
 io.use(attachClientIdMiddleware);
 
-// Helper functions defined at top level
 function emitActiveRooms() {
   const activeRoomList = Array.from(rooms.keys());
   console.log("Emitting active_rooms:", activeRoomList);
@@ -82,7 +81,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('message', (msg: { user: string; text: string; room: string; feeling?: number }) => {
-    console.log('Received message:', msg);
     const timestamp = new Date().toISOString();
     io.to(msg.room).emit('message', { ...msg, timestamp });
   });
