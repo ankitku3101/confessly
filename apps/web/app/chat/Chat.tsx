@@ -62,5 +62,5 @@ const {
 
   if (!room) return <RoomSelector setRoom={setRoom} />;
 
-  return <ChatRoom username={username} room={room} feeling={feeling} setRoom={setRoom} />;
+  return <ChatRoom username={username} room={room} setRoom={setRoom} />;
 }

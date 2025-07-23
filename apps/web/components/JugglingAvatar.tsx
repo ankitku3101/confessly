@@ -17,8 +17,13 @@ export const JugglingAvatar = ({ username, feeling }: Props) => {
   const [showLottie, setShowLottie] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
-  const animationData =
-    feeling === 'happy' ? sadAnim : feeling === 'neutral' ? neutralAnim : happyAnim;
+  const animations = {
+    happy: happyAnim,
+    neutral: neutralAnim,
+    sad: sadAnim,
+  };
+
+  const animationData = animations[feeling];
 
   const handleMouseEnter = () => {
     // Show animation

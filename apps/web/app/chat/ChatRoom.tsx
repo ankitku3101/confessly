@@ -15,6 +15,9 @@ import { BorderBeam } from '@/components/magicui/border-beam';
 import GifPicker from 'gif-picker-react';
 import { ComicText } from '@/components/magicui/comic-text';
 import { JugglingAvatar } from '@/components/JugglingAvatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { FeelingSelector } from '@/components/FeelingSelector';
 
 
 type Message = {
@@ -37,12 +40,11 @@ interface Props {
   username: string;
   room: string;
   setRoom: (room: string) => void;
-  feeling: Feeling;
 }
 
 let socket: Socket | null = null;
 
-export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
+export default function ChatRoom({ username, room, setRoom }: Props) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [userTyping, setUserTyping] = useState<string | null>(null);
@@ -55,7 +57,9 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
   const [replyTo, setReplyTo] = useState<null | { user?: string; text: string }>(null);
   const tenorApiKey = process.env.NEXT_PUBLIC_TENOR_API_KEY
   const { clientId, setClientId } = useClientIdStore();
-
+  const { feeling, setFeeling } = useChatStore();
+  const [open, setOpen] = useState(false);
+  
 
   useEffect(() => {
 
@@ -91,6 +95,23 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
         setUserTyping(typingUser);
         setTimeout(() => setUserTyping(null), 2000);
       }
+    });
+
+    socket.on('user_feeling_changed', ({ username, feeling }: { username: string, feeling: Feeling }) => {
+      setActiveUsers((prev) =>
+        prev.map((user) =>
+          user.username === username ? { ...user, feeling } : user
+        )
+      );
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          text: `${username} changed their feeling to ${feeling}`,
+          isSystem: true,
+          timestamp: new Date().toISOString(),
+        },
+      ]);
     });
 
     socket.on('active_users', (userList) => {
@@ -159,6 +180,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
     socket?.emit('typing', { username, room });
   };
 
+
   const formatTime = (timestamp?: string) => {
     if (!timestamp) return '';
     const date = new Date(timestamp);
@@ -194,18 +216,25 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
 
           {/* Right: Icons */}
           <div className="flex items-center gap-4 justify-end text-[#BBBBBB]">
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <button className="hover:text-white cursor-pointer">
                   <SmilePlusIcon className="w-5 h-5" />
                 </button>
               </DialogTrigger>
-              <DialogContent className="bg-[#0f0f0f] border border-[#333] text-[#CCCCCC]">
-                <DialogHeader>
-                  <DialogTitle className="text-white">Set Status</DialogTitle>
-                </DialogHeader>
-                <div className="text-sm mt-2">(Status modal)</div>
-              </DialogContent>
+
+              <FeelingSelector
+                handleFeelingChange={(newFeeling) => {
+                  setFeeling(newFeeling);
+                  socket?.emit('change_user_feeling', {
+                    username,
+                    room,
+                    feeling: newFeeling,
+                  });
+                  setOpen(false);
+                }}
+              />
+
             </Dialog>
 
             <Dialog>
@@ -223,8 +252,9 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                 ) : (
                   <ul className='mt-2 space-y-1 text-sm'>
                     {activeUsers.map((user, index) => (
-                      <li key={index} className="text-[#DDDDDD]">
-                        • {user.username}
+                      <li key={index} className="text-[#DDDDDD] flex items-center gap-2">
+                        <span className="text-lg">{user.feeling ?? Feeling.Neutral}</span>
+                        {user.username}
                       </li>
                     ))}
                   </ul>
@@ -302,10 +332,13 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                     {/* Receiver's avatar */}
                     {msg.user !== username && (
                       <JugglingAvatar
-                        feeling={msg.feeling ?? Feeling.Neutral}
+                        feeling={
+                          activeUsers.find((u) => u.username === msg.user)?.feeling ?? Feeling.Neutral
+                        }
                         username={msg.user as string}
                       />
                     )}
+
 
                     {/* Message bubble container with reply button */}
                     <div
@@ -368,10 +401,13 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
                     {/* Sender's avatar */}
                     {msg.user === username && (
                       <JugglingAvatar
-                        feeling={msg.feeling ?? Feeling.Neutral}
+                        feeling={
+                          activeUsers.find((u) => u.username === username)?.feeling ?? Feeling.Neutral
+                        }
                         username={msg.user as string}
                       />
                     )}
+
                   </div>
                 )
               )}

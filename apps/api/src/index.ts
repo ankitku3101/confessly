@@ -14,7 +14,7 @@ const io = new Server(httpServer, {
 });
 
 const rooms = new Map<string, Set<string>>();
-const users = new Map<string, { username: string; room: string; feeling?: number }>();
+const users = new Map<string, { username: string; room: string; feeling?: string | number }>();
 
 io.use(attachClientIdMiddleware);
 
@@ -88,6 +88,25 @@ io.on('connection', (socket) => {
   socket.on('typing', ({ username, room }: { username: string; room: string }) => {
     socket.to(room).emit('user_typing', username);
   });
+
+  socket.on('change_user_feeling', ({ username, room, feeling }: { username: string; room: string; feeling: string }) => {
+    const user = users.get(socket.id);
+    if (!user) {
+      console.warn(`change_user_feeling: No user found for socket ${socket.id}`);
+      return;
+    }
+
+    // Update user's feeling
+    user.feeling = feeling;
+    users.set(socket.id, user);
+
+    console.log(`User ${username} updated feeling to ${feeling} in room ${room}`);
+
+    io.to(room).emit('user_feeling_changed', { username, feeling });
+
+    emitRoomUsers(room);
+  });
+
 
   socket.on('get_active_rooms', () => {
     console.log('Client requested active rooms');
