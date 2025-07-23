@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 import { Feeling } from '@/lib/chat-store';
 
-
 const feelingColorMap = {
   [Feeling.Sad]: ['#ff0d0d', '#fc7a6a', '#faa79d'],
   [Feeling.Neutral]: ['#36d902', '#83ff5a', '#beffce'],
@@ -14,6 +13,18 @@ const feelingLabelMap = {
   [Feeling.Sad]: 'Need Virtual Hugs',
   [Feeling.Neutral]: 'Me Good',
   [Feeling.Happy]: 'Happy Happy Happy',
+};
+
+const feelingToValueMap: Record<Feeling, number> = {
+  [Feeling.Sad]: 1,
+  [Feeling.Neutral]: 2,
+  [Feeling.Happy]: 3,
+};
+
+const valueToFeelingMap: Record<number, Feeling> = {
+  1: Feeling.Sad,
+  2: Feeling.Neutral,
+  3: Feeling.Happy,
 };
 
 export default function BlobGradient({
@@ -29,7 +40,9 @@ export default function BlobGradient({
 
   useEffect(() => {
     if (!wrapperRef.current) return;
-    const [a, b, c] = feelingColorMap[feeling];
+    const colors = feelingColorMap[feeling];
+    if (!colors) return; // Avoid crashing if feeling is invalid
+    const [a, b, c] = colors;
     wrapperRef.current.style.setProperty('--color-a', a);
     wrapperRef.current.style.setProperty('--color-b', b);
     wrapperRef.current.style.setProperty('--color-c', c);
@@ -49,19 +62,25 @@ export default function BlobGradient({
     >
       <div className="relative z-10 flex flex-col h-full justify-center items-center w-full gap-6">
         <h1 className="mb-12 text-5xl font-medium leading-tight">
-            How are you feeling today?
-          </h1>
+          How are you feeling today?
+        </h1>
         <h2 className="mb-4 text-center text-2xl font-medium">
           {feelingLabelMap[feeling]}
         </h2>
         <input
           className="range w-full"
-          onChange={(ev) => setFeeling((ev.target.value) as Feeling)}
           type="range"
           min={1}
-          value={feeling}
           max={3}
           step={1}
+          value={feelingToValueMap[feeling] ?? 2} // fallback to Neutral
+          onChange={(ev) => {
+            const value = Number(ev.target.value);
+            const mappedFeeling = valueToFeelingMap[value];
+            if (mappedFeeling) {
+              setFeeling(mappedFeeling);
+            }
+          }}
         />
         {form}
       </div>

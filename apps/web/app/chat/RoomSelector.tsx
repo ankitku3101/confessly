@@ -16,7 +16,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { Undo2 } from 'lucide-react';
-import Link from 'next/link';
 import { useChatStore } from '@/lib/chat-store';
 
 type Props = {
@@ -37,7 +36,7 @@ export default function RoomSelector({ setRoom }: Props) {
   const [rooms, setRooms] = useState<string[]>([]);
   const [showError, setShowError] = useState(false);
   const reset = useChatStore((state) => state.reset);
-
+  const socketRef = React.useRef<any>(null);
 
   const {
     register,
@@ -48,19 +47,47 @@ export default function RoomSelector({ setRoom }: Props) {
   });
 
   useEffect(() => {
-    const socket = io(process.env.NEXT_PUBLIC_API_URL!);
+    let clientId = localStorage.getItem('clientId');
+    if (!clientId) {
+      clientId = 'client_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('clientId', clientId);
+    }
+
+    const socket = io(process.env.NEXT_PUBLIC_API_URL!, {
+      query: {
+        clientId: clientId
+      }
+    });
+    
+    socketRef.current = socket;
+
+    socket.on('connect', () => {
+      console.log('Socket connected:', socket.id);
+    });
+
+    socket.on('connect_error', (error) => {
+      console.error('Connection error:', error);
+    });
 
     socket.on('active_rooms', (roomList: string[]) => {
+      console.log("Received active_rooms:", roomList);
       setRooms(roomList);
     });
 
+    socket.on('disconnect', () => {
+      console.log('Socket disconnected');
+    });
+
     return () => {
+      console.log('Cleaning up socket connection');
       socket.disconnect();
     };
   }, []);
 
   const onSubmit = (data: RoomSchemaType) => {
+    
     if (rooms.includes(data.roomId)) {
+      useChatStore.getState().setRoom(data.roomId);
       setRoom(data.roomId);
     } else {
       setShowError(true);
@@ -69,7 +96,19 @@ export default function RoomSelector({ setRoom }: Props) {
 
   const handleCreateRoom = () => {
     const newRoomCode = Math.floor(100000 + Math.random() * 900000).toString();
-    setRoom(newRoomCode);
+    
+    if (socketRef.current?.connected) {
+      socketRef.current.emit('join_room', {
+        username: 'anonymous',
+        room: newRoomCode,
+      });
+
+      console.log("Emitted join_room event for room:", newRoomCode);
+      useChatStore.getState().setRoom(newRoomCode); 
+      setRoom(newRoomCode); 
+    } else {
+      console.error("Socket not connected, cannot create room");
+    }
   };
 
   return (

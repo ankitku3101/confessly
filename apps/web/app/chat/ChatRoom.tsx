@@ -10,7 +10,7 @@ import { SendHorizontal, Smile, Sticker, LogOut, Users, Settings, SmilePlusIcon,
 import { EmojiPicker, EmojiPickerSearch, EmojiPickerContent, EmojiPickerFooter } from "@/components/ui/emoji-picker";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { io, Socket } from 'socket.io-client';
-import { Feeling } from '@/lib/chat-store';
+import { Feeling, useChatStore } from '@/lib/chat-store';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import GifPicker from 'gif-picker-react';
 import { ComicText } from '@/components/magicui/comic-text';
@@ -248,6 +248,7 @@ export default function ChatRoom({ username, room, setRoom, feeling }: Props) {
             <button
               onClick={() => {
                 socket?.disconnect();
+                useChatStore.getState().reset();
                 setRoom('');
               }}
               className="text-red-500 hover:text-white cursor-pointer"

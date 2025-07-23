@@ -42,7 +42,6 @@ export const useChatStore = create<ChatState>()(
       name: 'chat-storage', 
       partialize: (state) => ({
         username: state.username,
-        hasJoined: state.hasJoined,
         room: state.room,
         feeling: state.feeling,
       }),
