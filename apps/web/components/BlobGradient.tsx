@@ -9,10 +9,11 @@ import sadAnim from '@/public/lotties/sad.json';
 
 
 const feelingColorMap = {
-  [Feeling.Sad]: ['#ff0d0d', '#fc7a6a', '#faa79d'],
-  [Feeling.Neutral]: ['#36d902', '#83ff5a', '#beffce'],
-  [Feeling.Happy]: ['#ff8f05', '#ffe83b', '#fcfb86'],
+  [Feeling.Sad]: ['#660000', '#991b1b', '#faa79d'],
+  [Feeling.Neutral]: ['#1e5c00', '#3f8f1e', '#beffce'],
+  [Feeling.Happy]: ['#995c00', '#a68f0c', '#fcfb86'],
 };
+
 
 const feelingToAnimation = {
   [Feeling.Happy]: happyAnim,
