@@ -10,7 +10,7 @@ import { SendHorizontal, Smile, Sticker, LogOut, Users, Settings, SmilePlusIcon,
 import { EmojiPicker, EmojiPickerSearch, EmojiPickerContent, EmojiPickerFooter } from "@/components/ui/emoji-picker";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { io, Socket } from 'socket.io-client';
-import { Feeling, useChatStore } from '@/lib/chat-store';
+import { Feeling, useChatStore, } from '@/lib/chat-store';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import GifPicker from 'gif-picker-react';
 import { ComicText } from '@/components/magicui/comic-text';
@@ -41,6 +41,7 @@ type ActiveUser = {
 interface Props {
   username: string;
   room: string;
+  feeling: Feeling;
   setRoom: (room: string) => void;
 }
 
@@ -52,7 +53,7 @@ const feelingToAnimation: Record<Feeling, any> = {
 
 let socket: Socket | null = null;
 
-export default function ChatRoom({ username, room, setRoom }: Props) {
+export default function ChatRoom({ username, room, feeling, setRoom }: Props) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [userTyping, setUserTyping] = useState<string | null>(null);
@@ -65,8 +66,15 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
   const [replyTo, setReplyTo] = useState<null | { user?: string; text: string }>(null);
   const tenorApiKey = process.env.NEXT_PUBLIC_TENOR_API_KEY
   const { clientId, setClientId } = useClientIdStore();
-  const { feeling, setFeeling } = useChatStore();
+  const { feeling: storeFeeling, setFeeling } = useChatStore();
   const [open, setOpen] = useState(false);
+
+
+  useEffect(() => {
+    if (feeling !== storeFeeling) {
+      setFeeling(feeling);
+    }
+  }, [feeling, storeFeeling, setFeeling]);
 
   useEffect(() => {
 
@@ -83,7 +91,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
       });
     }
 
-    socket.emit('join_room', { username, room });
+    socket.emit('join_room', { username, room, feeling: storeFeeling });
 
     socket.on('message', (msg: Message) => {
       setMessages((prev) => [...prev, msg]);
@@ -160,7 +168,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
         user: username,
         text: input.trim(),
         room,
-        feeling,
+        feeling: storeFeeling,
         timestamp: new Date().toISOString(),
         replyTo: replyTo || undefined,
       };
@@ -426,7 +434,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                     {msg.user === username && (
                       <JugglingAvatar
                         feeling={
-                          activeUsers.find((u) => u.username === username)?.feeling ?? Feeling.Neutral
+                          activeUsers.find((u) => u.username === username)?.feeling ?? storeFeeling
                         }
                         username={msg.user as string}
                       />
@@ -537,7 +545,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                             user: username,
                             text: gif.url,
                             room,
-                            feeling,
+                            feeling: storeFeeling, // Use store value
                             timestamp: new Date().toISOString(),
                           };
                           socket?.emit('message', gifMsg);

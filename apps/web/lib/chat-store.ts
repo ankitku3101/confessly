@@ -56,6 +56,7 @@ export const useChatStore = create<ChatState>()(
         username: state.username,
         room: state.room,
         feeling: state.feeling,
+        hasJoined: state.hasJoined, 
       }),
     }
   )

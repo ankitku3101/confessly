@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RoomSelector from './RoomSelector';
 import ChatRoom from './ChatRoom';
 import { Input } from '@/components/ui/input';
@@ -21,7 +21,13 @@ const {
   setRoom,
   setFeeling,
 } = useChatStore();
+const [hydrated, setHydrated] = useState(false);
 
+useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) return null;
 
   if (!hasJoined) {
     return (
@@ -62,5 +68,5 @@ const {
 
   if (!room) return <RoomSelector setRoom={setRoom} />;
 
-  return <ChatRoom username={username} room={room} setRoom={setRoom} />;
+  return <ChatRoom username={username} room={room} feeling={feeling} setRoom={setRoom} />;
 }
