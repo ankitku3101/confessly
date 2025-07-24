@@ -15,7 +15,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BorderBeam } from '@/components/magicui/border-beam';
-import { Undo2 } from 'lucide-react';
+import { Undo2, Loader } from 'lucide-react';
 import { useChatStore } from '@/lib/chat-store';
 
 type Props = {
@@ -35,6 +35,8 @@ type RoomSchemaType = z.infer<typeof RoomSchema>;
 export default function RoomSelector({ setRoom }: Props) {
   const [rooms, setRooms] = useState<string[]>([]);
   const [showError, setShowError] = useState(false);
+  const [isJoining, setIsJoining] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
   const reset = useChatStore((state) => state.reset);
   const socketRef = React.useRef<any>(null);
 
@@ -84,32 +86,42 @@ export default function RoomSelector({ setRoom }: Props) {
     };
   }, []);
 
-  const onSubmit = (data: RoomSchemaType) => {
-    
-    if (rooms.includes(data.roomId)) {
-      useChatStore.getState().setRoom(data.roomId);
-      setRoom(data.roomId);
-    } else {
-      setShowError(true);
+  const onSubmit = async (data: RoomSchemaType) => {
+    setIsJoining(true);
+    try {
+      if (rooms.includes(data.roomId)) {
+        useChatStore.getState().setRoom(data.roomId);
+        setRoom(data.roomId);
+      } else {
+        setShowError(true);
+      }
+    } finally {
+      setIsJoining(false);
     }
   };
 
-  const handleCreateRoom = () => {
-    const newRoomCode = Math.floor(100000 + Math.random() * 900000).toString();
-    
-    if (socketRef.current?.connected) {
-      socketRef.current.emit('join_room', {
-        username: 'anonymous',
-        room: newRoomCode,
-      });
 
-      console.log("Emitted join_room event for room:", newRoomCode);
-      useChatStore.getState().setRoom(newRoomCode); 
-      setRoom(newRoomCode); 
-    } else {
-      console.error("Socket not connected, cannot create room");
+  const handleCreateRoom = async () => {
+    setIsCreating(true);
+    try {
+      const newRoomCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+      if (socketRef.current?.connected) {
+        socketRef.current.emit('join_room', {
+          username: 'anonymous',
+          room: newRoomCode,
+        });
+
+        useChatStore.getState().setRoom(newRoomCode);
+        setRoom(newRoomCode);
+      } else {
+        console.error("Socket not connected");
+      }
+    } finally {
+      setIsCreating(false);
     }
   };
+
 
   return (
     <div className="min-h-dvh md:min-h-screen flex flex-col items-center justify-center text-white px-4">
@@ -133,30 +145,44 @@ export default function RoomSelector({ setRoom }: Props) {
           {errors.roomId && (
             <p className="text-red-500 text-sm mt-1">{errors.roomId.message}</p>
           )}
-          <Button type="submit" className="w-full">
-            Join Room
+          <Button type="submit" className="w-full" disabled={isJoining}>
+            {isJoining ? (
+              <Loader className="w-4 h-4 animate-spin" />
+            ) : (
+              'Join Room'
+            )}
           </Button>
         </form>
 
-        <Button onClick={handleCreateRoom} className="w-full">
-          Create New Room
+        
+        <Button onClick={handleCreateRoom} className="w-full" disabled={isCreating}>
+          {isCreating ? (
+            <Loader className="w-4 h-4 animate-spin" />
+          ) : (
+            'Create New Room'
+          )}
         </Button>
 
-        {rooms.length > 0 && (
-          <div className="mt-6">
-            <h2 className="text-lg font-bold mb-2 text-white">Active Rooms:</h2>
-            <ul className="space-y-2">
-              {rooms.map((room) => (
-                <li key={room} className="flex justify-between items-center px-4 py-2 rounded-xl bg-gray-200/50">
-                  <span>Room ID: {room}</span>
-                  <Button size="sm" onClick={() => setRoom(room)}>
-                    Join
-                  </Button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <div className="mt-6">
+          <div className="text-lg font-bold mb-2 text-white flex items-center">
+            Active Rooms:
+            {rooms.length === 0 ? (
+              <p className='ml-2 text-red-200 text-sm font-normal'>
+                No existing rooms found...
+              </p>
+            ): (<></>)}
+          </div> 
+          <ul className="space-y-2">
+            {rooms.map((room) => (
+              <li key={room} className="flex justify-between items-center px-4 py-2 rounded-xl bg-gray-200/50">
+                <span>Room ID: {room}</span>
+                <Button size="sm" onClick={() => setRoom(room)}>
+                  Join
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <BorderBeam
           duration={6}
