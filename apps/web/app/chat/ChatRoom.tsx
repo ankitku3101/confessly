@@ -15,9 +15,11 @@ import { BorderBeam } from '@/components/magicui/border-beam';
 import GifPicker from 'gif-picker-react';
 import { ComicText } from '@/components/magicui/comic-text';
 import { JugglingAvatar } from '@/components/JugglingAvatar';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
 import { FeelingSelector } from '@/components/FeelingSelector';
+import Player from 'react-lottie-player';
+import happyAnim from '@/public/lotties/happy.json';
+import neutralAnim from '@/public/lotties/neutral.json';
+import sadAnim from '@/public/lotties/sad.json';
 
 
 type Message = {
@@ -42,6 +44,12 @@ interface Props {
   setRoom: (room: string) => void;
 }
 
+const feelingToAnimation: Record<Feeling, any> = {
+  [Feeling.Happy]: happyAnim,
+  [Feeling.Sad]: sadAnim,
+  [Feeling.Neutral]: neutralAnim
+};
+
 let socket: Socket | null = null;
 
 export default function ChatRoom({ username, room, setRoom }: Props) {
@@ -59,7 +67,6 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
   const { clientId, setClientId } = useClientIdStore();
   const { feeling, setFeeling } = useChatStore();
   const [open, setOpen] = useState(false);
-  
 
   useEffect(() => {
 
@@ -250,10 +257,17 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                 {activeUsers.length === 0 ? (
                   <div className="text-sm mt-2 italic text-[#888]">No Users Online</div>
                 ) : (
-                  <ul className='mt-2 space-y-1 text-sm'>
+                  <ul className="mt-2 space-y-1 text-sm">
                     {activeUsers.map((user, index) => (
                       <li key={index} className="text-[#DDDDDD] flex items-center gap-2">
-                        <span className="text-lg">{user.feeling ?? Feeling.Neutral}</span>
+                        <Player
+                          play
+                          loop
+                          animationData={
+                            feelingToAnimation[user.feeling ?? Feeling.Neutral]
+                          }
+                          className="w-6 h-6"
+                        />
                         {user.username}
                       </li>
                     ))}
@@ -261,6 +275,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                 )}
               </DialogContent>
             </Dialog>
+
 
             <Dialog>
               <DialogTrigger asChild>
