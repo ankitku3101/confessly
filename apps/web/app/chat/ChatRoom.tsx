@@ -329,7 +329,6 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                       msg.user === username ? 'justify-end' : 'justify-start'
                     }`}
                   >
-                    {/* Receiver's avatar */}
                     {msg.user !== username && (
                       <JugglingAvatar
                         feeling={
@@ -339,8 +338,6 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                       />
                     )}
 
-
-                    {/* Message bubble container with reply button */}
                     <div
                       className={`relative flex flex-col max-w-[75%] sm:max-w-[70%] lg:max-w-md space-y-1 ${
                         msg.user === username ? 'items-end' : 'items-start'
@@ -352,16 +349,28 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                         </div>
                       )}
 
-                      {/* Reply context (if any) */}
                       {msg.replyTo && (
                         <div className="bg-[#2e2e2e] rounded-md p-2 text-xs text-gray-300 border-l-4 border-blue-500">
                           <span className="font-semibold">{msg.replyTo.user}</span>: {msg.replyTo.text}
                         </div>
                       )}
 
-                      {/* Main message content */}
-                      <div className="relative">
-                        {/* Main text or image */}
+                      <div
+                        className="relative"
+                        onTouchStart={(e) => {
+                          const target = e.currentTarget;
+                          target.dataset.touchTimer = String(
+                            window.setTimeout(() => {
+                              if (navigator.vibrate) navigator.vibrate(30); 
+                              handleReply(msg);
+                            }, 500) 
+                          );
+                        }}
+                        onTouchEnd={(e) => {
+                          clearTimeout(Number(e.currentTarget.dataset.touchTimer));
+                        }}
+                      >
+                        {/* Main content */}
                         {msg.text.match(/\.(gif|webp|png|jpg)$/i) ? (
                           <img
                             src={msg.text}
@@ -380,25 +389,25 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                           </div>
                         )}
 
-                        {/* Reply button - only visible on hover */}
+                        {/* Reply button (visible on hover only on desktop) */}
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
+                            if (navigator.vibrate) navigator.vibrate(10);
                             handleReply(msg);
                           }}
                           className={`absolute top-2 cursor-pointer ${
                             msg.user === username ? '-left-8' : '-right-8'
                           } opacity-0 group-hover:opacity-100 transition-opacity duration-200 
-                          bg-[#2a2a2a] hover:bg-[#3a3a3a] text-[#BBBBBB] hover:text-white 
-                          p-1.5 rounded-full shadow-lg border border-[#454545]`}
-                          title="Reply to this message"
+                            bg-[#2a2a2a] hover:bg-[#3a3a3a] text-[#BBBBBB] hover:text-white 
+                            p-1.5 rounded-full shadow-lg border border-[#454545]`}
+                          title="Reply"
                         >
                           <Reply className="w-3 h-3" />
                         </button>
                       </div>
                     </div>
 
-                    {/* Sender's avatar */}
                     {msg.user === username && (
                       <JugglingAvatar
                         feeling={
@@ -407,7 +416,6 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                         username={msg.user as string}
                       />
                     )}
-
                   </div>
                 )
               )}
@@ -434,7 +442,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
             </div>
             <button
               onClick={() => setReplyTo(null)}
-              className="text-red-400 text-xs hover:text-red-300 ml-2"
+              className="text-red-400 text-xs hover:text-red-300 ml-2 cursor-pointer"
             >
               ✕
             </button>
