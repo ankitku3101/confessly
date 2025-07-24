@@ -1,5 +1,6 @@
 import express from 'express';
 import { createServer } from 'http';
+import cors from 'cors';
 import { Server } from 'socket.io';
 import { attachClientIdMiddleware } from './middleware';
 
@@ -13,10 +14,19 @@ const io = new Server(httpServer, {
   },
 });
 
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://confessly-web.vercel.app'],
+  credentials: true,
+}));
+
 const rooms = new Map<string, Set<string>>();
 const users = new Map<string, { username: string; room: string; feeling?: string }>();
 
 io.use(attachClientIdMiddleware);
+
+app.get('/ping', (req, res) => {
+  res.status(200).send('awake')
+});
 
 function emitActiveRooms() {
   const activeRoomList = Array.from(rooms.keys());
