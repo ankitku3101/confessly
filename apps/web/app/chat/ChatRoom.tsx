@@ -473,7 +473,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
 
             {/* Input Row */}
             <div className="flex items-center gap-1 sm:gap-2">
-              <div className="flex flex-1 items-center px-2 sm:px-3 lg:px-4 py-2 rounded-md border border-[#454545] bg-[#0a0a0a] text-white focus-within:ring-1 ring-[#BBBBBB]">
+              <div className="flex flex-1 items-center px-2 sm:px-3 lg:px-4 py-3 md:py-2 rounded-md border border-[#454545] bg-[#0a0a0a] text-white focus-within:ring-1 ring-[#BBBBBB]">
                 
                 {/* Input */}
                 <input
@@ -489,7 +489,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                 />
                 
                 {/* Mobile-optimized icon buttons */}
-                <div className="flex items-center gap-0.5 sm:gap-1 md:gap-2 shrink-0">
+                <div className="flex items-center gap-1 md:gap-2 shrink-0">
                   {/* Emoji Icon */}
                   <Popover open={emojiOpen} onOpenChange={setEmojiOpen}>
                     <PopoverTrigger asChild>
@@ -497,7 +497,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                         type="button"
                         className="p-1 text-[#BBBBBB] hover:text-teal-400 touch-manipulation cursor-pointer"
                       >
-                        <Smile className="w-4 h-4 sm:w-5 sm:h-5" />
+                        <Smile className="w-5 h-5" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-fit p-0 m-4 md:mr-22">
@@ -524,7 +524,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                         type="button"
                         className="p-1 text-[#BBBBBB] hover:text-teal-400 touch-manipulation cursor-pointer"
                       >
-                        <Sticker className="w-4 h-4 sm:w-5 sm:h-5" />
+                        <Sticker className="w-5 h-5" />
                       </button>
                     </DialogTrigger>
                     <DialogContent className="bg-[#0a0a0a] border border-[#454545] rounded-lg max-w-md">
@@ -553,7 +553,7 @@ export default function ChatRoom({ username, room, setRoom }: Props) {
                     type="submit"
                     className="p-1 text-[#BBBBBB] hover:text-blue-400 touch-manipulation cursor-pointer"
                   >
-                    <SendHorizontal className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <SendHorizontal className="w-5 h-5" />
                   </button>
                 </div>
               </div>
