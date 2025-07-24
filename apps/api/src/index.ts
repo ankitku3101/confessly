@@ -14,7 +14,7 @@ const io = new Server(httpServer, {
 });
 
 const rooms = new Map<string, Set<string>>();
-const users = new Map<string, { username: string; room: string; feeling?: string | number }>();
+const users = new Map<string, { username: string; room: string; feeling?: string }>();
 
 io.use(attachClientIdMiddleware);
 
@@ -47,7 +47,7 @@ io.on('connection', (socket) => {
   // Send active rooms immediately on connection
   socket.emit('active_rooms', Array.from(rooms.keys()));
 
-  socket.on('join_room', (data: { username: string; room: string; feeling?: number }) => {
+  socket.on('join_room', (data: { username: string; room: string; feeling?: string }) => {
     console.log('Received join_room:', data);
     const { username, room, feeling } = data;
 
@@ -65,7 +65,7 @@ io.on('connection', (socket) => {
     }
     rooms.get(room)!.add(socket.id);
 
-    console.log(`User ${username} joined room ${room}`);
+    console.log(`User ${username} joined room ${room} with feeling: ${feeling}`);
     console.log(`Room ${room} now has ${rooms.get(room)!.size} users`);
     console.log('All rooms:', Array.from(rooms.keys()));
 
@@ -80,7 +80,8 @@ io.on('connection', (socket) => {
     emitRoomUsers(room);
   });
 
-  socket.on('message', (msg: { user: string; text: string; room: string; feeling?: number }) => {
+  socket.on('message', (msg: { user: string; text: string; room: string; feeling?: string }) => {
+    console.log('Received message:', msg);
     const timestamp = new Date().toISOString();
     io.to(msg.room).emit('message', { ...msg, timestamp });
   });
@@ -106,7 +107,6 @@ io.on('connection', (socket) => {
 
     emitRoomUsers(room);
   });
-
 
   socket.on('get_active_rooms', () => {
     console.log('Client requested active rooms');
