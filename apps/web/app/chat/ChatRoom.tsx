@@ -20,6 +20,7 @@ import Player from 'react-lottie-player';
 import happyAnim from '@/public/lotties/happy.json';
 import neutralAnim from '@/public/lotties/neutral.json';
 import sadAnim from '@/public/lotties/sad.json';
+import confettiAnim from '@/public/lotties/confetti.json';
 
 
 type Message = {
@@ -68,6 +69,8 @@ export default function ChatRoom({ username, room, feeling, setRoom }: Props) {
   const { clientId, setClientId } = useClientIdStore();
   const { feeling: storeFeeling, setFeeling } = useChatStore();
   const [open, setOpen] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+
 
 
   useEffect(() => {
@@ -127,6 +130,11 @@ export default function ChatRoom({ username, room, feeling, setRoom }: Props) {
           timestamp: new Date().toISOString(),
         },
       ]);
+
+      if (feeling === Feeling.Happy) {
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 4000); // show for 4 sec
+      }
     });
 
     socket.on('active_users', (userList) => {
@@ -331,6 +339,15 @@ export default function ChatRoom({ username, room, feeling, setRoom }: Props) {
             WebkitOverflowScrolling: 'touch'
           }}
         >
+          {showConfetti && (
+            <div className="absolute top-0 md:top-20 left-0 w-full h-full flex justify-center items-start pointer-events-none z-50">
+              <Player
+                play
+                animationData={confettiAnim}
+                className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px]"
+              />
+            </div>
+          )}
           {!hasJoined ? (
             <div className="flex justify-center items-center h-full">
               <LoaderFive text="Connecting to the server..." />
