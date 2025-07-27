@@ -1,6 +1,6 @@
 import type { Socket } from 'socket.io';
 
-export const attachClientIdMiddleware = (
+export const attachClientId = (
   socket: Socket,
   next: (err?: Error) => void
 ) => {
