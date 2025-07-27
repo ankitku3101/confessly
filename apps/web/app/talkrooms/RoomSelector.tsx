@@ -56,6 +56,7 @@ export default function RoomSelector({ setRoom }: Props) {
     }
 
     const socket = io(process.env.NEXT_PUBLIC_API_URL!, {
+      path: '/talkrooms',
       query: {
         clientId: clientId
       }

@@ -14,6 +14,7 @@ const io = new Server(httpServer, {
     methods: ['GET', 'POST'],
     credentials: true,
   },
+  path: '/talkrooms',
 });
 
 setupSocket(io);

@@ -91,6 +91,7 @@ export default function ChatRoom({ username, room, feeling, setRoom }: Props) {
     if (!socket) {
       socket = io(process.env.NEXT_PUBLIC_API_URL, {
         query: {clientId: id},
+        path: '/talkrooms'
       });
     }
 

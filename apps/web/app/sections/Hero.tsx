@@ -76,7 +76,7 @@ export default function Hero() {
           />
         </motion.span>
 
-        <Link href={'/chat'} className='cursor-none'>
+        <Link href={'/talkrooms'} className='cursor-none'>
           <motion.button
             style={{ border, boxShadow }}
             initial={{ opacity: 0 }}
