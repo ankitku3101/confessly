@@ -24,12 +24,12 @@ import {
 } from '@/components/ui/dialog';
 import { MagicCard } from '@/components/magicui/magic-card';
 
-export default function ConfessionsPage() {
+export default function page() {
   const { theme } = useTheme();
 
   const [content, setContent] = useState('');
   const [username, setUsername] = useState('');
-  const [confessionType, setConfessionType] = useState('general');
+  const [confessionType, setConfessionType] = useState('random');
   const [loading, setLoading] = useState(false);
 
   const [showDialog, setShowDialog] = useState(false);
@@ -46,25 +46,27 @@ export default function ConfessionsPage() {
 
     setLoading(true);
     try {
-      const res = await fetch('/confessions', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/confessions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           content,
-          username,
           confession_type: confessionType,
+          username,
         }),
       });
 
       const data = await res.json();
+      console.log(data);
+      
 
       if (!res.ok) throw new Error(data.error || 'Something went wrong');
 
       setDialogMessage('Your confession has been submitted successfully!');
       setShowDialog(true);
-      setContent('');
-      setUsername('');
-      setConfessionType('general');
+      setContent(content);
+      setUsername(username);
+      setConfessionType(confessionType);
     } catch (error: any) {
       setDialogMessage(error.message || 'Something went wrong');
       setShowDialog(true);
@@ -74,10 +76,10 @@ export default function ConfessionsPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 text-white">
-      <Card className="p-0 max-w-xl w-full shadow-none bg-card text-card-foreground">
-        <MagicCard className="p-0" gradientColor="#262626">
-          <CardHeader className="border-b border-border p-4 text-white">
+    <div className="min-h-screen flex items-center justify-center">
+      <Card className="p-0 max-w-lg w-full shadow-none border-none">
+        <MagicCard className="p-0" gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}>
+          <CardHeader className="border-b border-border p-4 [.border-b]:pb-4 text-white">
             <CardTitle>Post a Confession (under development)</CardTitle>
             <CardDescription className="text-muted-foreground">
               Share anonymously. Your identity is safe with us.
@@ -85,7 +87,7 @@ export default function ConfessionsPage() {
           </CardHeader>
 
           <form onSubmit={handleSubmit}>
-            <CardContent className="p-4 grid gap-4">
+            <CardContent className="p-4 grid gap-4 border-none">
               <div className="grid gap-2">
                 <Label className='text-white' htmlFor="confession">Confession</Label>
                 <Textarea
@@ -94,7 +96,7 @@ export default function ConfessionsPage() {
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   rows={5}
-                  className="bg-background border border-border text-foreground"
+                  className="bg-background border border-border text-foreground "
                 />
               </div>
 
@@ -128,7 +130,7 @@ export default function ConfessionsPage() {
               </div>
             </CardContent>
 
-            <CardFooter className="p-4 border-t border-border">
+            <CardFooter className="p-4">
               <Button type="submit" disabled={loading} className="w-full">
                 {loading ? 'Submitting...' : 'Submit'}
               </Button>
@@ -138,7 +140,7 @@ export default function ConfessionsPage() {
       </Card>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="bg-card text-card-foreground border border-border">
+        <DialogContent className="bg-background text-white border border-gray-200">
           <DialogHeader>
             <DialogTitle>Confession Status</DialogTitle>
           </DialogHeader>
