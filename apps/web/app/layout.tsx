@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
-import { MagicCursor } from "@/components/MagicCursor";
 import { StarsBackground } from "@/components/ui/stars-background"; 
 import { ShootingStars } from "@/components/ui/shooting-stars";
 import { Analytics } from '@vercel/analytics/next';
@@ -30,11 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${robotoSans.variable} ${robotoMono.variable} antialiased relative bg-black text-white overflow-hidden`}
+        className={`${robotoSans.variable} ${robotoMono.variable} antialiased relative bg-black text-white`}
       >
         <StarsBackground className="absolute inset-0 -z-10 pointer-events-none" />
         <ShootingStars className="absolute inset-0 -z-10 pointer-events-none" />
-        {/* <MagicCursor /> */}
         {children}
         <Analytics />
       </body>
