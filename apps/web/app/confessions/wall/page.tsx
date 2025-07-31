@@ -72,6 +72,12 @@ export default function Page() {
     700: 1,
   };
 
+  const truncateContent = (text: string, wordLimit: number) => {
+    const words = text.trim().split(/\s+/);
+    if (words.length <= wordLimit) return text;
+    return words.slice(0, wordLimit).join(' ') + '... See more';
+  };
+
   return (
     <div className="min-h-screen w-full text-white py-10">
       <div className="space-y-6 container">
@@ -107,7 +113,7 @@ export default function Page() {
                       </div>
                       {getConfessionIcon(confession.confession_type)}
                       <div className="font-sans text-neutral-200 whitespace-pre-wrap">
-                        {confession.content}
+                        {truncateContent(confession.content, 120)}
                       </div>
                       <div className="mt-2 mb-2 text-xs text-right font-sans italic text-neutral-300">{confession.username}</div>
                     </>
