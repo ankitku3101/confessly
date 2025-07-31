@@ -44,24 +44,6 @@ export default function Page() {
     });
   };
 
-  const getConfessionIcon = (type: string) => {
-    const iconClass = 'h-4 w-4 text-neutral-400';
-    switch (type.toLowerCase()) {
-      case 'love':
-        return <span className={iconClass}>💕</span>;
-      case 'secret':
-        return <span className={iconClass}>🤫</span>;
-      case 'guilt':
-        return <span className={iconClass}>😔</span>;
-      case 'fear':
-        return <span className={iconClass}>😰</span>;
-      case 'joy':
-        return <span className={iconClass}>😊</span>;
-      default:
-        return <span className={iconClass}>💭</span>;
-    }
-  };
-
   const Skeleton = () => (
     <div className="w-full h-30 rounded-xl bg-neutral-800/40 animate-pulse" />
   );
@@ -111,7 +93,6 @@ export default function Page() {
                         </span>
                         <span>{formatDate(confession.created_at)}</span>
                       </div>
-                      {getConfessionIcon(confession.confession_type)}
                       <div className="font-sans text-neutral-200 whitespace-pre-wrap">
                         {truncateContent(confession.content, 120)}
                       </div>
