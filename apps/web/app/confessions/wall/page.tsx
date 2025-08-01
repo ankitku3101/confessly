@@ -139,23 +139,50 @@ export default function Page() {
         </div>
       </div>
 
-      {/* Dialog for full confession */}
+      {selectedConfession && (
+        <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-md transition-all duration-300" />
+      )}
+
       <Dialog open={!!selectedConfession} onOpenChange={() => setSelectedConfession(null)}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
-            <DialogTitle>
-              {selectedConfession?.username} ·{' '}
-              <span className="text-xs text-neutral-400 lowercase">
-                {selectedConfession?.confession_type}
-              </span>
-            </DialogTitle>
+        <DialogContent
+          className={cn(
+            'min-w-full md:min-w-2xl lg:min-w-4xl md:rounded-xl border border-white/20 bg-transparent md:bg-black p-4 backdrop-blur-sm z-50',
+            'transition-all duration-300',
+          )}
+          style={{
+            boxShadow: selectedConfession
+              ? `0 0 200px ${shineColorMap[selectedConfession.confession_type]?.[1] ?? '#ffffff'}`
+              : undefined,
+          }}
+        >
+          <DialogHeader className="mb-2">
+            <DialogTitle className="text-base text-white">Anonymous Confession</DialogTitle>
           </DialogHeader>
-          <div className="text-sm text-neutral-200 whitespace-pre-wrap mt-4">
-            {selectedConfession?.content}
-          </div>
-          <div className="text-xs text-neutral-500 mt-4 text-right">
-            {selectedConfession && formatDate(selectedConfession.created_at)}
-          </div>
+
+          {selectedConfession && (
+            <>
+              <div className="flex gap-4 items-center text-xs text-neutral-500 mb-2">
+                <span
+                  className="capitalize px-3 py-1 rounded-xl text-xs text-white"
+                  style={{
+                    backgroundColor:
+                      tagColorMap[selectedConfession.confession_type] || 'rgba(255,255,255,0.08)',
+                  }}
+                >
+                  {selectedConfession.confession_type}
+                </span>
+                <span>{formatDate(selectedConfession.created_at)}</span>
+              </div>
+
+              <div className="font-sans text-neutral-200 whitespace-pre-wrap p-2">
+                {selectedConfession.content}
+              </div>
+
+              <div className="mt-2 mb-2 text-xs text-right font-sans italic text-neutral-300">
+                {selectedConfession.username}
+              </div>
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </div>
