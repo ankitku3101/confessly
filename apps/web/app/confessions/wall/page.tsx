@@ -46,7 +46,7 @@ export default function Page() {
   };
 
   const Skeleton = () => (
-    <div className="w-full h-30 rounded-xl bg-neutral-800/40 animate-pulse" />
+    <div className="w-full h-50 rounded-xl bg-neutral-800/40 animate-pulse" />
   );
 
   const breakpointColumnsObj = {
@@ -58,7 +58,7 @@ export default function Page() {
   const truncateContent = (text: string, wordLimit: number) => {
     const words = text.trim().split(/\s+/);
     if (words.length <= wordLimit) return text;
-    return words.slice(0, wordLimit).join(' ') + '... See more';
+    return words.slice(0, wordLimit).join(' ') + '...   See more';
   };
 
   const shineColorMap: Record<string, string[]> = {
@@ -146,7 +146,7 @@ export default function Page() {
       <Dialog open={!!selectedConfession} onOpenChange={() => setSelectedConfession(null)}>
         <DialogContent
           className={cn(
-            'md:max-h-3/4 max-h-[calc(100vh-6rem)] w-[calc(100vw-3rem)] md:min-w-2xl lg:min-w-4xl md:rounded-xl border border-white/20 bg-transparent p-4 backdrop-blur-sm z-50 overflow-y-auto',
+            'md:max-h-3/4 max-h-[calc(100vh-6rem)] w-[calc(100vw-3rem)] md:min-w-2xl lg:min-w-4xl md:rounded-xl bg-transparent p-4 backdrop-blur-sm z-50 overflow-y-auto',
             'transition-all duration-300',
           )}
           style={{

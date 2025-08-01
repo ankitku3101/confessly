@@ -42,18 +42,6 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --animate-shine: shine var(--duration) infinite linear;
-  @keyframes shine {
-  0% {
-    background-position: 0% 0%;
-    }
-  50% {
-    background-position: 100% 100%;
-    }
-  to {
-    background-position: 0% 0%;
-    }
-  }
 }
 
 :root {
@@ -216,7 +204,7 @@
     padding-left: 10px;
     padding-right: 10px;
   }
-
+  
   @media (min-width: 1200px) {
     .container {
       padding-left: 80px;
@@ -229,7 +217,7 @@
       max-width: 375px;
     }
   }
-
+  
   @media (min-width: 768px) {
     .container {
       max-width: 768px;
