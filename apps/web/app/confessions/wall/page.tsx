@@ -146,7 +146,7 @@ export default function Page() {
       <Dialog open={!!selectedConfession} onOpenChange={() => setSelectedConfession(null)}>
         <DialogContent
           className={cn(
-            'md:max-h-3/4 max-h-[calc(100vh-6rem)] w-[calc(100vw-6rem)] md:min-w-2xl lg:min-w-4xl md:rounded-xl border border-white/20 bg-transparent p-4 backdrop-blur-sm z-50 overflow-y-auto',
+            'md:max-h-3/4 max-h-[calc(100vh-6rem)] w-[calc(100vw-3rem)] md:min-w-2xl lg:min-w-4xl md:rounded-xl border border-white/20 bg-transparent p-4 backdrop-blur-sm z-50 overflow-y-auto',
             'transition-all duration-300',
           )}
           style={{
