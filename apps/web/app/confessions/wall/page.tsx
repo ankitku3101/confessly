@@ -6,6 +6,7 @@ import { SparklesText } from '@/components/magicui/sparkles-text';
 import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
+import { ShineBorder } from '@/components/magicui/shine-border';
 
 interface Confession {
   id: number;
@@ -60,6 +61,27 @@ export default function Page() {
     return words.slice(0, wordLimit).join(' ') + '... See more';
   };
 
+  const shineColorMap: Record<string, string[]> = {
+    love: ['#2b0f1a', '#ff3e75', '#4d1f2d'],
+    rant: ['#230808', '#e53935', '#4c1b1b'],
+    regret: ['#2f2503', '#f4c430', '#5c4510'],
+    funny: ['#322a00', '#ffcc33', '#5b4e16'],
+    sad: ['#08131f', '#2196f3', '#1d3242'],
+    wholesome: ['#0d1e14', '#4caf50', '#24432d'],
+    random: ['#160d26', '#9c27b0', '#3b2a50'],
+  };
+
+
+  const tagColorMap: Record<string, string> = {
+    love: '#4b1f28',   
+    rant: '#3d1412',   
+    regret: '#4a3a10',   
+    funny: '#4c3f0e',   
+    sad: '#1b2a36',   
+    wholesome: '#1e3426',   
+    random: '#2d1f3d',   
+  };
+
   return (
     <div className="min-h-screen w-full text-white py-10">
       <div className="space-y-6 container">
@@ -81,19 +103,28 @@ export default function Page() {
                 <div
                   key={confession?.id || index}
                   className={cn(
-                    'break-inside-avoid cursor-pointer rounded-xl border border-white/20 bg-black p-4 backdrop-blur-sm hover:bg-neutral-900/50 transition-all duration-300 hover:scale-[1.02]',
+                    'break-inside-avoid cursor-pointer rounded-xl border border-white/20 bg-black p-4 backdrop-blur-sm hover:bg-neutral-900/40 transition-all duration-300 hover:scale-[1.02]',
                   )}
                   onClick={() => confession && setSelectedConfession(confession)}
                 >
                   {confession ? (
                     <>
+                      <ShineBorder
+                        shineColor={shineColorMap[confession.confession_type] || ['#A07CFE', '#FE8FB5', '#FFBE7B']}
+                      />
                       <div className="flex justify-between items-center text-xs text-neutral-500 mb-2">
-                        <span className="capitalize bg-neutral-800 px-2 py-1 rounded-full text-xs">
+                        <span
+                          className="capitalize px-3 py-1 rounded-xl text-xs text-white"
+                          style={{
+                            backgroundColor:
+                              tagColorMap[confession.confession_type] || 'rgba(255,255,255,0.08)',
+                          }}
+                        >
                           {confession.confession_type}
                         </span>
                         <span>{formatDate(confession.created_at)}</span>
                       </div>
-                      <div className="font-sans text-neutral-200 whitespace-pre-wrap">
+                      <div className="font-sans text-neutral-200 whitespace-pre-wrap p-2">
                         {truncateContent(confession.content, 120)}
                       </div>
                       <div className="mt-2 mb-2 text-xs text-right font-sans italic text-neutral-300">{confession.username}</div>
