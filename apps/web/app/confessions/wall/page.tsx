@@ -10,6 +10,7 @@ import { ShineBorder } from '@/components/magicui/shine-border';
 
 interface Confession {
   id: number;
+  title?: string;
   content: string;
   confession_type: string;
   username: string;
@@ -117,13 +118,16 @@ export default function Page() {
                           className="capitalize px-3 py-1 rounded-xl text-xs text-white"
                           style={{
                             backgroundColor:
-                              tagColorMap[confession.confession_type] || 'rgba(255,255,255,0.08)',
+                            tagColorMap[confession.confession_type] || 'rgba(255,255,255,0.08)',
                           }}
-                        >
+                          >
                           {confession.confession_type}
                         </span>
                         <span>{formatDate(confession.created_at)}</span>
                       </div>
+                      {confession?.title && (
+                        <h3 className="text-lg font-semibold text-white px-2 pb-1">{confession.title}</h3>
+                      )}
                       <div className="font-sans text-neutral-200 whitespace-pre-wrap p-2">
                         {truncateContent(confession.content, 120)}
                       </div>
@@ -146,8 +150,8 @@ export default function Page() {
       <Dialog open={!!selectedConfession} onOpenChange={() => setSelectedConfession(null)}>
         <DialogContent
           className={cn(
-            'md:max-h-3/4 max-h-[calc(100vh-6rem)] w-[calc(100vw-3rem)] md:min-w-2xl lg:min-w-4xl md:rounded-xl bg-transparent p-4 backdrop-blur-sm z-50 overflow-y-auto',
-            'transition-all duration-300',
+            'md:max-h-3/4 max-h-[calc(100vh-6rem)] w-[calc(100vw-3rem)] md:min-w-2xl lg:min-w-4xl md:rounded-xl bg-transparent backdrop-blur-sm z-50 overflow-y-auto',
+            'transition-all duration-300 px-4 md:px-6 py-4 md:py-6'
           )}
           style={{
             boxShadow: selectedConfession
@@ -155,30 +159,40 @@ export default function Page() {
               : undefined,
           }}
         >
-          <DialogHeader className="mb-2">
-            <DialogTitle className="text-base text-white">Anonymous Confession</DialogTitle>
-          </DialogHeader>
-
           {selectedConfession && (
             <>
-              <div className="flex gap-4 items-center text-xs text-neutral-500 mb-2">
-                <span
-                  className="capitalize px-3 py-1 rounded-xl text-xs text-white"
-                  style={{
-                    backgroundColor:
-                      tagColorMap[selectedConfession.confession_type] || 'rgba(255,255,255,0.08)',
-                  }}
-                >
-                  {selectedConfession.confession_type}
-                </span>
-                <span>{formatDate(selectedConfession.created_at)}</span>
-              </div>
+              <DialogHeader className="mb-4">
+                <DialogTitle>
+                  <div className="flex gap-4 items-center text-xs text-neutral-500">
+                    <span
+                      className="capitalize px-3 py-1 rounded-xl text-white"
+                      style={{
+                        backgroundColor:
+                          tagColorMap[selectedConfession.confession_type] || 'rgba(255,255,255,0.08)',
+                      }}
+                    >
+                      {selectedConfession.confession_type}
+                    </span>
+                    <span>{formatDate(selectedConfession.created_at)}</span>
+                  </div>
+                </DialogTitle>
+              </DialogHeader>
 
-              <div className="font-sans text-neutral-200 whitespace-pre-wrap p-2">
+              {selectedConfession?.title?.trim() ? (
+                <h3 className="text-xl font-semibold text-white mb-3">
+                  {selectedConfession.title}
+                </h3>
+              ) : (
+                <h3 className="text-xl font-semibold text-white mb-3">
+                  Anonymous Confession
+                </h3>
+              )}
+
+              <div className="font-sans text-neutral-200 whitespace-pre-wrap mb-4">
                 {selectedConfession.content}
               </div>
 
-              <div className="mt-2 mb-2 text-xs text-right font-sans italic text-neutral-300">
+              <div className="text-xs text-right font-sans italic text-neutral-300">
                 {selectedConfession.username}
               </div>
             </>
