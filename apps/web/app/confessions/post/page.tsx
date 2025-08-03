@@ -27,6 +27,7 @@ import { MagicCard } from '@/components/magicui/magic-card';
 export default function page() {
   const { theme } = useTheme();
 
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [username, setUsername] = useState('');
   const [confessionType, setConfessionType] = useState('random');
@@ -50,6 +51,7 @@ export default function page() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          title,
           content,
           confession_type: confessionType,
           username,
@@ -58,15 +60,15 @@ export default function page() {
 
       const data = await res.json();
       console.log(data);
-      
 
       if (!res.ok) throw new Error(data.error || 'Something went wrong');
 
       setDialogMessage('Your confession has been submitted successfully!');
       setShowDialog(true);
-      setContent(content);
-      setUsername(username);
-      setConfessionType(confessionType);
+      setTitle('');
+      setContent('');
+      setUsername('');
+      setConfessionType('random');
     } catch (error: any) {
       setDialogMessage(error.message || 'Something went wrong');
       setShowDialog(true);
@@ -78,7 +80,7 @@ export default function page() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Card className="p-0 max-w-lg w-full shadow-none border-none">
-        <MagicCard className="p-0" gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}>
+        <MagicCard className="p-0" gradientColor={theme === 'dark' ? '#262626' : '#D9D9D955'}>
           <CardHeader className="border-b border-border p-4 [.border-b]:pb-4 text-white">
             <CardTitle>Post a Confession (under development)</CardTitle>
             <CardDescription className="text-muted-foreground">
@@ -89,19 +91,30 @@ export default function page() {
           <form onSubmit={handleSubmit}>
             <CardContent className="p-4 grid gap-4 border-none">
               <div className="grid gap-2">
-                <Label className='text-white' htmlFor="confession">Confession</Label>
+                <Label className="text-white" htmlFor="title">Title (optional)</Label>
+                <Input
+                  id="title"
+                  placeholder="Give it a short title (optional)"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="bg-background border border-border text-foreground"
+                />
+              </div>
+
+              <div className="grid gap-2">
+                <Label className="text-white" htmlFor="confession">Confession</Label>
                 <Textarea
                   id="confession"
                   placeholder="Type something you need to get off your chest..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   rows={5}
-                  className="bg-background border border-border text-foreground "
+                  className="bg-background border border-border text-foreground"
                 />
               </div>
 
               <div className="grid gap-2">
-                <Label className='text-white' htmlFor="username">Username (optional)</Label>
+                <Label className="text-white" htmlFor="username">Username (optional)</Label>
                 <Input
                   id="username"
                   placeholder="Anonymous"
@@ -112,7 +125,7 @@ export default function page() {
               </div>
 
               <div className="grid gap-2">
-                <Label className='text-white' htmlFor="type">Type</Label>
+                <Label className="text-white" htmlFor="type">Type</Label>
                 <select
                   id="type"
                   value={confessionType}
