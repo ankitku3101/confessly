@@ -12,8 +12,8 @@ import { StarsBackground } from '@/components/ui/stars-background';
 import { ShootingStars } from '@/components/ui/shooting-stars';
 import Link from 'next/link';
 import { TextRevealCard } from '@/components/ui/text-reveal-card';
+import { CardSpotlight } from '@/components/ui/card-spotlight';
 
-// Rotating taglines
 const TAGLINES = [
   'say it, forget it',
   'share without shame',
@@ -38,13 +38,10 @@ export default function Hero() {
   const border = useMotionTemplate`1px solid ${color}`;
   const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
 
-  const randomTagline =
-    TAGLINES[Math.floor(Math.random() * TAGLINES.length)];
-
   return (
     <motion.section
       style={{ backgroundImage }}
-      className="relative grid min-h-dvh md:min-h-screen place-content-center overflow-hidden bg-black px-4 py-24 text-gray-200"
+      className="relative grid min-h-dvh md:min-h-screen place-content-center overflow-hidden bg-black px-4 py-20 text-gray-200"
     >
       <div className="relative z-10 flex flex-col items-center">
         <motion.span
@@ -60,7 +57,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 1.0, ease: 'easeOut' }}
-          className="max-w-4xl p-1 bg-gradient-to-b from-white via-white/80 to-white/60 bg-clip-text text-transparent text-center text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-semibold leading-tight tracking-tight"
+          className="max-w-4xl p-1 bg-gradient-to-b from-white via-white/80 to-white/60 bg-clip-text text-transparent text-center text-5xl sm:text-7xl md:text-8xl font-semibold leading-tight tracking-tight"
         >
           confessly
         </motion.h1>
@@ -76,20 +73,53 @@ export default function Hero() {
           />
         </motion.span>
 
-        <Link href={'/talkrooms'} className='cursor-none'>
-          <motion.button
-            style={{ border, boxShadow }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.9, duration: 0.5 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.985 }}
-            className="group mt-8 relative flex w-fit items-center gap-2 rounded-full bg-[#1f1f1f]/60 px-6 py-3 text-white transition-colors hover:bg-[#1f1f1f]/80 cursor-none"
-          >
-            Enter Anonymously
-            <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
-          </motion.button>
-        </Link>
+        {/* Mini Cards Section */}
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {[
+            {
+              title: 'Talkrooms',
+              subtitle: 'Topic-based group chats. Fully anonymous.',
+              href: '/talkrooms',
+              cta: 'Join Rooms',
+            },
+            {
+              title: 'Confession Wall',
+              subtitle: 'Read and write real, raw, anonymous confessions.',
+              href: '/confessions/wall',
+              cta: 'View Confessions',
+            },
+            {
+              title: 'Talk with a Stranger',
+              subtitle: 'One-on-one anonymous chats. No identity, no pressure.',
+              href: '/stranger-chat',
+              cta: 'Start Chatting',
+            },
+          ].map(({ title, subtitle, href, cta }, index) => (
+            <CardSpotlight
+              key={index}
+              className="h-auto w-72 flex flex-col justify-between p-8 text-center rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 hover:scale-[1.015] transition-transform duration-200"
+            >
+              <div className="relative z-20 flex flex-col flex-grow justify-between items-center">
+                <div>
+                  <h3 className="text-xl font-bold text-white">{title}</h3>
+                  <p className="text-white/70 mt-2 text-sm">{subtitle}</p>
+                </div>
+
+                <Link href={href} className="mt-6">
+                  <motion.button
+                    style={{ border, boxShadow }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.985 }}
+                    className="group relative flex items-center gap-2 rounded-full bg-[#1f1f1f]/60 px-4 py-2 text-xs text-white transition-colors hover:bg-[#1f1f1f]/80 cursor-none"
+                  >
+                    {cta}
+                    <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
+                  </motion.button>
+                </Link>
+              </div>
+            </CardSpotlight>
+          ))}
+        </div>
       </div>
 
       <StarsBackground className="z-0" />
