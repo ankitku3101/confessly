@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
 import {
   useMotionTemplate,
@@ -13,6 +13,7 @@ import { ShootingStars } from '@/components/ui/shooting-stars';
 import Link from 'next/link';
 import { TextRevealCard } from '@/components/ui/text-reveal-card';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
+import { LoaderOne } from '@/components/ui/loader';
 
 const TAGLINES = [
   'say it, forget it',
@@ -24,6 +25,7 @@ const COLORS_TOP = ['#13FFAA', '#1E67C6', '#CE84CF', '#DD335C'];
 
 export default function Hero() {
   const color = useMotionValue(COLORS_TOP[0]);
+  const [loadingStates, setLoadingStates] = useState<{ [key: number]: boolean }>({});
 
   useEffect(() => {
     animate(color, COLORS_TOP, {
@@ -37,6 +39,14 @@ export default function Hero() {
   const backgroundImage = useMotionTemplate`radial-gradient(110% 145% at 50% 0%, #000000 44%, ${color})`;
   const border = useMotionTemplate`1px solid ${color}`;
   const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
+
+  const handleButtonClick = (index: number) => {
+    setLoadingStates(prev => ({ ...prev, [index]: true }));
+    
+    setTimeout(() => {
+      setLoadingStates(prev => ({ ...prev, [index]: false }));
+    }, 2000);
+  };
 
   return (
     <motion.section
@@ -110,10 +120,18 @@ export default function Hero() {
                     style={{ border, boxShadow }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.985 }}
-                    className="group relative flex items-center gap-2 rounded-full bg-[#1f1f1f]/60 px-4 py-2 text-xs text-white transition-colors hover:bg-[#1f1f1f]/80 cursor-none"
+                    onClick={() => handleButtonClick(index)}
+                    disabled={loadingStates[index]}
+                    className="group relative flex items-center justify-center gap-2 rounded-full bg-[#1f1f1f]/60 px-4 py-2 text-xs text-white transition-colors hover:bg-[#1f1f1f]/80 cursor-none min-w-[120px] h-8"
                   >
-                    {cta}
-                    <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
+                    {loadingStates[index] ? (
+                      <LoaderOne />
+                    ) : (
+                      <>
+                        {cta}
+                        <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
+                      </>
+                    )}
                   </motion.button>
                 </Link>
               </div>
