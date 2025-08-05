@@ -7,6 +7,8 @@ import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import { ShineBorder } from '@/components/magicui/shine-border';
+import { RainbowButton } from '@/components/magicui/rainbow-button';
+import Link from 'next/link';
 
 interface Confession {
   id: number;
@@ -91,7 +93,11 @@ export default function Page() {
             Confession Wall
           </SparklesText>
           <TextGenerateEffect className="text-rose-100 text-sm md:text-lg mt-4" words={words} />
+          <Link href={'/confessions/post'}>
+            <RainbowButton className='mt-6' variant={'outline'}>Wanna Confess ?</RainbowButton>
+          </Link>
         </div>
+
 
         <div className="my-16 max-w-6xl mx-auto">
           <Masonry
