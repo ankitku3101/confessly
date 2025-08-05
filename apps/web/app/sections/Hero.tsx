@@ -100,7 +100,7 @@ export default function Hero() {
             },
             {
               title: 'Talk with a Stranger',
-              subtitle: 'One-on-one anonymous chats. No identity, no pressure.',
+              subtitle: 'One-on-one anonymous chats. No identity, no pressure. (in progress)',
               href: '/stranger-chat',
               cta: 'Start Chatting',
             },
