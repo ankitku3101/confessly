@@ -105,37 +105,43 @@ export default function Hero() {
               cta: 'Start Chatting',
             },
           ].map(({ title, subtitle, href, cta }, index) => (
-            <CardSpotlight
+            <motion.div
               key={index}
-              className="h-auto w-72 flex flex-col justify-between p-8 text-center rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 hover:scale-[1.015] transition-transform duration-200"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 + index * 0.2, duration: 0.8, ease: 'easeOut' }}
             >
-              <div className="relative z-20 flex flex-col flex-grow justify-between items-center">
-                <div>
-                  <h3 className="text-xl font-bold text-white">{title}</h3>
-                  <p className="text-white/70 mt-2 text-sm">{subtitle}</p>
-                </div>
+              <CardSpotlight
+                className="h-auto w-72 flex flex-col justify-between p-8 text-center rounded-2xl bg-white/10 hover:bg-black backdrop-blur-md border border-white/20 hover:scale-[1.015] transition-transform duration-200"
+              >
+                <div className="relative z-20 flex flex-col flex-grow justify-between items-center">
+                  <div>
+                    <h3 className="text-xl font-bold text-white">{title}</h3>
+                    <p className="text-white/70 mt-2 text-sm">{subtitle}</p>
+                  </div>
 
-                <Link href={href} className="mt-6">
-                  <motion.button
-                    style={{ border, boxShadow }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.985 }}
-                    onClick={() => handleButtonClick(index)}
-                    disabled={loadingStates[index]}
-                    className="group relative flex items-center justify-center gap-2 rounded-full bg-[#1f1f1f]/60 px-4 py-2 text-xs text-white transition-colors hover:bg-[#1f1f1f]/80 cursor-none min-w-[120px] h-8"
-                  >
-                    {loadingStates[index] ? (
-                      <LoaderOne />
-                    ) : (
-                      <>
-                        {cta}
-                        <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
-                      </>
-                    )}
-                  </motion.button>
-                </Link>
-              </div>
-            </CardSpotlight>
+                  <Link href={href} className="mt-6">
+                    <motion.button
+                      style={{ border, boxShadow }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.985 }}
+                      onClick={() => handleButtonClick(index)}
+                      disabled={loadingStates[index]}
+                      className="group relative flex items-center justify-center gap-2 rounded-full bg-[#1f1f1f]/60 px-4 py-2 text-xs text-white transition-colors hover:bg-[#1f1f1f]/80 cursor-none min-w-[120px] h-8"
+                    >
+                      {loadingStates[index] ? (
+                        <LoaderOne />
+                      ) : (
+                        <>
+                          {cta}
+                          <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
+                        </>
+                      )}
+                    </motion.button>
+                  </Link>
+                </div>
+              </CardSpotlight>
+            </motion.div>
           ))}
         </div>
       </div>
