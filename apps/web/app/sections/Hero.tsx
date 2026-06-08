@@ -60,7 +60,7 @@ export default function Hero() {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="mb-2 inline-block rounded-full bg-[#1f1f1f]/70 px-3 py-1.5 text-sm text-white/60"
         >
-          Under Development!
+          Anonymous Voices, Real Stories
         </motion.span>
 
         <motion.h1
@@ -84,7 +84,7 @@ export default function Hero() {
         </motion.span>
 
         {/* Mini Cards Section */}
-        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-10">
           {[
             {
               title: 'Talkrooms',
@@ -97,13 +97,13 @@ export default function Hero() {
               subtitle: 'Read and write real, raw, anonymous confessions.',
               href: '/confessions/wall',
               cta: 'View Confessions',
-            },
-            {
-              title: 'Talk with a Stranger',
-              subtitle: 'One-on-one anonymous chats. No identity, no pressure. (in progress)',
-              href: '/stranger-chat',
-              cta: 'Start Chatting',
-            },
+            }
+            // {
+            //   title: 'Talk with a Stranger',
+            //   subtitle: 'One-on-one anonymous chats. No identity, no pressure. (in progress)',
+            //   href: '/stranger-chat',
+            //   cta: 'Start Chatting',
+            // },
           ].map(({ title, subtitle, href, cta }, index) => (
             <motion.div
               key={index}
@@ -112,7 +112,7 @@ export default function Hero() {
               transition={{ delay: 0.6 + index * 0.2, duration: 0.8, ease: 'easeOut' }}
             >
               <CardSpotlight
-                className="h-auto w-72 flex flex-col justify-between p-8 text-center rounded-2xl bg-white/10 hover:bg-black backdrop-blur-md border border-white/20 hover:scale-[1.015] transition-transform duration-200"
+                className="h-auto w-72 md:w-96 flex flex-col justify-between p-8 text-center rounded-2xl bg-white/10 hover:bg-black backdrop-blur-md border border-white/20 hover:scale-[1.015] transition-transform duration-200"
               >
                 <div className="relative z-20 flex flex-col flex-grow justify-between items-center">
                   <div>

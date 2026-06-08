@@ -13,7 +13,7 @@ export const LoaderOne = () => {
     };
   };
   return (
-    <div className="flex items-center gap-2 mb-1">
+    <div className="flex items-center gap-2 pb-1.5">
       <motion.div
         initial={{
           y: 0,
