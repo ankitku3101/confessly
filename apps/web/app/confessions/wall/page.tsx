@@ -28,7 +28,7 @@ export default function Page() {
   useEffect(() => {
     const fetchConfessions = async () => {
       try {
-        const res = await fetch('https://confessly.onrender.com/confessions');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/confessions`);
         const data = await res.json();
         setConfessions(data);
       } catch (error) {
