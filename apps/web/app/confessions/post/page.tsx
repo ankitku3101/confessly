@@ -82,7 +82,7 @@ export default function page() {
       <Card className="p-0 max-w-lg w-full shadow-none border-none">
         <MagicCard className="p-0" gradientColor={theme === 'dark' ? '#262626' : '#D9D9D955'}>
           <CardHeader className="border-b border-border p-4 [.border-b]:pb-4 text-white">
-            <CardTitle>Post a Confession (under development)</CardTitle>
+            <CardTitle>Post a Confession</CardTitle>
             <CardDescription className="text-muted-foreground">
               Share anonymously. Your identity is safe with us.
             </CardDescription>
