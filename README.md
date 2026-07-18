@@ -2,7 +2,20 @@
 
 **An anonymous confession wall paired with live WebSocket chat rooms — no accounts, no sign-up, just a browser-generated identity.**
 
-[🚀 Live Demo](https://confessly-web.vercel.app/) · ![Build Status](https://img.shields.io/badge/build-passing-brightgreen) ![License](https://img.shields.io/badge/license-ISC-blue) ![PRs](https://img.shields.io/badge/PRs-welcome-orange)
+[🚀 Live Demo](https://confessly-web.vercel.app/)
+
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![Socket.IO](https://img.shields.io/badge/Socket.IO-010101?style=for-the-badge&logo=socketdotio&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-433E38?style=for-the-badge&logo=react&logoColor=white)
+![Turborepo](https://img.shields.io/badge/Turborepo-EF4444?style=for-the-badge&logo=turborepo&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)
 
 ![System Preview](confessly.png)
 
@@ -14,16 +27,14 @@ Anonymous apps have to handle two things carefully: knowing who someone is *with
 
 - **No accounts, but still "you"** — each browser gets a `clientId` generated once and saved in `localStorage`. That ID gets checked at the Socket.IO handshake (`attachClientId` middleware), so a connection is rejected before it can even join a room if the ID is missing. No sign-up, no passwords, nothing to leak.
 - **Room state kept in memory** — who's online, which rooms exist, and each person's "feeling" status all live in plain `Map`/`Set` structures on the server. Nothing hits the database on every join, message, or typing event, so presence updates stay fast.
-- **Two chat systems, one server** — Talk Rooms (multi-person, persistent, shows who's online) and Stranger Chat (random 1:1 pairing) run on the same Socket.IO server but never share state, so events from one never leak into the other.
 - **The confession wall talks straight to the database** — no caching tricks on the client, every read/write goes through Supabase. Slightly slower, but the feed is never showing stale or incorrect data.
 
 ### At a Glance
 
-- ⚡ Presence updates (`active_rooms`, `active_users`) are served from memory, so they're fast — no database round trip in the hot path.
-- 🔒 Every socket connection is checked for a `clientId` before it's allowed to join anything.
-- 🧵 Stranger-chat matchmaking pairs people off a simple FIFO queue — first come, first matched.
-- 🧱 Turborepo caches builds per workspace, so touching the frontend doesn't force the backend to rebuild (and vice versa).
-- 🎯 Confession reads/writes go through Supabase's REST layer, with real error messages returned instead of silent failures.
+- Presence updates (`active_rooms`, `active_users`) are served from memory, so they're fast — no database round trip in the hot path.
+- Every socket connection is checked for a `clientId` before it's allowed to join anything.
+- Turborepo caches builds per workspace, so touching the frontend doesn't force the backend to rebuild (and vice versa).
+- Confession reads/writes go through Supabase's REST layer, with real error messages returned instead of silent failures.
 
 ---
 
@@ -35,9 +46,9 @@ Anonymous apps have to handle two things carefully: knowing who someone is *with
 | | Zustand (`persist` middleware) | Client identity (`clientId`), chat session state (`username`, `room`, `feeling`) persisted to `localStorage` |
 | | Tailwind CSS 4, Radix UI, `class-variance-authority` | Design-system primitives (dialog, avatar, dropdown, popover) with accessible headless components |
 | | React Hook Form + Zod | Schema-validated form state (e.g. 6-digit room ID regex validation) with zero re-render cost |
-| | Socket.IO Client | Bidirectional transport for talk rooms & stranger matchmaking |
+| | Socket.IO Client | Bidirectional transport for talk rooms |
 | **Backend Services** | Node.js, Express 5 | REST API surface (`/confessions`, `/ping` liveness probe) |
-| | Socket.IO Server (`socket.io`) | Two isolated real-time namespaces: talk rooms (presence/typing/feeling) and stranger matchmaking (FIFO pairing) |
+| | Socket.IO Server (`socket.io`) | Talk rooms namespace — presence, typing, and feeling-state broadcast |
 | | Custom Socket.IO middleware | `attachClientId` — handshake-level identity enforcement before any room join |
 | | `ws` | Low-level WebSocket primitive available for non-Socket.IO transports |
 | **Data & Infra** | Supabase (Postgres + PostgREST) | Confession persistence, ordered by `created_at`, accessed via `@supabase/supabase-js` |
@@ -63,7 +74,6 @@ flowchart LR
         Router["Express Router\nconfessions/index.ts"]
         MW["attachClientId\nhandshake middleware"]
         TalkNS["Talk Room Namespace\nrooms Map · users Map"]
-        StrangerNS["Stranger Chat Namespace\nwaitingQueue · matchedUsers"]
     end
 
     subgraph Data["Persistence"]
@@ -81,9 +91,7 @@ flowchart LR
 
     WS --> MW
     MW -->|"validated clientId"| TalkNS
-    MW -->|"validated clientId"| StrangerNS
     TalkNS -->|"active_rooms · active_users · message"| UI
-    StrangerNS -->|"match_found · private_message"| UI
 ```
 
 ---
@@ -233,23 +241,6 @@ Group chat rooms with live presence, typing indicators, and a per-user "feeling"
 }
 ```
 
-### WebSocket — Stranger Matchmaking
-
-Pairs two random users into a private chat. Runs on the same server as Talk Rooms but keeps completely separate state.
-
-| Event (client→server) | Server behavior |
-|---|---|
-| `join_random_chat` | Enqueues `socket.id`; pairs the two oldest waiting sockets into a synthetic room (`stranger_<id1>_<id2>`) |
-| `private_message` | Relays `{ sender, text, timestamp }` to the paired room only |
-
-**Sample: `match_found` emitted to both paired sockets**
-```json
-{
-  "roomId": "stranger_abc123_def456",
-  "partner": "def456"
-}
-```
-
 ---
 
 ## Project Structure
@@ -262,7 +253,7 @@ apps/
     lib/             # Zustand stores (clientId, chat state)
   api/              # Express + Socket.IO backend
     src/routes/       # REST: /confessions
-    src/socket/       # Talk room + stranger-chat namespaces
+    src/socket/       # Talk room namespace
     src/middleware/    # Handshake-level clientId enforcement
     src/lib/           # Supabase client
 
@@ -276,4 +267,4 @@ packages/
 
 ## Status
 
-Actively being worked on. The REST and Socket.IO features above are stable; the matchmaking UI and moderation tools are still in progress.
+Confession Wall and Talk Rooms are complete and stable. More features are planned and will be added in future versions.
