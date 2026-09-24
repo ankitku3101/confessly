@@ -73,7 +73,7 @@ export default function RoomSelector({ setRoom }: Props) {
     });
 
     socket.on('active_rooms', (roomList: string[]) => {
-      console.log("Received active_rooms:", roomList);
+      // console.log("Received active_rooms:", roomList);
       setRooms(roomList);
     });
 

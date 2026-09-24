@@ -1,0 +1,79 @@
+# Socket.IO load test for talk rooms (in-memory only, no database writes).
+# Each virtual user connects with its own clientId, joins a room, types,
+# sends messages and changes feeling, mirroring apps/web/app/talkrooms/ChatRoom.tsx.
+#
+#   npx artillery@2.0.34 run loadtest/talkrooms.yml              # prod (Render)
+#   npx artillery@2.0.34 run -e local loadtest/talkrooms.yml     # localhost:3001
+#
+# Real server latency is reported as the custom metrics talkroom.join_rtt and
+# talkroom.message_rtt (see talkrooms-processor.js). socketio.response_time
+# only measures the client-side emit and can be ignored.
+#
+# Rooms are prefixed "loadtest-". Real users will see them in the room list
+# while the test runs, and they disappear once the virtual users disconnect.
+
+config:
+  target: "https://confessly.onrender.com"
+  environments:
+    local:
+      target: "http://localhost:3001"
+  processor: "./talkrooms-processor.js"
+  socketio:
+    path: "/talkrooms"
+    transports: ["websocket"]
+    query:
+      clientId: "loadtest-{{ $uuid }}"
+  phases:
+    - name: warm-up
+      duration: 30
+      arrivalRate: 1
+    - name: ramp-up
+      duration: 60
+      arrivalRate: 1
+      rampTo: 10
+    - name: sustained
+      duration: 120
+      arrivalRate: 10
+  variables:
+    room:
+      - loadtest-lobby
+      - loadtest-late-night
+      - loadtest-vent
+      - loadtest-random
+    feeling:
+      - happy
+      - neutral
+      - sad
+  plugins:
+    ensure: {}
+  ensure:
+    thresholds:
+      - talkroom.message_rtt.p95: 1000
+      - talkroom.join_rtt.p95: 1500
+
+scenarios:
+  - name: Chat in a talk room
+    engine: socketio
+    flow:
+      # Opens the socket, as the room selector does on page load.
+      - emit:
+          channel: "get_active_rooms"
+      - function: "joinRoom"
+      - think: 1
+      - loop:
+          - emit:
+              channel: "typing"
+              data:
+                username: "{{ username }}"
+                room: "{{ room }}"
+          - think: 1
+          - function: "sendMessage"
+          - think: 2
+        count: 10
+      - emit:
+          channel: "change_user_feeling"
+          data:
+            username: "{{ username }}"
+            room: "{{ room }}"
+            feeling: "happy"
+      - think: 2

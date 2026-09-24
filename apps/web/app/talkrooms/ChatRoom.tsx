@@ -142,6 +142,18 @@ export default function ChatRoom({ username, room, feeling, setRoom }: Props) {
       setActiveUsers(userList)
     })
 
+    socket.on('user_joined', (user: ActiveUser) => {
+      setActiveUsers((prev) => [...prev, user]);
+    });
+
+    socket.on('user_left', ({ username }: { username: string }) => {
+      setActiveUsers((prev) => {
+        // Remove only one entry in case two users share a name
+        const index = prev.findIndex((user) => user.username === username);
+        return index === -1 ? prev : prev.filter((_, i) => i !== index);
+      });
+    });
+
     return () => {
       socket?.disconnect();
       socket = null;
