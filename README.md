@@ -211,10 +211,13 @@ Group chat rooms with live presence, typing indicators, and a per-user "feeling"
 
 | Event (client→server) | Payload | Event (server→client) | Payload |
 |---|---|---|---|
-| `join_room` | `{ username, room, feeling? }` | `active_rooms` | `string[]` (room IDs) |
-| `message` | `{ user, text, room, feeling? }` | `active_users` | `Array<{ username, room, feeling }>` |
-| `typing` | `{ username, room }` | `message` | `{ user, text, room, timestamp }` |
-| `change_user_feeling` | `{ username, room, feeling }` | `system_message` | `{ text, timestamp, isSystem: true }` |
+| `join_room` | `{ username, room, feeling? }` | `active_rooms` | `string[]` (room IDs) — sent on connect, and to everyone when a room is created or deleted |
+| `message` | `{ user, text, room, feeling? }` | `active_users` | `Array<{ username, room, feeling }>` — full list, sent only to the user who just joined |
+| `typing` | `{ username, room }` | `user_joined` | `{ username, room, feeling }` — sent to the rest of the room |
+| `change_user_feeling` | `{ username, room, feeling }` | `user_left` | `{ username }` — sent to the rest of the room |
+| | | `message` | `{ user, text, room, timestamp }` |
+| | | `system_message` | `{ text, timestamp, isSystem: true }` |
+| | | `user_feeling_changed` | `{ username, feeling }` |
 
 **Sample: `join_room` → `system_message` broadcast**
 ```json
@@ -227,6 +230,47 @@ Group chat rooms with live presence, typing indicators, and a per-user "feeling"
   "timestamp": "2026-07-18T02:15:01.442Z",
   "isSystem": true
 }
+```
+
+---
+
+## 5. Load Testing
+
+The talk rooms were load-tested against the production API (Render, single instance, 0.5 vCPU / 512 MB) using [Artillery](https://www.artillery.io/). The full report is in [`loadtest/results/talkrooms-report.json`](loadtest/results/talkrooms-report.json).
+
+### What the Test Does
+
+Each virtual user connects over WebSocket with its own `clientId`, joins one of 4 rooms, sends 10 typing events and 10 messages, and changes its feeling — the same flow as a real user in `ChatRoom.tsx`. Latency is measured as a true round trip: the time from sending a message until the server broadcasts it back to the sender's room.
+
+| Phase | Duration | New users per second |
+|---|---|---|
+| Warm-up | 30 s | 1 |
+| Ramp-up | 60 s | 1 → 10 |
+| Sustained | 120 s | 10 |
+
+### Results
+
+| Concurrent users | Message round trip (p95) | Outcome |
+|---|---|---|
+| up to ~230 | ~310 ms | Flat — same as idle, server keeping up |
+| ~290 | ~670 ms | Starting to queue |
+| ~370 | ~1.6 s | CPU saturated |
+| 450+ | several seconds | New connections start timing out |
+
+- **1,560** simulated users and **13.5K** socket events over 3.5 minutes
+- **~250 concurrent users** sustained at ~300 ms round trip (most of which is network latency between the test machine and Render)
+- Memory stayed under **90 MB**; CPU hit 100% of 0.5 vCPU at the peak
+
+The bottleneck is message fan-out: every message and typing event is delivered to every user in the room, and this test packs 60+ users into each room with everyone chatting nonstop. That makes it a worst-case scenario — real traffic spread across more, smaller rooms needs far fewer deliveries per message.
+
+### Running It
+
+```bash
+# Against production (writes loadtest/results/talkrooms-report.json)
+npm run loadtest:talkrooms
+
+# Against a local API on port 3001
+npx artillery@2.0.34 run -e local loadtest/talkrooms.yml
 ```
 
 ---
@@ -244,6 +288,8 @@ apps/
     src/socket/       # Talk room namespace
     src/middleware/    # Handshake-level clientId enforcement
     src/lib/           # Supabase client
+
+loadtest/             # Artillery load test for talk rooms + results
 
 packages/
   ui/                 # Shared UI primitives

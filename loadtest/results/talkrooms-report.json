@@ -1,0 +1,3389 @@
+{
+  "aggregate": {
+    "period": 1790285280000,
+    "counters": {
+      "vusers.created_by_name.Chat in a talk room": 1560,
+      "vusers.created": 1560,
+      "socketio.emit": 13512,
+      "vusers.failed": 434,
+      "vusers.completed": 1126,
+      "errors.Error: timeout": 434,
+      "talkroom.message_timeout": 115
+    },
+    "rates": {
+      "socketio.emit_rate": 22
+    },
+    "firstCounterAt": 1790285016698,
+    "firstHistogramAt": 1790285017873,
+    "lastCounterAt": 1790285281074,
+    "lastHistogramAt": 1790285281074,
+    "firstMetricAt": 1790285016698,
+    "lastMetricAt": 1790285281074,
+    "summaries": {
+      "socketio.response_time": {
+        "min": 0,
+        "max": 6.7,
+        "count": 13512,
+        "mean": 0.2,
+        "p50": 0.2,
+        "median": 0.2,
+        "p75": 0.3,
+        "p90": 0.3,
+        "p95": 0.4,
+        "p99": 0.9,
+        "p999": 2.5
+      },
+      "talkroom.join_rtt": {
+        "min": 274,
+        "max": 8006,
+        "count": 1126,
+        "mean": 960.4,
+        "p50": 620.3,
+        "median": 620.3,
+        "p75": 1465.9,
+        "p90": 2059.5,
+        "p95": 2515.5,
+        "p99": 2780,
+        "p999": 4770.6
+      },
+      "talkroom.message_rtt": {
+        "min": 268,
+        "max": 9664,
+        "count": 11145,
+        "mean": 1549.9,
+        "p50": 1043.3,
+        "median": 1043.3,
+        "p75": 2018.7,
+        "p90": 3197.8,
+        "p95": 4770.6,
+        "p99": 8024.5,
+        "p999": 9607.1
+      },
+      "vusers.session_length": {
+        "min": 37297.9,
+        "max": 90301.5,
+        "count": 1126,
+        "mean": 58110.7,
+        "p50": 58122.9,
+        "median": 58122.9,
+        "p75": 68208.3,
+        "p90": 81660.6,
+        "p95": 84993.4,
+        "p99": 90249.2,
+        "p999": 90249.2
+      }
+    },
+    "histograms": {
+      "socketio.response_time": {
+        "min": 0,
+        "max": 6.7,
+        "count": 13512,
+        "mean": 0.2,
+        "p50": 0.2,
+        "median": 0.2,
+        "p75": 0.3,
+        "p90": 0.3,
+        "p95": 0.4,
+        "p99": 0.9,
+        "p999": 2.5
+      },
+      "talkroom.join_rtt": {
+        "min": 274,
+        "max": 8006,
+        "count": 1126,
+        "mean": 960.4,
+        "p50": 620.3,
+        "median": 620.3,
+        "p75": 1465.9,
+        "p90": 2059.5,
+        "p95": 2515.5,
+        "p99": 2780,
+        "p999": 4770.6
+      },
+      "talkroom.message_rtt": {
+        "min": 268,
+        "max": 9664,
+        "count": 11145,
+        "mean": 1549.9,
+        "p50": 1043.3,
+        "median": 1043.3,
+        "p75": 2018.7,
+        "p90": 3197.8,
+        "p95": 4770.6,
+        "p99": 8024.5,
+        "p999": 9607.1
+      },
+      "vusers.session_length": {
+        "min": 37297.9,
+        "max": 90301.5,
+        "count": 1126,
+        "mean": 58110.7,
+        "p50": 58122.9,
+        "median": 58122.9,
+        "p75": 68208.3,
+        "p90": 81660.6,
+        "p95": 84993.4,
+        "p99": 90249.2,
+        "p999": 90249.2
+      }
+    }
+  },
+  "intermediate": [
+    {
+      "period": "1790285010000",
+      "counters": {
+        "vusers.created_by_name.Chat in a talk room": 4,
+        "vusers.created": 4,
+        "socketio.emit": 4
+      },
+      "rates": {
+        "socketio.emit_rate": 2
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285016698,
+      "firstHistogramAt": 1790285017873,
+      "lastCounterAt": 1790285019881,
+      "lastHistogramAt": 1790285019881,
+      "firstMetricAt": 1790285016698,
+      "lastMetricAt": 1790285019881,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0.4,
+          "max": 1,
+          "count": 4,
+          "mean": 0.6,
+          "p50": 0.5,
+          "median": 0.5,
+          "p75": 0.7,
+          "p90": 0.7,
+          "p95": 0.7,
+          "p99": 0.7,
+          "p999": 0.7
+        },
+        "talkroom.join_rtt": {
+          "min": 284,
+          "max": 288,
+          "count": 2,
+          "mean": 286,
+          "p50": 284.3,
+          "median": 284.3,
+          "p75": 284.3,
+          "p90": 284.3,
+          "p95": 284.3,
+          "p99": 284.3,
+          "p999": 284.3
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0.4,
+          "max": 1,
+          "count": 4,
+          "mean": 0.6,
+          "p50": 0.5,
+          "median": 0.5,
+          "p75": 0.7,
+          "p90": 0.7,
+          "p95": 0.7,
+          "p99": 0.7,
+          "p999": 0.7
+        },
+        "talkroom.join_rtt": {
+          "min": 284,
+          "max": 288,
+          "count": 2,
+          "mean": 286,
+          "p50": 284.3,
+          "median": 284.3,
+          "p75": 284.3,
+          "p90": 284.3,
+          "p95": 284.3,
+          "p99": 284.3,
+          "p999": 284.3
+        }
+      }
+    },
+    {
+      "period": "1790285020000",
+      "counters": {
+        "socketio.emit": 34,
+        "vusers.created_by_name.Chat in a talk room": 10,
+        "vusers.created": 10
+      },
+      "rates": {
+        "socketio.emit_rate": 3
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285020139,
+      "firstHistogramAt": 1790285020139,
+      "lastCounterAt": 1790285029910,
+      "lastHistogramAt": 1790285029911,
+      "firstMetricAt": 1790285020139,
+      "lastMetricAt": 1790285029911,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0.2,
+          "max": 0.5,
+          "count": 34,
+          "mean": 0.3,
+          "p50": 0.3,
+          "median": 0.3,
+          "p75": 0.4,
+          "p90": 0.4,
+          "p95": 0.4,
+          "p99": 0.4,
+          "p999": 0.4
+        },
+        "talkroom.join_rtt": {
+          "min": 280,
+          "max": 303,
+          "count": 10,
+          "mean": 291.6,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 301.9,
+          "p99": 301.9,
+          "p999": 301.9
+        },
+        "talkroom.message_rtt": {
+          "min": 276,
+          "max": 490,
+          "count": 20,
+          "mean": 303.6,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 301.9,
+          "p90": 308,
+          "p95": 308,
+          "p99": 308,
+          "p999": 308
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0.2,
+          "max": 0.5,
+          "count": 34,
+          "mean": 0.3,
+          "p50": 0.3,
+          "median": 0.3,
+          "p75": 0.4,
+          "p90": 0.4,
+          "p95": 0.4,
+          "p99": 0.4,
+          "p999": 0.4
+        },
+        "talkroom.join_rtt": {
+          "min": 280,
+          "max": 303,
+          "count": 10,
+          "mean": 291.6,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 301.9,
+          "p99": 301.9,
+          "p999": 301.9
+        },
+        "talkroom.message_rtt": {
+          "min": 276,
+          "max": 490,
+          "count": 20,
+          "mean": 303.6,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 301.9,
+          "p90": 308,
+          "p95": 308,
+          "p99": 308,
+          "p999": 308
+        }
+      }
+    },
+    {
+      "period": "1790285030000",
+      "counters": {
+        "socketio.emit": 64,
+        "vusers.created_by_name.Chat in a talk room": 10,
+        "vusers.created": 10
+      },
+      "rates": {
+        "socketio.emit_rate": 7
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285030216,
+      "firstHistogramAt": 1790285030204,
+      "lastCounterAt": 1790285039900,
+      "lastHistogramAt": 1790285039900,
+      "firstMetricAt": 1790285030204,
+      "lastMetricAt": 1790285039900,
+      "summaries": {
+        "talkroom.join_rtt": {
+          "min": 282,
+          "max": 311,
+          "count": 10,
+          "mean": 296.5,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 301.9,
+          "p90": 301.9,
+          "p95": 301.9,
+          "p99": 301.9,
+          "p999": 301.9
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 0.4,
+          "count": 64,
+          "mean": 0.3,
+          "p50": 0.3,
+          "median": 0.3,
+          "p75": 0.3,
+          "p90": 0.4,
+          "p95": 0.4,
+          "p99": 0.4,
+          "p999": 0.4
+        },
+        "talkroom.message_rtt": {
+          "min": 275,
+          "max": 312,
+          "count": 50,
+          "mean": 292.4,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 308,
+          "p95": 308,
+          "p99": 314.2,
+          "p999": 314.2
+        }
+      },
+      "histograms": {
+        "talkroom.join_rtt": {
+          "min": 282,
+          "max": 311,
+          "count": 10,
+          "mean": 296.5,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 301.9,
+          "p90": 301.9,
+          "p95": 301.9,
+          "p99": 301.9,
+          "p999": 301.9
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 0.4,
+          "count": 64,
+          "mean": 0.3,
+          "p50": 0.3,
+          "median": 0.3,
+          "p75": 0.3,
+          "p90": 0.4,
+          "p95": 0.4,
+          "p99": 0.4,
+          "p999": 0.4
+        },
+        "talkroom.message_rtt": {
+          "min": 275,
+          "max": 312,
+          "count": 50,
+          "mean": 292.4,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 308,
+          "p95": 308,
+          "p99": 314.2,
+          "p999": 314.2
+        }
+      }
+    },
+    {
+      "period": "1790285040000",
+      "counters": {
+        "socketio.emit": 94,
+        "vusers.created_by_name.Chat in a talk room": 10,
+        "vusers.created": 10
+      },
+      "rates": {
+        "socketio.emit_rate": 10
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285040135,
+      "firstHistogramAt": 1790285040135,
+      "lastCounterAt": 1790285049874,
+      "lastHistogramAt": 1790285049874,
+      "firstMetricAt": 1790285040135,
+      "lastMetricAt": 1790285049874,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 0.8,
+          "count": 94,
+          "mean": 0.3,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.5,
+          "p999": 0.5
+        },
+        "talkroom.message_rtt": {
+          "min": 275,
+          "max": 310,
+          "count": 80,
+          "mean": 292.2,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 308,
+          "p99": 308,
+          "p999": 308
+        },
+        "talkroom.join_rtt": {
+          "min": 277,
+          "max": 304,
+          "count": 10,
+          "mean": 290.7,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 290.1,
+          "p90": 301.9,
+          "p95": 301.9,
+          "p99": 301.9,
+          "p999": 301.9
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 0.8,
+          "count": 94,
+          "mean": 0.3,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.5,
+          "p999": 0.5
+        },
+        "talkroom.message_rtt": {
+          "min": 275,
+          "max": 310,
+          "count": 80,
+          "mean": 292.2,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 308,
+          "p99": 308,
+          "p999": 308
+        },
+        "talkroom.join_rtt": {
+          "min": 277,
+          "max": 304,
+          "count": 10,
+          "mean": 290.7,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 290.1,
+          "p90": 301.9,
+          "p95": 301.9,
+          "p99": 301.9,
+          "p999": 301.9
+        }
+      }
+    },
+    {
+      "period": "1790285050000",
+      "counters": {
+        "socketio.emit": 142,
+        "vusers.created_by_name.Chat in a talk room": 24,
+        "vusers.created": 24,
+        "vusers.failed": 0,
+        "vusers.completed": 6
+      },
+      "rates": {
+        "socketio.emit_rate": 17
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285050004,
+      "firstHistogramAt": 1790285050004,
+      "lastCounterAt": 1790285059944,
+      "lastHistogramAt": 1790285059960,
+      "firstMetricAt": 1790285050004,
+      "lastMetricAt": 1790285059960,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 1.4,
+          "count": 142,
+          "mean": 0.3,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.5,
+          "p95": 0.5,
+          "p99": 0.8,
+          "p999": 0.9
+        },
+        "talkroom.message_rtt": {
+          "min": 272,
+          "max": 307,
+          "count": 111,
+          "mean": 290.3,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 301.9,
+          "p99": 301.9,
+          "p999": 308
+        },
+        "talkroom.join_rtt": {
+          "min": 281,
+          "max": 306,
+          "count": 20,
+          "mean": 291,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 295.9,
+          "p95": 301.9,
+          "p99": 301.9,
+          "p999": 301.9
+        },
+        "vusers.session_length": {
+          "min": 37465.7,
+          "max": 37738.1,
+          "count": 6,
+          "mean": 37603.3,
+          "p50": 37432.7,
+          "median": 37432.7,
+          "p75": 37432.7,
+          "p90": 37432.7,
+          "p95": 37432.7,
+          "p99": 37432.7,
+          "p999": 37432.7
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 1.4,
+          "count": 142,
+          "mean": 0.3,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.5,
+          "p95": 0.5,
+          "p99": 0.8,
+          "p999": 0.9
+        },
+        "talkroom.message_rtt": {
+          "min": 272,
+          "max": 307,
+          "count": 111,
+          "mean": 290.3,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 301.9,
+          "p99": 301.9,
+          "p999": 308
+        },
+        "talkroom.join_rtt": {
+          "min": 281,
+          "max": 306,
+          "count": 20,
+          "mean": 291,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 295.9,
+          "p95": 301.9,
+          "p99": 301.9,
+          "p999": 301.9
+        },
+        "vusers.session_length": {
+          "min": 37465.7,
+          "max": 37738.1,
+          "count": 6,
+          "mean": 37603.3,
+          "p50": 37432.7,
+          "median": 37432.7,
+          "p75": 37432.7,
+          "p90": 37432.7,
+          "p95": 37432.7,
+          "p99": 37432.7,
+          "p999": 37432.7
+        }
+      }
+    },
+    {
+      "period": "1790285060000",
+      "counters": {
+        "socketio.emit": 216,
+        "vusers.failed": 0,
+        "vusers.completed": 10,
+        "vusers.created_by_name.Chat in a talk room": 36,
+        "vusers.created": 36
+      },
+      "rates": {
+        "socketio.emit_rate": 22
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285060012,
+      "firstHistogramAt": 1790285060012,
+      "lastCounterAt": 1790285069965,
+      "lastHistogramAt": 1790285069986,
+      "firstMetricAt": 1790285060012,
+      "lastMetricAt": 1790285069986,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 1,
+          "count": 216,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.6,
+          "p999": 0.8
+        },
+        "talkroom.message_rtt": {
+          "min": 273,
+          "max": 327,
+          "count": 161,
+          "mean": 292.3,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 308,
+          "p99": 314.2,
+          "p999": 314.2
+        },
+        "talkroom.join_rtt": {
+          "min": 282,
+          "max": 315,
+          "count": 35,
+          "mean": 293.4,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 301.9,
+          "p99": 308,
+          "p999": 308
+        },
+        "vusers.session_length": {
+          "min": 37423.9,
+          "max": 37733.8,
+          "count": 10,
+          "mean": 37565,
+          "p50": 37432.7,
+          "median": 37432.7,
+          "p75": 37432.7,
+          "p90": 37432.7,
+          "p95": 37432.7,
+          "p99": 37432.7,
+          "p999": 37432.7
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 1,
+          "count": 216,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.6,
+          "p999": 0.8
+        },
+        "talkroom.message_rtt": {
+          "min": 273,
+          "max": 327,
+          "count": 161,
+          "mean": 292.3,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 308,
+          "p99": 314.2,
+          "p999": 314.2
+        },
+        "talkroom.join_rtt": {
+          "min": 282,
+          "max": 315,
+          "count": 35,
+          "mean": 293.4,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 301.9,
+          "p99": 308,
+          "p999": 308
+        },
+        "vusers.session_length": {
+          "min": 37423.9,
+          "max": 37733.8,
+          "count": 10,
+          "mean": 37565,
+          "p50": 37432.7,
+          "median": 37432.7,
+          "p75": 37432.7,
+          "p90": 37432.7,
+          "p95": 37432.7,
+          "p99": 37432.7,
+          "p999": 37432.7
+        }
+      }
+    },
+    {
+      "period": "1790285070000",
+      "counters": {
+        "vusers.created_by_name.Chat in a talk room": 52,
+        "vusers.created": 52,
+        "socketio.emit": 332,
+        "vusers.failed": 0,
+        "vusers.completed": 10
+      },
+      "rates": {
+        "socketio.emit_rate": 36
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285070023,
+      "firstHistogramAt": 1790285070023,
+      "lastCounterAt": 1790285079978,
+      "lastHistogramAt": 1790285079998,
+      "firstMetricAt": 1790285070023,
+      "lastMetricAt": 1790285079998,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 0.8,
+          "count": 332,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.6,
+          "p999": 0.7
+        },
+        "talkroom.join_rtt": {
+          "min": 280,
+          "max": 310,
+          "count": 51,
+          "mean": 293.4,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 301.9,
+          "p90": 308,
+          "p95": 308,
+          "p99": 308,
+          "p999": 308
+        },
+        "talkroom.message_rtt": {
+          "min": 268,
+          "max": 315,
+          "count": 255,
+          "mean": 291.6,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 308,
+          "p99": 314.2,
+          "p999": 314.2
+        },
+        "vusers.session_length": {
+          "min": 37378.5,
+          "max": 37592.3,
+          "count": 10,
+          "mean": 37478.1,
+          "p50": 37432.7,
+          "median": 37432.7,
+          "p75": 37432.7,
+          "p90": 37432.7,
+          "p95": 37432.7,
+          "p99": 37432.7,
+          "p999": 37432.7
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 0.8,
+          "count": 332,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.6,
+          "p999": 0.7
+        },
+        "talkroom.join_rtt": {
+          "min": 280,
+          "max": 310,
+          "count": 51,
+          "mean": 293.4,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 301.9,
+          "p90": 308,
+          "p95": 308,
+          "p99": 308,
+          "p999": 308
+        },
+        "talkroom.message_rtt": {
+          "min": 268,
+          "max": 315,
+          "count": 255,
+          "mean": 291.6,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 308,
+          "p99": 314.2,
+          "p999": 314.2
+        },
+        "vusers.session_length": {
+          "min": 37378.5,
+          "max": 37592.3,
+          "count": 10,
+          "mean": 37478.1,
+          "p50": 37432.7,
+          "median": 37432.7,
+          "p75": 37432.7,
+          "p90": 37432.7,
+          "p95": 37432.7,
+          "p99": 37432.7,
+          "p999": 37432.7
+        }
+      }
+    },
+    {
+      "period": "1790285080000",
+      "counters": {
+        "vusers.created_by_name.Chat in a talk room": 66,
+        "vusers.created": 66,
+        "socketio.emit": 494,
+        "vusers.failed": 0,
+        "vusers.completed": 12
+      },
+      "rates": {
+        "socketio.emit_rate": 51
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285080002,
+      "firstHistogramAt": 1790285080002,
+      "lastCounterAt": 1790285089986,
+      "lastHistogramAt": 1790285089993,
+      "firstMetricAt": 1790285080002,
+      "lastMetricAt": 1790285089993,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 1.6,
+          "count": 494,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.7,
+          "p999": 0.9
+        },
+        "talkroom.join_rtt": {
+          "min": 274,
+          "max": 325,
+          "count": 65,
+          "mean": 292.5,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 301.9,
+          "p99": 314.2,
+          "p999": 314.2
+        },
+        "talkroom.message_rtt": {
+          "min": 276,
+          "max": 326,
+          "count": 393,
+          "mean": 294.1,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 301.9,
+          "p90": 308,
+          "p95": 308,
+          "p99": 320.6,
+          "p999": 320.6
+        },
+        "vusers.session_length": {
+          "min": 37304.6,
+          "max": 37513.3,
+          "count": 12,
+          "mean": 37426.2,
+          "p50": 37432.7,
+          "median": 37432.7,
+          "p75": 37432.7,
+          "p90": 37432.7,
+          "p95": 37432.7,
+          "p99": 37432.7,
+          "p999": 37432.7
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 1.6,
+          "count": 494,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.7,
+          "p999": 0.9
+        },
+        "talkroom.join_rtt": {
+          "min": 274,
+          "max": 325,
+          "count": 65,
+          "mean": 292.5,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 301.9,
+          "p95": 301.9,
+          "p99": 314.2,
+          "p999": 314.2
+        },
+        "talkroom.message_rtt": {
+          "min": 276,
+          "max": 326,
+          "count": 393,
+          "mean": 294.1,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 301.9,
+          "p90": 308,
+          "p95": 308,
+          "p99": 320.6,
+          "p999": 320.6
+        },
+        "vusers.session_length": {
+          "min": 37304.6,
+          "max": 37513.3,
+          "count": 12,
+          "mean": 37426.2,
+          "p50": 37432.7,
+          "median": 37432.7,
+          "p75": 37432.7,
+          "p90": 37432.7,
+          "p95": 37432.7,
+          "p99": 37432.7,
+          "p999": 37432.7
+        }
+      }
+    },
+    {
+      "period": "1790285090000",
+      "counters": {
+        "socketio.emit": 670,
+        "vusers.created_by_name.Chat in a talk room": 83,
+        "vusers.created": 83,
+        "vusers.failed": 0,
+        "vusers.completed": 26
+      },
+      "rates": {
+        "socketio.emit_rate": 70
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285090009,
+      "firstHistogramAt": 1790285090009,
+      "lastCounterAt": 1790285099997,
+      "lastHistogramAt": 1790285099998,
+      "firstMetricAt": 1790285090009,
+      "lastMetricAt": 1790285099998,
+      "summaries": {
+        "talkroom.message_rtt": {
+          "min": 275,
+          "max": 372,
+          "count": 543,
+          "mean": 298.5,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 301.9,
+          "p90": 308,
+          "p95": 320.6,
+          "p99": 333.7,
+          "p999": 368.8
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 1.5,
+          "count": 670,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.5,
+          "p999": 1.1
+        },
+        "talkroom.join_rtt": {
+          "min": 280,
+          "max": 327,
+          "count": 80,
+          "mean": 298.9,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 308,
+          "p90": 314.2,
+          "p95": 314.2,
+          "p99": 320.6,
+          "p999": 320.6
+        },
+        "vusers.session_length": {
+          "min": 37342,
+          "max": 37651.1,
+          "count": 26,
+          "mean": 37483,
+          "p50": 37432.7,
+          "median": 37432.7,
+          "p75": 37432.7,
+          "p90": 37432.7,
+          "p95": 37432.7,
+          "p99": 37432.7,
+          "p999": 37432.7
+        }
+      },
+      "histograms": {
+        "talkroom.message_rtt": {
+          "min": 275,
+          "max": 372,
+          "count": 543,
+          "mean": 298.5,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 301.9,
+          "p90": 308,
+          "p95": 320.6,
+          "p99": 333.7,
+          "p999": 368.8
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 1.5,
+          "count": 670,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.5,
+          "p999": 1.1
+        },
+        "talkroom.join_rtt": {
+          "min": 280,
+          "max": 327,
+          "count": 80,
+          "mean": 298.9,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 308,
+          "p90": 314.2,
+          "p95": 314.2,
+          "p99": 320.6,
+          "p999": 320.6
+        },
+        "vusers.session_length": {
+          "min": 37342,
+          "max": 37651.1,
+          "count": 26,
+          "mean": 37483,
+          "p50": 37432.7,
+          "median": 37432.7,
+          "p75": 37432.7,
+          "p90": 37432.7,
+          "p95": 37432.7,
+          "p99": 37432.7,
+          "p999": 37432.7
+        }
+      }
+    },
+    {
+      "period": "1790285100000",
+      "counters": {
+        "socketio.emit": 788,
+        "vusers.created_by_name.Chat in a talk room": 97,
+        "vusers.created": 97,
+        "vusers.failed": 0,
+        "vusers.completed": 42
+      },
+      "rates": {
+        "socketio.emit_rate": 83
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285100011,
+      "firstHistogramAt": 1790285100011,
+      "lastCounterAt": 1790285109973,
+      "lastHistogramAt": 1790285109986,
+      "firstMetricAt": 1790285100011,
+      "lastMetricAt": 1790285109986,
+      "summaries": {
+        "talkroom.message_rtt": {
+          "min": 274,
+          "max": 700,
+          "count": 660,
+          "mean": 420.4,
+          "p50": 399.5,
+          "median": 399.5,
+          "p75": 497.8,
+          "p90": 620.3,
+          "p95": 671.9,
+          "p99": 685.5,
+          "p999": 699.4
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 2.8,
+          "count": 788,
+          "mean": 0.3,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.8,
+          "p999": 1.4
+        },
+        "talkroom.join_rtt": {
+          "min": 285,
+          "max": 690,
+          "count": 78,
+          "mean": 383.4,
+          "p50": 361.5,
+          "median": 361.5,
+          "p75": 415.8,
+          "p90": 507.8,
+          "p95": 620.3,
+          "p99": 671.9,
+          "p999": 671.9
+        },
+        "vusers.session_length": {
+          "min": 37297.9,
+          "max": 37769.5,
+          "count": 42,
+          "mean": 37520.8,
+          "p50": 37432.7,
+          "median": 37432.7,
+          "p75": 37432.7,
+          "p90": 37432.7,
+          "p95": 37432.7,
+          "p99": 37432.7,
+          "p999": 37432.7
+        }
+      },
+      "histograms": {
+        "talkroom.message_rtt": {
+          "min": 274,
+          "max": 700,
+          "count": 660,
+          "mean": 420.4,
+          "p50": 399.5,
+          "median": 399.5,
+          "p75": 497.8,
+          "p90": 620.3,
+          "p95": 671.9,
+          "p99": 685.5,
+          "p999": 699.4
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 2.8,
+          "count": 788,
+          "mean": 0.3,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.8,
+          "p999": 1.4
+        },
+        "talkroom.join_rtt": {
+          "min": 285,
+          "max": 690,
+          "count": 78,
+          "mean": 383.4,
+          "p50": 361.5,
+          "median": 361.5,
+          "p75": 415.8,
+          "p90": 507.8,
+          "p95": 620.3,
+          "p99": 671.9,
+          "p999": 671.9
+        },
+        "vusers.session_length": {
+          "min": 37297.9,
+          "max": 37769.5,
+          "count": 42,
+          "mean": 37520.8,
+          "p50": 37432.7,
+          "median": 37432.7,
+          "p75": 37432.7,
+          "p90": 37432.7,
+          "p95": 37432.7,
+          "p99": 37432.7,
+          "p999": 37432.7
+        }
+      }
+    },
+    {
+      "period": "1790285110000",
+      "counters": {
+        "socketio.emit": 782,
+        "vusers.created_by_name.Chat in a talk room": 100,
+        "vusers.created": 100,
+        "vusers.failed": 0,
+        "vusers.completed": 50
+      },
+      "rates": {
+        "socketio.emit_rate": 80
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285110047,
+      "firstHistogramAt": 1790285110040,
+      "lastCounterAt": 1790285119984,
+      "lastHistogramAt": 1790285119989,
+      "firstMetricAt": 1790285110040,
+      "lastMetricAt": 1790285119989,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 3.1,
+          "count": 782,
+          "mean": 0.3,
+          "p50": 0.3,
+          "median": 0.3,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.7,
+          "p999": 2.5
+        },
+        "talkroom.message_rtt": {
+          "min": 305,
+          "max": 795,
+          "count": 666,
+          "mean": 561.5,
+          "p50": 572.6,
+          "median": 572.6,
+          "p75": 645.6,
+          "p90": 699.4,
+          "p95": 713.5,
+          "p99": 757.6,
+          "p999": 788.5
+        },
+        "talkroom.join_rtt": {
+          "min": 300,
+          "max": 728,
+          "count": 52,
+          "mean": 514.7,
+          "p50": 507.8,
+          "median": 507.8,
+          "p75": 596,
+          "p90": 645.6,
+          "p95": 713.5,
+          "p99": 713.5,
+          "p999": 713.5
+        },
+        "vusers.session_length": {
+          "min": 37503.2,
+          "max": 38406.1,
+          "count": 50,
+          "mean": 38010.5,
+          "p50": 38189,
+          "median": 38189,
+          "p75": 38189,
+          "p90": 38189,
+          "p95": 38189,
+          "p99": 38189,
+          "p999": 38189
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 3.1,
+          "count": 782,
+          "mean": 0.3,
+          "p50": 0.3,
+          "median": 0.3,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.7,
+          "p999": 2.5
+        },
+        "talkroom.message_rtt": {
+          "min": 305,
+          "max": 795,
+          "count": 666,
+          "mean": 561.5,
+          "p50": 572.6,
+          "median": 572.6,
+          "p75": 645.6,
+          "p90": 699.4,
+          "p95": 713.5,
+          "p99": 757.6,
+          "p999": 788.5
+        },
+        "talkroom.join_rtt": {
+          "min": 300,
+          "max": 728,
+          "count": 52,
+          "mean": 514.7,
+          "p50": 507.8,
+          "median": 507.8,
+          "p75": 596,
+          "p90": 645.6,
+          "p95": 713.5,
+          "p99": 713.5,
+          "p999": 713.5
+        },
+        "vusers.session_length": {
+          "min": 37503.2,
+          "max": 38406.1,
+          "count": 50,
+          "mean": 38010.5,
+          "p50": 38189,
+          "median": 38189,
+          "p75": 38189,
+          "p90": 38189,
+          "p95": 38189,
+          "p99": 38189,
+          "p999": 38189
+        }
+      }
+    },
+    {
+      "period": "1790285120000",
+      "counters": {
+        "socketio.emit": 638,
+        "vusers.created_by_name.Chat in a talk room": 100,
+        "vusers.created": 100,
+        "vusers.failed": 0,
+        "vusers.completed": 62
+      },
+      "rates": {
+        "socketio.emit_rate": 70
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285120017,
+      "firstHistogramAt": 1790285120017,
+      "lastCounterAt": 1790285129955,
+      "lastHistogramAt": 1790285129874,
+      "firstMetricAt": 1790285120017,
+      "lastMetricAt": 1790285129955,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 3.4,
+          "count": 638,
+          "mean": 0.3,
+          "p50": 0.3,
+          "median": 0.3,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.8,
+          "p999": 1.2
+        },
+        "talkroom.message_rtt": {
+          "min": 314,
+          "max": 1722,
+          "count": 600,
+          "mean": 769.2,
+          "p50": 632.8,
+          "median": 632.8,
+          "p75": 871.5,
+          "p90": 1408.4,
+          "p95": 1620,
+          "p99": 1686.1,
+          "p999": 1720.2
+        },
+        "vusers.session_length": {
+          "min": 38248.5,
+          "max": 40340.1,
+          "count": 62,
+          "mean": 38860.7,
+          "p50": 38960.5,
+          "median": 38960.5,
+          "p75": 38960.5,
+          "p90": 38960.5,
+          "p95": 39747.5,
+          "p99": 40550.5,
+          "p999": 40550.5
+        },
+        "talkroom.join_rtt": {
+          "min": 317,
+          "max": 1661,
+          "count": 20,
+          "mean": 685.6,
+          "p50": 584.2,
+          "median": 584.2,
+          "p75": 671.9,
+          "p90": 1002.4,
+          "p95": 1465.9,
+          "p99": 1465.9,
+          "p999": 1465.9
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 3.4,
+          "count": 638,
+          "mean": 0.3,
+          "p50": 0.3,
+          "median": 0.3,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.8,
+          "p999": 1.2
+        },
+        "talkroom.message_rtt": {
+          "min": 314,
+          "max": 1722,
+          "count": 600,
+          "mean": 769.2,
+          "p50": 632.8,
+          "median": 632.8,
+          "p75": 871.5,
+          "p90": 1408.4,
+          "p95": 1620,
+          "p99": 1686.1,
+          "p999": 1720.2
+        },
+        "vusers.session_length": {
+          "min": 38248.5,
+          "max": 40340.1,
+          "count": 62,
+          "mean": 38860.7,
+          "p50": 38960.5,
+          "median": 38960.5,
+          "p75": 38960.5,
+          "p90": 38960.5,
+          "p95": 39747.5,
+          "p99": 40550.5,
+          "p999": 40550.5
+        },
+        "talkroom.join_rtt": {
+          "min": 317,
+          "max": 1661,
+          "count": 20,
+          "mean": 685.6,
+          "p50": 584.2,
+          "median": 584.2,
+          "p75": 671.9,
+          "p90": 1002.4,
+          "p95": 1465.9,
+          "p99": 1465.9,
+          "p999": 1465.9
+        }
+      }
+    },
+    {
+      "period": "1790285130000",
+      "counters": {
+        "socketio.emit": 836,
+        "vusers.created_by_name.Chat in a talk room": 100,
+        "vusers.created": 100,
+        "vusers.failed": 0,
+        "vusers.completed": 52
+      },
+      "rates": {
+        "socketio.emit_rate": 87
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285130042,
+      "firstHistogramAt": 1790285130042,
+      "lastCounterAt": 1790285139989,
+      "lastHistogramAt": 1790285139995,
+      "firstMetricAt": 1790285130042,
+      "lastMetricAt": 1790285139995,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0,
+          "max": 3.2,
+          "count": 836,
+          "mean": 0.3,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.5,
+          "p99": 1.6,
+          "p999": 3
+        },
+        "talkroom.message_rtt": {
+          "min": 280,
+          "max": 4767,
+          "count": 492,
+          "mean": 2339.7,
+          "p50": 2725,
+          "median": 2725,
+          "p75": 3197.8,
+          "p90": 3678.4,
+          "p95": 3752.7,
+          "p99": 3905.8,
+          "p999": 3905.8
+        },
+        "talkroom.join_rtt": {
+          "min": 285,
+          "max": 4710,
+          "count": 159,
+          "mean": 1241.3,
+          "p50": 1300.1,
+          "median": 1300.1,
+          "p75": 1587.9,
+          "p90": 1901.1,
+          "p95": 2059.5,
+          "p99": 2231,
+          "p999": 3395.5
+        },
+        "vusers.session_length": {
+          "min": 39160.5,
+          "max": 44274.1,
+          "count": 52,
+          "mean": 40694.1,
+          "p50": 40550.5,
+          "median": 40550.5,
+          "p75": 41369.7,
+          "p90": 42205.5,
+          "p95": 43928,
+          "p99": 43928,
+          "p999": 43928
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0,
+          "max": 3.2,
+          "count": 836,
+          "mean": 0.3,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.5,
+          "p99": 1.6,
+          "p999": 3
+        },
+        "talkroom.message_rtt": {
+          "min": 280,
+          "max": 4767,
+          "count": 492,
+          "mean": 2339.7,
+          "p50": 2725,
+          "median": 2725,
+          "p75": 3197.8,
+          "p90": 3678.4,
+          "p95": 3752.7,
+          "p99": 3905.8,
+          "p999": 3905.8
+        },
+        "talkroom.join_rtt": {
+          "min": 285,
+          "max": 4710,
+          "count": 159,
+          "mean": 1241.3,
+          "p50": 1300.1,
+          "median": 1300.1,
+          "p75": 1587.9,
+          "p90": 1901.1,
+          "p95": 2059.5,
+          "p99": 2231,
+          "p999": 3395.5
+        },
+        "vusers.session_length": {
+          "min": 39160.5,
+          "max": 44274.1,
+          "count": 52,
+          "mean": 40694.1,
+          "p50": 40550.5,
+          "median": 40550.5,
+          "p75": 41369.7,
+          "p90": 42205.5,
+          "p95": 43928,
+          "p99": 43928,
+          "p999": 43928
+        }
+      }
+    },
+    {
+      "period": "1790285140000",
+      "counters": {
+        "socketio.emit": 669,
+        "vusers.failed": 0,
+        "vusers.completed": 61,
+        "vusers.created_by_name.Chat in a talk room": 100,
+        "vusers.created": 100
+      },
+      "rates": {
+        "socketio.emit_rate": 69
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285140043,
+      "firstHistogramAt": 1790285140044,
+      "lastCounterAt": 1790285149996,
+      "lastHistogramAt": 1790285149996,
+      "firstMetricAt": 1790285140043,
+      "lastMetricAt": 1790285149996,
+      "summaries": {
+        "talkroom.message_rtt": {
+          "min": 314,
+          "max": 2189,
+          "count": 679,
+          "mean": 1372.7,
+          "p50": 1465.9,
+          "median": 1465.9,
+          "p75": 1826.6,
+          "p90": 1978.7,
+          "p95": 2059.5,
+          "p99": 2101.1,
+          "p999": 2143.5
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 1.5,
+          "count": 669,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.6,
+          "p999": 1.4
+        },
+        "vusers.session_length": {
+          "min": 41691.4,
+          "max": 46398.8,
+          "count": 61,
+          "mean": 44059.4,
+          "p50": 43928,
+          "median": 43928,
+          "p75": 44815.4,
+          "p90": 45720.8,
+          "p95": 45720.8,
+          "p99": 46644.4,
+          "p999": 46644.4
+        },
+        "talkroom.join_rtt": {
+          "min": 1485,
+          "max": 2000,
+          "count": 4,
+          "mean": 1731.3,
+          "p50": 1556.5,
+          "median": 1556.5,
+          "p75": 1901.1,
+          "p90": 1901.1,
+          "p95": 1901.1,
+          "p99": 1901.1,
+          "p999": 1901.1
+        }
+      },
+      "histograms": {
+        "talkroom.message_rtt": {
+          "min": 314,
+          "max": 2189,
+          "count": 679,
+          "mean": 1372.7,
+          "p50": 1465.9,
+          "median": 1465.9,
+          "p75": 1826.6,
+          "p90": 1978.7,
+          "p95": 2059.5,
+          "p99": 2101.1,
+          "p999": 2143.5
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 1.5,
+          "count": 669,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.6,
+          "p999": 1.4
+        },
+        "vusers.session_length": {
+          "min": 41691.4,
+          "max": 46398.8,
+          "count": 61,
+          "mean": 44059.4,
+          "p50": 43928,
+          "median": 43928,
+          "p75": 44815.4,
+          "p90": 45720.8,
+          "p95": 45720.8,
+          "p99": 46644.4,
+          "p999": 46644.4
+        },
+        "talkroom.join_rtt": {
+          "min": 1485,
+          "max": 2000,
+          "count": 4,
+          "mean": 1731.3,
+          "p50": 1556.5,
+          "median": 1556.5,
+          "p75": 1901.1,
+          "p90": 1901.1,
+          "p95": 1901.1,
+          "p99": 1901.1,
+          "p999": 1901.1
+        }
+      }
+    },
+    {
+      "period": "1790285150000",
+      "counters": {
+        "socketio.emit": 795,
+        "vusers.created_by_name.Chat in a talk room": 100,
+        "vusers.created": 100,
+        "errors.Error: timeout": 41,
+        "vusers.failed": 41,
+        "vusers.completed": 66
+      },
+      "rates": {
+        "socketio.emit_rate": 83
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285150048,
+      "firstHistogramAt": 1790285150041,
+      "lastCounterAt": 1790285159983,
+      "lastHistogramAt": 1790285159992,
+      "firstMetricAt": 1790285150041,
+      "lastMetricAt": 1790285159992,
+      "summaries": {
+        "talkroom.join_rtt": {
+          "min": 380,
+          "max": 2476,
+          "count": 118,
+          "mean": 1069.3,
+          "p50": 1107.9,
+          "median": 1107.9,
+          "p75": 1465.9,
+          "p90": 1686.1,
+          "p95": 1720.2,
+          "p99": 1901.1,
+          "p999": 1939.5
+        },
+        "talkroom.message_rtt": {
+          "min": 288,
+          "max": 3876,
+          "count": 545,
+          "mean": 1005.5,
+          "p50": 608,
+          "median": 608,
+          "p75": 1465.9,
+          "p90": 2369,
+          "p95": 2836.2,
+          "p99": 3752.7,
+          "p999": 3828.5
+        },
+        "socketio.response_time": {
+          "min": 0,
+          "max": 2.5,
+          "count": 795,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.7,
+          "p999": 2.3
+        },
+        "vusers.session_length": {
+          "min": 44881.9,
+          "max": 50628.1,
+          "count": 66,
+          "mean": 47593.7,
+          "p50": 47586.7,
+          "median": 47586.7,
+          "p75": 48548.1,
+          "p90": 49528.8,
+          "p95": 49528.8,
+          "p99": 50529.4,
+          "p999": 50529.4
+        }
+      },
+      "histograms": {
+        "talkroom.join_rtt": {
+          "min": 380,
+          "max": 2476,
+          "count": 118,
+          "mean": 1069.3,
+          "p50": 1107.9,
+          "median": 1107.9,
+          "p75": 1465.9,
+          "p90": 1686.1,
+          "p95": 1720.2,
+          "p99": 1901.1,
+          "p999": 1939.5
+        },
+        "talkroom.message_rtt": {
+          "min": 288,
+          "max": 3876,
+          "count": 545,
+          "mean": 1005.5,
+          "p50": 608,
+          "median": 608,
+          "p75": 1465.9,
+          "p90": 2369,
+          "p95": 2836.2,
+          "p99": 3752.7,
+          "p999": 3828.5
+        },
+        "socketio.response_time": {
+          "min": 0,
+          "max": 2.5,
+          "count": 795,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.7,
+          "p999": 2.3
+        },
+        "vusers.session_length": {
+          "min": 44881.9,
+          "max": 50628.1,
+          "count": 66,
+          "mean": 47593.7,
+          "p50": 47586.7,
+          "median": 47586.7,
+          "p75": 48548.1,
+          "p90": 49528.8,
+          "p95": 49528.8,
+          "p99": 50529.4,
+          "p999": 50529.4
+        }
+      }
+    },
+    {
+      "period": "1790285160000",
+      "counters": {
+        "socketio.emit": 702,
+        "vusers.created_by_name.Chat in a talk room": 100,
+        "vusers.created": 100,
+        "vusers.failed": 31,
+        "vusers.completed": 26,
+        "errors.Error: timeout": 31
+      },
+      "rates": {
+        "socketio.emit_rate": 70
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285160047,
+      "firstHistogramAt": 1790285160047,
+      "lastCounterAt": 1790285169985,
+      "lastHistogramAt": 1790285169985,
+      "firstMetricAt": 1790285160047,
+      "lastMetricAt": 1790285169985,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 6.7,
+          "count": 702,
+          "mean": 0.3,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 1,
+          "p999": 2
+        },
+        "talkroom.message_rtt": {
+          "min": 462,
+          "max": 3018,
+          "count": 697,
+          "mean": 1684.8,
+          "p50": 1408.4,
+          "median": 1408.4,
+          "p75": 1978.7,
+          "p90": 2725,
+          "p95": 2893.5,
+          "p99": 3011.6,
+          "p999": 3011.6
+        },
+        "talkroom.join_rtt": {
+          "min": 1215,
+          "max": 2648,
+          "count": 5,
+          "mean": 1782.8,
+          "p50": 1686.1,
+          "median": 1686.1,
+          "p75": 1790.4,
+          "p90": 1790.4,
+          "p95": 1790.4,
+          "p99": 1790.4,
+          "p999": 1790.4
+        },
+        "vusers.session_length": {
+          "min": 51993.6,
+          "max": 56633.7,
+          "count": 26,
+          "mean": 53992.7,
+          "p50": 53654.1,
+          "median": 53654.1,
+          "p75": 55843.8,
+          "p90": 55843.8,
+          "p95": 55843.8,
+          "p99": 56972,
+          "p999": 56972
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 6.7,
+          "count": 702,
+          "mean": 0.3,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 1,
+          "p999": 2
+        },
+        "talkroom.message_rtt": {
+          "min": 462,
+          "max": 3018,
+          "count": 697,
+          "mean": 1684.8,
+          "p50": 1408.4,
+          "median": 1408.4,
+          "p75": 1978.7,
+          "p90": 2725,
+          "p95": 2893.5,
+          "p99": 3011.6,
+          "p999": 3011.6
+        },
+        "talkroom.join_rtt": {
+          "min": 1215,
+          "max": 2648,
+          "count": 5,
+          "mean": 1782.8,
+          "p50": 1686.1,
+          "median": 1686.1,
+          "p75": 1790.4,
+          "p90": 1790.4,
+          "p95": 1790.4,
+          "p99": 1790.4,
+          "p999": 1790.4
+        },
+        "vusers.session_length": {
+          "min": 51993.6,
+          "max": 56633.7,
+          "count": 26,
+          "mean": 53992.7,
+          "p50": 53654.1,
+          "median": 53654.1,
+          "p75": 55843.8,
+          "p90": 55843.8,
+          "p95": 55843.8,
+          "p99": 56972,
+          "p999": 56972
+        }
+      }
+    },
+    {
+      "period": "1790285170000",
+      "counters": {
+        "socketio.emit": 727,
+        "vusers.created_by_name.Chat in a talk room": 100,
+        "vusers.created": 100,
+        "errors.Error: timeout": 100,
+        "vusers.failed": 100,
+        "vusers.completed": 156
+      },
+      "rates": {
+        "socketio.emit_rate": 76
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285170044,
+      "firstHistogramAt": 1790285170033,
+      "lastCounterAt": 1790285179996,
+      "lastHistogramAt": 1790285179996,
+      "firstMetricAt": 1790285170033,
+      "lastMetricAt": 1790285179996,
+      "summaries": {
+        "talkroom.message_rtt": {
+          "min": 581,
+          "max": 1807,
+          "count": 612,
+          "mean": 869.2,
+          "p50": 772.9,
+          "median": 772.9,
+          "p75": 1107.9,
+          "p90": 1200.1,
+          "p95": 1224.4,
+          "p99": 1300.1,
+          "p999": 1587.9
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 4.5,
+          "count": 727,
+          "mean": 0.3,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 1.4,
+          "p999": 3.5
+        },
+        "vusers.session_length": {
+          "min": 50430.4,
+          "max": 64086.6,
+          "count": 156,
+          "mean": 57829.8,
+          "p50": 58122.9,
+          "median": 58122.9,
+          "p75": 61717.2,
+          "p90": 62964,
+          "p95": 64236,
+          "p99": 64236,
+          "p999": 64236
+        },
+        "talkroom.join_rtt": {
+          "min": 1563,
+          "max": 1563,
+          "count": 1,
+          "mean": 1563,
+          "p50": 1556.5,
+          "median": 1556.5,
+          "p75": 1556.5,
+          "p90": 1556.5,
+          "p95": 1556.5,
+          "p99": 1556.5,
+          "p999": 1556.5
+        }
+      },
+      "histograms": {
+        "talkroom.message_rtt": {
+          "min": 581,
+          "max": 1807,
+          "count": 612,
+          "mean": 869.2,
+          "p50": 772.9,
+          "median": 772.9,
+          "p75": 1107.9,
+          "p90": 1200.1,
+          "p95": 1224.4,
+          "p99": 1300.1,
+          "p999": 1587.9
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 4.5,
+          "count": 727,
+          "mean": 0.3,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.3,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 1.4,
+          "p999": 3.5
+        },
+        "vusers.session_length": {
+          "min": 50430.4,
+          "max": 64086.6,
+          "count": 156,
+          "mean": 57829.8,
+          "p50": 58122.9,
+          "median": 58122.9,
+          "p75": 61717.2,
+          "p90": 62964,
+          "p95": 64236,
+          "p99": 64236,
+          "p999": 64236
+        },
+        "talkroom.join_rtt": {
+          "min": 1563,
+          "max": 1563,
+          "count": 1,
+          "mean": 1563,
+          "p50": 1556.5,
+          "median": 1556.5,
+          "p75": 1556.5,
+          "p90": 1556.5,
+          "p95": 1556.5,
+          "p99": 1556.5,
+          "p999": 1556.5
+        }
+      }
+    },
+    {
+      "period": "1790285180000",
+      "counters": {
+        "vusers.failed": 18,
+        "vusers.completed": 15,
+        "socketio.emit": 758,
+        "vusers.created_by_name.Chat in a talk room": 100,
+        "vusers.created": 100,
+        "errors.Error: timeout": 18
+      },
+      "rates": {
+        "socketio.emit_rate": 80
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285180026,
+      "firstHistogramAt": 1790285180026,
+      "lastCounterAt": 1790285189995,
+      "lastHistogramAt": 1790285189995,
+      "firstMetricAt": 1790285180026,
+      "lastMetricAt": 1790285189995,
+      "summaries": {
+        "vusers.session_length": {
+          "min": 50591,
+          "max": 58503.7,
+          "count": 15,
+          "mean": 52168.4,
+          "p50": 51550.2,
+          "median": 51550.2,
+          "p75": 52591.6,
+          "p90": 53654.1,
+          "p95": 54738,
+          "p99": 54738,
+          "p999": 54738
+        },
+        "socketio.response_time": {
+          "min": 0,
+          "max": 2.9,
+          "count": 758,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.8,
+          "p999": 2.6
+        },
+        "talkroom.message_rtt": {
+          "min": 293,
+          "max": 3283,
+          "count": 493,
+          "mean": 1951.4,
+          "p50": 2186.8,
+          "median": 2186.8,
+          "p75": 2725,
+          "p90": 2836.2,
+          "p95": 2893.5,
+          "p99": 2893.5,
+          "p999": 3197.8
+        },
+        "talkroom.join_rtt": {
+          "min": 292,
+          "max": 3105,
+          "count": 198,
+          "mean": 1136.6,
+          "p50": 1153.1,
+          "median": 1153.1,
+          "p75": 1525.7,
+          "p90": 1978.7,
+          "p95": 2059.5,
+          "p99": 2951.9,
+          "p999": 3134.5
+        }
+      },
+      "histograms": {
+        "vusers.session_length": {
+          "min": 50591,
+          "max": 58503.7,
+          "count": 15,
+          "mean": 52168.4,
+          "p50": 51550.2,
+          "median": 51550.2,
+          "p75": 52591.6,
+          "p90": 53654.1,
+          "p95": 54738,
+          "p99": 54738,
+          "p999": 54738
+        },
+        "socketio.response_time": {
+          "min": 0,
+          "max": 2.9,
+          "count": 758,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.8,
+          "p999": 2.6
+        },
+        "talkroom.message_rtt": {
+          "min": 293,
+          "max": 3283,
+          "count": 493,
+          "mean": 1951.4,
+          "p50": 2186.8,
+          "median": 2186.8,
+          "p75": 2725,
+          "p90": 2836.2,
+          "p95": 2893.5,
+          "p99": 2893.5,
+          "p999": 3197.8
+        },
+        "talkroom.join_rtt": {
+          "min": 292,
+          "max": 3105,
+          "count": 198,
+          "mean": 1136.6,
+          "p50": 1153.1,
+          "median": 1153.1,
+          "p75": 1525.7,
+          "p90": 1978.7,
+          "p95": 2059.5,
+          "p99": 2951.9,
+          "p999": 3134.5
+        }
+      }
+    },
+    {
+      "period": "1790285190000",
+      "counters": {
+        "socketio.emit": 722,
+        "vusers.created_by_name.Chat in a talk room": 100,
+        "vusers.created": 100,
+        "vusers.failed": 0,
+        "vusers.completed": 5
+      },
+      "rates": {
+        "socketio.emit_rate": 71
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285190047,
+      "firstHistogramAt": 1790285190044,
+      "lastCounterAt": 1790285199988,
+      "lastHistogramAt": 1790285199989,
+      "firstMetricAt": 1790285190044,
+      "lastMetricAt": 1790285199989,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 6.4,
+          "count": 722,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.9,
+          "p999": 3.6
+        },
+        "talkroom.message_rtt": {
+          "min": 815,
+          "max": 2515,
+          "count": 703,
+          "mean": 1516,
+          "p50": 1556.5,
+          "median": 1556.5,
+          "p75": 1587.9,
+          "p90": 1652.8,
+          "p95": 1686.1,
+          "p99": 1720.2,
+          "p999": 2465.6
+        },
+        "vusers.session_length": {
+          "min": 61224.4,
+          "max": 68733,
+          "count": 5,
+          "mean": 65963.3,
+          "p50": 68208.3,
+          "median": 68208.3,
+          "p75": 68208.3,
+          "p90": 68208.3,
+          "p95": 68208.3,
+          "p99": 68208.3,
+          "p999": 68208.3
+        },
+        "talkroom.join_rtt": {
+          "min": 1600,
+          "max": 2028,
+          "count": 4,
+          "mean": 1903,
+          "p50": 1978.7,
+          "median": 1978.7,
+          "p75": 2018.7,
+          "p90": 2018.7,
+          "p95": 2018.7,
+          "p99": 2018.7,
+          "p999": 2018.7
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 6.4,
+          "count": 722,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.9,
+          "p999": 3.6
+        },
+        "talkroom.message_rtt": {
+          "min": 815,
+          "max": 2515,
+          "count": 703,
+          "mean": 1516,
+          "p50": 1556.5,
+          "median": 1556.5,
+          "p75": 1587.9,
+          "p90": 1652.8,
+          "p95": 1686.1,
+          "p99": 1720.2,
+          "p999": 2465.6
+        },
+        "vusers.session_length": {
+          "min": 61224.4,
+          "max": 68733,
+          "count": 5,
+          "mean": 65963.3,
+          "p50": 68208.3,
+          "median": 68208.3,
+          "p75": 68208.3,
+          "p90": 68208.3,
+          "p95": 68208.3,
+          "p99": 68208.3,
+          "p999": 68208.3
+        },
+        "talkroom.join_rtt": {
+          "min": 1600,
+          "max": 2028,
+          "count": 4,
+          "mean": 1903,
+          "p50": 1978.7,
+          "median": 1978.7,
+          "p75": 2018.7,
+          "p90": 2018.7,
+          "p95": 2018.7,
+          "p99": 2018.7,
+          "p999": 2018.7
+        }
+      }
+    },
+    {
+      "period": "1790285200000",
+      "counters": {
+        "vusers.created_by_name.Chat in a talk room": 100,
+        "vusers.created": 100,
+        "socketio.emit": 884,
+        "errors.Error: timeout": 45,
+        "vusers.failed": 45,
+        "vusers.completed": 117
+      },
+      "rates": {
+        "socketio.emit_rate": 90
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285200045,
+      "firstHistogramAt": 1790285200037,
+      "lastCounterAt": 1790285209981,
+      "lastHistogramAt": 1790285209990,
+      "firstMetricAt": 1790285200037,
+      "lastMetricAt": 1790285209990,
+      "summaries": {
+        "talkroom.message_rtt": {
+          "min": 300,
+          "max": 2743,
+          "count": 461,
+          "mean": 1255.6,
+          "p50": 1495.5,
+          "median": 1495.5,
+          "p75": 1587.9,
+          "p90": 1620,
+          "p95": 1686.1,
+          "p99": 2515.5,
+          "p999": 2618.1
+        },
+        "socketio.response_time": {
+          "min": 0,
+          "max": 1.5,
+          "count": 884,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.8,
+          "p999": 1.3
+        },
+        "vusers.session_length": {
+          "min": 57224.1,
+          "max": 68178.6,
+          "count": 117,
+          "mean": 63018.1,
+          "p50": 62964,
+          "median": 62964,
+          "p75": 65533.7,
+          "p90": 66857.6,
+          "p95": 68208.3,
+          "p99": 68208.3,
+          "p999": 68208.3
+        },
+        "talkroom.join_rtt": {
+          "min": 309,
+          "max": 2586,
+          "count": 156,
+          "mean": 1361.6,
+          "p50": 1380.5,
+          "median": 1380.5,
+          "p75": 2059.5,
+          "p90": 2322.1,
+          "p95": 2465.6,
+          "p99": 2566.3,
+          "p999": 2566.3
+        }
+      },
+      "histograms": {
+        "talkroom.message_rtt": {
+          "min": 300,
+          "max": 2743,
+          "count": 461,
+          "mean": 1255.6,
+          "p50": 1495.5,
+          "median": 1495.5,
+          "p75": 1587.9,
+          "p90": 1620,
+          "p95": 1686.1,
+          "p99": 2515.5,
+          "p999": 2618.1
+        },
+        "socketio.response_time": {
+          "min": 0,
+          "max": 1.5,
+          "count": 884,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.8,
+          "p999": 1.3
+        },
+        "vusers.session_length": {
+          "min": 57224.1,
+          "max": 68178.6,
+          "count": 117,
+          "mean": 63018.1,
+          "p50": 62964,
+          "median": 62964,
+          "p75": 65533.7,
+          "p90": 66857.6,
+          "p95": 68208.3,
+          "p99": 68208.3,
+          "p999": 68208.3
+        },
+        "talkroom.join_rtt": {
+          "min": 309,
+          "max": 2586,
+          "count": 156,
+          "mean": 1361.6,
+          "p50": 1380.5,
+          "median": 1380.5,
+          "p75": 2059.5,
+          "p90": 2322.1,
+          "p95": 2465.6,
+          "p99": 2566.3,
+          "p999": 2566.3
+        }
+      }
+    },
+    {
+      "period": "1790285210000",
+      "counters": {
+        "socketio.emit": 544,
+        "vusers.created_by_name.Chat in a talk room": 100,
+        "vusers.created": 100,
+        "vusers.failed": 0,
+        "vusers.completed": 4
+      },
+      "rates": {
+        "socketio.emit_rate": 57
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285210041,
+      "firstHistogramAt": 1790285210041,
+      "lastCounterAt": 1790285219983,
+      "lastHistogramAt": 1790285219983,
+      "firstMetricAt": 1790285210041,
+      "lastMetricAt": 1790285219983,
+      "summaries": {
+        "talkroom.message_rtt": {
+          "min": 323,
+          "max": 7918,
+          "count": 530,
+          "mean": 3548.2,
+          "p50": 3464.1,
+          "median": 3464.1,
+          "p75": 4676.2,
+          "p90": 5378.9,
+          "p95": 7865.6,
+          "p99": 7865.6,
+          "p999": 7865.6
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 3.8,
+          "count": 544,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.8,
+          "p999": 1.7
+        },
+        "talkroom.join_rtt": {
+          "min": 2414,
+          "max": 4807,
+          "count": 44,
+          "mean": 2723.7,
+          "p50": 2618.1,
+          "median": 2618.1,
+          "p75": 2671,
+          "p90": 2780,
+          "p95": 2780,
+          "p99": 4492.8,
+          "p999": 4492.8
+        },
+        "vusers.session_length": {
+          "min": 64610.4,
+          "max": 72592.1,
+          "count": 4,
+          "mean": 70094.4,
+          "p50": 70992,
+          "median": 70992,
+          "p75": 72426.2,
+          "p90": 72426.2,
+          "p95": 72426.2,
+          "p99": 72426.2,
+          "p999": 72426.2
+        }
+      },
+      "histograms": {
+        "talkroom.message_rtt": {
+          "min": 323,
+          "max": 7918,
+          "count": 530,
+          "mean": 3548.2,
+          "p50": 3464.1,
+          "median": 3464.1,
+          "p75": 4676.2,
+          "p90": 5378.9,
+          "p95": 7865.6,
+          "p99": 7865.6,
+          "p999": 7865.6
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 3.8,
+          "count": 544,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.8,
+          "p999": 1.7
+        },
+        "talkroom.join_rtt": {
+          "min": 2414,
+          "max": 4807,
+          "count": 44,
+          "mean": 2723.7,
+          "p50": 2618.1,
+          "median": 2618.1,
+          "p75": 2671,
+          "p90": 2780,
+          "p95": 2780,
+          "p99": 4492.8,
+          "p999": 4492.8
+        },
+        "vusers.session_length": {
+          "min": 64610.4,
+          "max": 72592.1,
+          "count": 4,
+          "mean": 70094.4,
+          "p50": 70992,
+          "median": 70992,
+          "p75": 72426.2,
+          "p90": 72426.2,
+          "p95": 72426.2,
+          "p99": 72426.2,
+          "p999": 72426.2
+        }
+      }
+    },
+    {
+      "period": "1790285220000",
+      "counters": {
+        "vusers.created_by_name.Chat in a talk room": 68,
+        "vusers.created": 68,
+        "socketio.emit": 527,
+        "errors.Error: timeout": 31,
+        "vusers.failed": 31
+      },
+      "rates": {
+        "socketio.emit_rate": 54
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285220039,
+      "firstHistogramAt": 1790285220039,
+      "lastCounterAt": 1790285229981,
+      "lastHistogramAt": 1790285229986,
+      "firstMetricAt": 1790285220039,
+      "lastMetricAt": 1790285229986,
+      "summaries": {
+        "talkroom.message_rtt": {
+          "min": 2209,
+          "max": 7997,
+          "count": 538,
+          "mean": 4459.1,
+          "p50": 2465.6,
+          "median": 2465.6,
+          "p75": 7709.8,
+          "p90": 7865.6,
+          "p95": 7865.6,
+          "p99": 8024.5,
+          "p999": 8024.5
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 2.5,
+          "count": 527,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.6,
+          "p999": 2.2
+        },
+        "talkroom.join_rtt": {
+          "min": 4796,
+          "max": 4877,
+          "count": 2,
+          "mean": 4836.5,
+          "p50": 4770.6,
+          "median": 4770.6,
+          "p75": 4770.6,
+          "p90": 4770.6,
+          "p95": 4770.6,
+          "p99": 4770.6,
+          "p999": 4770.6
+        }
+      },
+      "histograms": {
+        "talkroom.message_rtt": {
+          "min": 2209,
+          "max": 7997,
+          "count": 538,
+          "mean": 4459.1,
+          "p50": 2465.6,
+          "median": 2465.6,
+          "p75": 7709.8,
+          "p90": 7865.6,
+          "p95": 7865.6,
+          "p99": 8024.5,
+          "p999": 8024.5
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 2.5,
+          "count": 527,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.6,
+          "p999": 2.2
+        },
+        "talkroom.join_rtt": {
+          "min": 4796,
+          "max": 4877,
+          "count": 2,
+          "mean": 4836.5,
+          "p50": 4770.6,
+          "median": 4770.6,
+          "p75": 4770.6,
+          "p90": 4770.6,
+          "p95": 4770.6,
+          "p99": 4770.6,
+          "p999": 4770.6
+        }
+      }
+    },
+    {
+      "period": "1790285230000",
+      "counters": {
+        "socketio.emit": 440,
+        "errors.Error: timeout": 100,
+        "vusers.failed": 100,
+        "vusers.completed": 42,
+        "talkroom.message_timeout": 115
+      },
+      "rates": {
+        "socketio.emit_rate": 46
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285230040,
+      "firstHistogramAt": 1790285230040,
+      "lastCounterAt": 1790285239995,
+      "lastHistogramAt": 1790285239995,
+      "firstMetricAt": 1790285230040,
+      "lastMetricAt": 1790285239995,
+      "summaries": {
+        "talkroom.message_rtt": {
+          "min": 2626,
+          "max": 9322,
+          "count": 284,
+          "mean": 4891.2,
+          "p50": 4147.4,
+          "median": 4147.4,
+          "p75": 7557.1,
+          "p90": 7865.6,
+          "p95": 7865.6,
+          "p99": 8024.5,
+          "p999": 8692.8
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 0.8,
+          "count": 440,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.5,
+          "p999": 0.8
+        },
+        "vusers.session_length": {
+          "min": 55174.4,
+          "max": 75974.9,
+          "count": 42,
+          "mean": 61217,
+          "p50": 56972,
+          "median": 56972,
+          "p75": 68208.3,
+          "p90": 73889.3,
+          "p95": 75382,
+          "p99": 75382,
+          "p999": 75382
+        },
+        "talkroom.join_rtt": {
+          "min": 8006,
+          "max": 8006,
+          "count": 1,
+          "mean": 8006,
+          "p50": 8024.5,
+          "median": 8024.5,
+          "p75": 8024.5,
+          "p90": 8024.5,
+          "p95": 8024.5,
+          "p99": 8024.5,
+          "p999": 8024.5
+        }
+      },
+      "histograms": {
+        "talkroom.message_rtt": {
+          "min": 2626,
+          "max": 9322,
+          "count": 284,
+          "mean": 4891.2,
+          "p50": 4147.4,
+          "median": 4147.4,
+          "p75": 7557.1,
+          "p90": 7865.6,
+          "p95": 7865.6,
+          "p99": 8024.5,
+          "p999": 8692.8
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 0.8,
+          "count": 440,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.5,
+          "p999": 0.8
+        },
+        "vusers.session_length": {
+          "min": 55174.4,
+          "max": 75974.9,
+          "count": 42,
+          "mean": 61217,
+          "p50": 56972,
+          "median": 56972,
+          "p75": 68208.3,
+          "p90": 73889.3,
+          "p95": 75382,
+          "p99": 75382,
+          "p999": 75382
+        },
+        "talkroom.join_rtt": {
+          "min": 8006,
+          "max": 8006,
+          "count": 1,
+          "mean": 8006,
+          "p50": 8024.5,
+          "median": 8024.5,
+          "p75": 8024.5,
+          "p90": 8024.5,
+          "p95": 8024.5,
+          "p99": 8024.5,
+          "p999": 8024.5
+        }
+      }
+    },
+    {
+      "period": "1790285240000",
+      "counters": {
+        "vusers.failed": 68,
+        "vusers.completed": 42,
+        "errors.Error: timeout": 68,
+        "socketio.emit": 542
+      },
+      "rates": {
+        "socketio.emit_rate": 57
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285240018,
+      "firstHistogramAt": 1790285240018,
+      "lastCounterAt": 1790285249993,
+      "lastHistogramAt": 1790285249993,
+      "firstMetricAt": 1790285240018,
+      "lastMetricAt": 1790285249993,
+      "summaries": {
+        "talkroom.message_rtt": {
+          "min": 497,
+          "max": 9664,
+          "count": 606,
+          "mean": 3833.1,
+          "p50": 2515.5,
+          "median": 2515.5,
+          "p75": 4492.8,
+          "p90": 9047.6,
+          "p95": 9607.1,
+          "p99": 9607.1,
+          "p999": 9607.1
+        },
+        "vusers.session_length": {
+          "min": 64229.8,
+          "max": 80508.9,
+          "count": 42,
+          "mean": 72277.7,
+          "p50": 72426.2,
+          "median": 72426.2,
+          "p75": 73889.3,
+          "p90": 75382,
+          "p95": 76904.9,
+          "p99": 80043.6,
+          "p999": 80043.6
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 2.3,
+          "count": 542,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.9,
+          "p999": 1.3
+        },
+        "talkroom.join_rtt": {
+          "min": 4201,
+          "max": 4201,
+          "count": 1,
+          "mean": 4201,
+          "p50": 4231.1,
+          "median": 4231.1,
+          "p75": 4231.1,
+          "p90": 4231.1,
+          "p95": 4231.1,
+          "p99": 4231.1,
+          "p999": 4231.1
+        }
+      },
+      "histograms": {
+        "talkroom.message_rtt": {
+          "min": 497,
+          "max": 9664,
+          "count": 606,
+          "mean": 3833.1,
+          "p50": 2515.5,
+          "median": 2515.5,
+          "p75": 4492.8,
+          "p90": 9047.6,
+          "p95": 9607.1,
+          "p99": 9607.1,
+          "p999": 9607.1
+        },
+        "vusers.session_length": {
+          "min": 64229.8,
+          "max": 80508.9,
+          "count": 42,
+          "mean": 72277.7,
+          "p50": 72426.2,
+          "median": 72426.2,
+          "p75": 73889.3,
+          "p90": 75382,
+          "p95": 76904.9,
+          "p99": 80043.6,
+          "p999": 80043.6
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 2.3,
+          "count": 542,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.9,
+          "p999": 1.3
+        },
+        "talkroom.join_rtt": {
+          "min": 4201,
+          "max": 4201,
+          "count": 1,
+          "mean": 4201,
+          "p50": 4231.1,
+          "median": 4231.1,
+          "p75": 4231.1,
+          "p90": 4231.1,
+          "p95": 4231.1,
+          "p99": 4231.1,
+          "p999": 4231.1
+        }
+      }
+    },
+    {
+      "period": "1790285250000",
+      "counters": {
+        "socketio.emit": 619,
+        "vusers.failed": 0,
+        "vusers.completed": 116
+      },
+      "rates": {
+        "socketio.emit_rate": 65
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285250014,
+      "firstHistogramAt": 1790285250014,
+      "lastCounterAt": 1790285259900,
+      "lastHistogramAt": 1790285259995,
+      "firstMetricAt": 1790285250014,
+      "lastMetricAt": 1790285259995,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0,
+          "max": 2.2,
+          "count": 619,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.9,
+          "p999": 1.6
+        },
+        "talkroom.message_rtt": {
+          "min": 276,
+          "max": 2519,
+          "count": 589,
+          "mean": 1077.6,
+          "p50": 1002.4,
+          "median": 1002.4,
+          "p75": 1978.7,
+          "p90": 2186.8,
+          "p95": 2186.8,
+          "p99": 2322.1,
+          "p999": 2369
+        },
+        "vusers.session_length": {
+          "min": 70022.9,
+          "max": 90301.5,
+          "count": 116,
+          "mean": 82806.1,
+          "p50": 83310.3,
+          "median": 83310.3,
+          "p75": 86710.4,
+          "p90": 90249.2,
+          "p95": 90249.2,
+          "p99": 90249.2,
+          "p999": 90249.2
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0,
+          "max": 2.2,
+          "count": 619,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.4,
+          "p99": 0.9,
+          "p999": 1.6
+        },
+        "talkroom.message_rtt": {
+          "min": 276,
+          "max": 2519,
+          "count": 589,
+          "mean": 1077.6,
+          "p50": 1002.4,
+          "median": 1002.4,
+          "p75": 1978.7,
+          "p90": 2186.8,
+          "p95": 2186.8,
+          "p99": 2322.1,
+          "p999": 2369
+        },
+        "vusers.session_length": {
+          "min": 70022.9,
+          "max": 90301.5,
+          "count": 116,
+          "mean": 82806.1,
+          "p50": 83310.3,
+          "median": 83310.3,
+          "p75": 86710.4,
+          "p90": 90249.2,
+          "p95": 90249.2,
+          "p99": 90249.2,
+          "p999": 90249.2
+        }
+      }
+    },
+    {
+      "period": "1790285260000",
+      "counters": {
+        "socketio.emit": 392,
+        "vusers.failed": 0,
+        "vusers.completed": 101
+      },
+      "rates": {
+        "socketio.emit_rate": 42
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285260051,
+      "firstHistogramAt": 1790285260000,
+      "lastCounterAt": 1790285269958,
+      "lastHistogramAt": 1790285269992,
+      "firstMetricAt": 1790285260000,
+      "lastMetricAt": 1790285269992,
+      "summaries": {
+        "talkroom.message_rtt": {
+          "min": 270,
+          "max": 512,
+          "count": 370,
+          "mean": 304.4,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 301.9,
+          "p90": 320.6,
+          "p95": 391.6,
+          "p99": 478.3,
+          "p999": 497.8
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 2.1,
+          "count": 392,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.6,
+          "p999": 1.3
+        },
+        "vusers.session_length": {
+          "min": 58880,
+          "max": 86836,
+          "count": 101,
+          "mean": 64947.1,
+          "p50": 64236,
+          "median": 64236,
+          "p75": 66857.6,
+          "p90": 69586.2,
+          "p95": 70992,
+          "p99": 84993.4,
+          "p999": 84993.4
+        }
+      },
+      "histograms": {
+        "talkroom.message_rtt": {
+          "min": 270,
+          "max": 512,
+          "count": 370,
+          "mean": 304.4,
+          "p50": 295.9,
+          "median": 295.9,
+          "p75": 301.9,
+          "p90": 320.6,
+          "p95": 391.6,
+          "p99": 478.3,
+          "p999": 497.8
+        },
+        "socketio.response_time": {
+          "min": 0.1,
+          "max": 2.1,
+          "count": 392,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 0.6,
+          "p999": 1.3
+        },
+        "vusers.session_length": {
+          "min": 58880,
+          "max": 86836,
+          "count": 101,
+          "mean": 64947.1,
+          "p50": 64236,
+          "median": 64236,
+          "p75": 66857.6,
+          "p90": 69586.2,
+          "p95": 70992,
+          "p99": 84993.4,
+          "p999": 84993.4
+        }
+      }
+    },
+    {
+      "period": "1790285270000",
+      "counters": {
+        "socketio.emit": 97,
+        "vusers.failed": 0,
+        "vusers.completed": 104
+      },
+      "rates": {
+        "socketio.emit_rate": 46
+      },
+      "socketio.emit_rate": null,
+      "firstCounterAt": 1790285270006,
+      "firstHistogramAt": 1790285270007,
+      "lastCounterAt": 1790285279702,
+      "lastHistogramAt": 1790285279702,
+      "firstMetricAt": 1790285270006,
+      "lastMetricAt": 1790285279702,
+      "summaries": {
+        "socketio.response_time": {
+          "min": 0,
+          "max": 1.9,
+          "count": 97,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 1,
+          "p999": 1
+        },
+        "vusers.session_length": {
+          "min": 66643.3,
+          "max": 85418.3,
+          "count": 104,
+          "mean": 78510.4,
+          "p50": 78458.5,
+          "median": 78458.5,
+          "p75": 83310.3,
+          "p90": 83310.3,
+          "p95": 84993.4,
+          "p99": 84993.4,
+          "p999": 84993.4
+        },
+        "talkroom.message_rtt": {
+          "min": 279,
+          "max": 299,
+          "count": 7,
+          "mean": 290.3,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 295.9,
+          "p95": 295.9,
+          "p99": 295.9,
+          "p999": 295.9
+        }
+      },
+      "histograms": {
+        "socketio.response_time": {
+          "min": 0,
+          "max": 1.9,
+          "count": 97,
+          "mean": 0.2,
+          "p50": 0.2,
+          "median": 0.2,
+          "p75": 0.2,
+          "p90": 0.3,
+          "p95": 0.3,
+          "p99": 1,
+          "p999": 1
+        },
+        "vusers.session_length": {
+          "min": 66643.3,
+          "max": 85418.3,
+          "count": 104,
+          "mean": 78510.4,
+          "p50": 78458.5,
+          "median": 78458.5,
+          "p75": 83310.3,
+          "p90": 83310.3,
+          "p95": 84993.4,
+          "p99": 84993.4,
+          "p999": 84993.4
+        },
+        "talkroom.message_rtt": {
+          "min": 279,
+          "max": 299,
+          "count": 7,
+          "mean": 290.3,
+          "p50": 290.1,
+          "median": 290.1,
+          "p75": 295.9,
+          "p90": 295.9,
+          "p95": 295.9,
+          "p99": 295.9,
+          "p999": 295.9
+        }
+      }
+    },
+    {
+      "period": "1790285280000",
+      "counters": {
+        "vusers.failed": 0,
+        "vusers.completed": 1
+      },
+      "rates": {},
+      "firstCounterAt": 1790285281074,
+      "firstHistogramAt": 1790285281074,
+      "lastCounterAt": 1790285281074,
+      "lastHistogramAt": 1790285281074,
+      "firstMetricAt": 1790285281074,
+      "lastMetricAt": 1790285281074,
+      "summaries": {
+        "vusers.session_length": {
+          "min": 74178.7,
+          "max": 74178.7,
+          "count": 1,
+          "mean": 74178.7,
+          "p50": 73889.3,
+          "median": 73889.3,
+          "p75": 73889.3,
+          "p90": 73889.3,
+          "p95": 73889.3,
+          "p99": 73889.3,
+          "p999": 73889.3
+        }
+      },
+      "histograms": {
+        "vusers.session_length": {
+          "min": 74178.7,
+          "max": 74178.7,
+          "count": 1,
+          "mean": 74178.7,
+          "p50": 73889.3,
+          "median": 73889.3,
+          "p75": 73889.3,
+          "p90": 73889.3,
+          "p95": 73889.3,
+          "p99": 73889.3,
+          "p999": 73889.3
+        }
+      }
+    }
+  ]
+}

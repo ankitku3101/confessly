@@ -7,7 +7,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "loadtest:talkrooms": "npx artillery@2.0.34 run loadtest/talkrooms.yml"
+    "loadtest:talkrooms": "npx artillery@2.0.34 run --output loadtest/results/talkrooms-report.json loadtest/talkrooms.yml"
   },
   "devDependencies": {
     "prettier": "^3.5.3",
